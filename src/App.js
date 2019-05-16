@@ -1,25 +1,27 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import Navbar from './components/layout/Navbar'
+import Dashboard from './components/dashboard/Dashboard'
+import FutureTrips from './components/trips/FutureTrips'
+import PastTrips from './components/trips/PastTrips'
+import TripDetails from './components/trips/TripDetails'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="App">
+        <Navbar />
+        <Switch>
+          <Route exact path='/' component={ Dashboard } />
+          <Route path='/future' component={ FutureTrips } />
+          <Route path='/past' component={ PastTrips } />
+          <Route path='/trip/:id' component={ TripDetails } />
+
+        </Switch>
+      </div>
+
+    </Router>
   );
 }
 
