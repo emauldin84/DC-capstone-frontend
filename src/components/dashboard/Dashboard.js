@@ -9,7 +9,7 @@ export default class Dashboard extends Component {
         <div className='dashboard'>
             <div className='row'>
                 <div className='col s3 m2'>
-                    <NavLink to='/'>+ Trip</NavLink>
+                    <NavLink  className='addTrip' to='/addtrip'>+ Trip</NavLink>
                     <TripList />
                 </div>
                 <div className='col s6 m10'>
