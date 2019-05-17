@@ -7,7 +7,7 @@ export default function Navbar() {
     return (
         <nav className='nav-wrapper grey darken-3'>
             <div className='container'>
-                <Link to='/' className='brand-logo'>Interactive Travel Map</Link>
+                <Link to='/' className='brand-logo left'>Interactive Travel Map</Link>
                 <SignedInLinks />
                 <SignedOutLinks />
             </div>
