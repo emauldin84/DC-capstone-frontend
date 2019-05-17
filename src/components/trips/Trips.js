@@ -8,7 +8,7 @@ export default function FutureTrips() {
         <div className='future-trips section'>
             <div className='row'>
             <div className='col s3 m2'>
-                <NavLink to='/addtrip'>+ Trip</NavLink>
+                <NavLink className='addTrip' to='/addtrip'>+ Trip</NavLink>
                 <TripList />
             </div>
             <div className='col s6 m10'>

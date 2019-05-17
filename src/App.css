@@ -5,3 +5,20 @@
 .btn-flat, .is-today{
     color: #AB47BC !important;
 }
+
+input:focus {
+    border-bottom:1px solid #6A1B9A !important;
+    box-shadow: 0 1px 0 0 #6A1B9A !important;
+    -webkit-box-shadow:0 1px 0 0 #6A1B9A !important;
+}
+
+.addTrip, .month-prev, .month-next {
+    color: #AB47BC !important;
+}
+.addTrip {
+    font-size: 1.5rem;
+}
+
+.is-selected {
+    background-color: #AB47BC !important;
+}
