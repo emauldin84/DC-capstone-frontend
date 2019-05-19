@@ -57,7 +57,7 @@ export default class AddTrip extends Component {
                     {/* <input type='text' className='datepicker' id='date' onChange={this.handleDateChange} /> */}
                 </div>
                 <div className='input-field'>
-                    <button className='btn purple lighten-1 z-depth-0'>Submit</button>
+                    <button className='btn teal lighten-1 z-depth-0'>Submit</button>
                 </div>
             </form>
             
