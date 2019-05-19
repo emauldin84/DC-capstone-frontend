@@ -32,7 +32,7 @@ export default class SignIn extends Component {
                     <input type='password' id='password' onChange={this.handleChange} />
                 </div>
                 <div className='input-field'>
-                    <button className='btn purple lighten-1 z-depth-0'>Login</button>
+                    <button className='btn teal lighten-1 z-depth-0'>Login</button>
                 </div>
             </form>
             

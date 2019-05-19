@@ -3,13 +3,13 @@ import { NavLink } from 'react-router-dom'
 import TripSummary from './TripSummary'
 import TripList from './TripList'
 
-export default function FutureTrips() {
+export default function Trips({trips}) {
     return (
         <div className='future-trips section'>
             <div className='row'>
             <div className='col s3 m2'>
                 <NavLink className='addTrip' to='/addtrip'>+ Trip</NavLink>
-                <TripList />
+                <TripList trips={trips}/>
             </div>
             <div className='col s6 m10'>
                 <TripSummary />

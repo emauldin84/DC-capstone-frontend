@@ -42,7 +42,7 @@ export default class Register extends Component {
                     <input type='text' id='lastName' required  onChange={this.handleChange} />
                 </div>
                 <div className='input-field'>
-                    <button className='btn purple lighten-1 z-depth-0'>Sign Up</button>
+                    <button className='btn teal lighten-1 z-depth-0'>Sign Up</button>
                 </div>
             </form>
             

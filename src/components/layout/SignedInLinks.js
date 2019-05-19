@@ -7,7 +7,7 @@ export default function SignedInLinks() {
             <li><NavLink to='/trips'>Trips</NavLink></li>
             {/* <li><NavLink to='/'>Past Trips</NavLink></li> */}
             <li><NavLink to='/'>Log Out</NavLink></li>
-            <li><NavLink to='/' className='btn btn-floating purple darken-3'>EM</NavLink></li>
+            <li><NavLink to='/' className='btn btn-floating teal lighten-1'>EM</NavLink></li>
         </ul>
     )
 }
