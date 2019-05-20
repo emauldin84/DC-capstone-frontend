@@ -46,29 +46,41 @@ export default class AddTrip extends Component {
         <div className='container'>
             <form onSubmit={this.handleSubmit} className='white'>
                 <h5 className='grey-text text-darken-3'>Add a New Trip</h5>
+
+                {/* location selector field */}
                 <div className='input-field'>
                     <label htmlFor='location'>Location</label>
                     <input type='text' id='location' required onChange={this.handleChange} />
                 </div>
+
+                {/* date picker */}
                 <div className='input-field'>
                     <label htmlFor='date'>Date</label>
                     <DatePicker type='text' id='date' className='datepicker' required onChange={this.handleDateChange}/>
                     
                     {/* <input type='text' className='datepicker' id='date' onChange={this.handleDateChange} /> */}
                 </div>
+
+                {/* text input field */}
                 <div class="input-field">
                     <label for="tripdetails">Trip Details / Itinerary</label>
                     <textarea id="tripdetails" className="materialize-textarea" onChange={this.handleChange}></textarea>
                 </div>
-                <div class="file-field input-field">
-                    <div class="btn">
-                        <span>File</span>
-                        <input type="file" multiple/>
+
+                {/* file input */}
+                <form method='post' enctype='multipart/form-data' action='/upload'>
+                    <div class="file-field input-field">
+                        <div class="btn">
+                            <span>File</span>
+                            <input type="file" name='file' multiple/>
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text" placeholder="Select multiple trip images for upload"/>
+                        </div>
                     </div>
-                    <div class="file-path-wrapper">
-                        <input class="file-path validate" type="text" placeholder="Select multiple trip images for upload"/>
-                    </div>
-                </div>
+                </form>
+
+                {/* submit button */}
                 <div className='input-field'>
                     <button className='btn teal lighten-1 z-depth-0'>Submit</button>
                 </div>
