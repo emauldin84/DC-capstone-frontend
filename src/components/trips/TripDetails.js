@@ -11,6 +11,9 @@ export default function TripDetails(props) {
         <Modal header="Trip" trigger={<Button>Button</Button>}>
                 <div class="modal-content">
                     <span className='card-title'>Cape Town, South Africa - id:{id}</span>
+                        <div className='card-action grey-text'>
+                            <div>12/25/2019</div>
+                        </div>
                     <p>Lorem ipsum aaand awaaaaaaay we go</p>
                 </div>
                 <Slider />

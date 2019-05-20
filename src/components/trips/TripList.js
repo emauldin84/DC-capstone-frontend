@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default function TripList({trips}) {
-    console.log({trips})
+    // console.log({trips})
     return (
         <div>
             <div className='trip-list section'>

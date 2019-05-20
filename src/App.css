@@ -15,10 +15,18 @@ input:focus {
 /* .addTrip, .month-prev, .month-next {
     color: #AB47BC !important;
 } */
+/* .is-selected {
+    background-color: #AB47BC !important;
+} */
+
+
 .addTrip {
     font-size: 1.5rem;
 }
 
-/* .is-selected {
-    background-color: #AB47BC !important;
-} */
+.trip-list {
+    border-right: 1px solid lightgrey;
+
+}
+
+

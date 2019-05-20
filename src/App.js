@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import './App.css';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Navbar from './components/layout/Navbar';
-import Dashboard from './components/dashboard/Dashboard';
-import Trips from './components/trips/Trips';
+
+import axios from 'axios'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+
+import Navbar from './components/layout/Navbar'
+import Dashboard from './components/dashboard/Dashboard'
+import Trips from './components/trips/Trips'
+
 // PastTrips is no longer necessary. Decided to list all trips in single component
 // import PastTrips from './components/trips/PastTrips';
 import TripDetails from './components/trips/TripDetails';
@@ -54,6 +58,14 @@ class App extends Component {
   
       </Router>
     );
+  }
+
+  getAllTrips= async () => {
+    const response = await axios.get('/trips')
+    console.log(response)
+    this.setState({
+      trips: response.data
+    })
   }
 
 }
