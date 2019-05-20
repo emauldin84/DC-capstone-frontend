@@ -10,10 +10,10 @@ export default function TripDetails(props) {
             <div className='card z-depth-0'>
                 <div className='card-content'>
                     <span className='card-title'>Cape Town, South Africa - id:{id}</span>
+                        <div className='card-action grey-text'>
+                            <div>12/25/2019</div>
+                        </div>
                     <p>Lorem ipsum aaand awaaaaaaay we go</p>
-                </div>
-                <div className='card-action grey lighten-4 grey-text'>
-                    <div>12/25/2019</div>
                 </div>
                 <Slider />
                 
