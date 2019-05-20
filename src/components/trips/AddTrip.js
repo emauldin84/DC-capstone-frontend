@@ -56,6 +56,19 @@ export default class AddTrip extends Component {
                     
                     {/* <input type='text' className='datepicker' id='date' onChange={this.handleDateChange} /> */}
                 </div>
+                <div class="input-field">
+                    <label for="tripdetails">Trip Details / Itinerary</label>
+                    <textarea id="tripdetails" className="materialize-textarea" onChange={this.handleChange}></textarea>
+                </div>
+                <div class="file-field input-field">
+                    <div class="btn">
+                        <span>File</span>
+                        <input type="file" multiple/>
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text" placeholder="Select multiple trip images for upload"/>
+                    </div>
+                </div>
                 <div className='input-field'>
                     <button className='btn teal lighten-1 z-depth-0'>Submit</button>
                 </div>
