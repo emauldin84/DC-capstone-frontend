@@ -17,15 +17,11 @@ export default class Map extends Component {
       }
     };
   }
-  // componentDidMount(){
-  //   const width = document.getElementById("mapbox").offsetWidth;
-  //   this.setState({
-  //     viewport: {
-  //       ...this.state.viewport,
-  //       width,
-  //     }
-  //   });
-  // }
+  componentDidMount(){
+    this._assignMapDimensions();
+    window.addEventListener('resize', this._assignMapDimensions);
+  }
+
 
 render() {
     const {viewport} = this.state;
@@ -54,11 +50,20 @@ return (
     );
   }
   _onChangeHandler = (viewport) => {
-    const width = document.getElementById("mapbox").offsetWidth;
     this.setState({
       viewport: {
         ...viewport,
+      }
+    });
+  }
+  _assignMapDimensions = () => {
+    const width = document.getElementById("mapbox").offsetWidth;
+    const height = document.getElementById("mapbox").offsetHeight;
+    this.setState({
+      viewport: {
+        ...this.state.viewport,
         width,
+        height,
       }
     });
   }

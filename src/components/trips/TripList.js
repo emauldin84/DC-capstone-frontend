@@ -17,7 +17,7 @@ export default function TripList({trips}) {
                             return(
                                 trip.location
                             )
-                        })}
+                        }).join(' ')}
                     </li>
                     
                 </ul>
