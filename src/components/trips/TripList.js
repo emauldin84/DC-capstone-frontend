@@ -1,7 +1,6 @@
 import React from 'react'
 
 export default function TripList({trips}) {
-    console.log('from TripList',{trips})
     return (
         <div>
             <div className='trip-list section'>
@@ -12,13 +11,15 @@ export default function TripList({trips}) {
                     <li>Tokyo, Japan</li>
                     <li>London, England</li>
                     <li>San Francisco, California</li> */}
-                    <li>
+                    
                         {trips && trips.map(trip => {
                             return(
-                                trip.trip_location
+                                <li key={trip.id} className='trip-list-item'>
+                                {trip.trip_location}
+                                </li>
                             )
-                        }).join(' ')}
-                    </li>
+                        })}
+                    
                     
                 </ul>
             </div>

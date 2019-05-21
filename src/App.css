@@ -29,4 +29,13 @@ input:focus {
 
 }
 
+.fa-map-pin:hover {
+    transform: scale(1.4);
+
+}
+
+.trip-list-item:hover {
+    background-color: lightgrey;
+}
+
 
