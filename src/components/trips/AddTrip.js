@@ -8,6 +8,7 @@ export default class AddTrip extends Component {
     state = {
         location: '',
         date: null,
+        tripdetails: '',
     }
 
 
@@ -15,7 +16,7 @@ export default class AddTrip extends Component {
         console.log('e.target.value:',[e.target.value])
         console.log('event:', [e])
         this.setState({
-            location: e.target.value,
+            [e.target.id]: e.target.value,
         })
     }
 

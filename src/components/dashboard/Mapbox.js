@@ -40,6 +40,7 @@ render() {
 
 return (
       <MapGL
+        className='mapbox-gl'
         {...viewport}
         mapStyle="mapbox://styles/mapbox/satellite-streets-v9"
         onViewportChange={this._onChangeHandler}
