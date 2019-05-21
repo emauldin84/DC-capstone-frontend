@@ -66,12 +66,21 @@ class App extends Component {
   }
 
   getTripsByUserId = async () => {
-    const response = await axios.get('/usertrips')
+    const response = await axios.get('/trips')
     
     await this.setState({
       trips: response.data
     })
-    await console.log('from app',response)
+    await console.log('from app. trips:',response)
+  }
+
+  getUserById = async () => {
+    const response = await axios.get('/users')
+    
+    await this.setState({
+      user: response.data
+    })
+    await console.log('from app. user:',response)
   }
 
 }
