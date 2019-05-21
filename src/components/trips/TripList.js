@@ -15,7 +15,7 @@ export default function TripList({trips}) {
                     <li>
                         {trips && trips.map(trip => {
                             return(
-                                trip.location
+                                trip.trip_location
                             )
                         }).join(' ')}
                     </li>

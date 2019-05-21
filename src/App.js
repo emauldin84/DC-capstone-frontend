@@ -7,12 +7,16 @@ import Navbar from './components/layout/Navbar'
 import Dashboard from './components/dashboard/Dashboard'
 import Trips from './components/trips/Trips'
 
+
+
 // PastTrips is no longer necessary. Decided to list all trips in single component
 // import PastTrips from './components/trips/PastTrips';
 import TripDetails from './components/trips/TripDetails';
 import SignIn from './components/auth/SignIn';
 import Register from './components/auth/Register';
 import AddTrip from './components/trips/AddTrip';
+
+// axios.get('/trips', {withCredentials: true});
 
 class App extends Component {
   constructor(props) {
@@ -43,7 +47,9 @@ class App extends Component {
 
   componentDidMount() {
     // call functions here to retrieve trip and user data?
+    console.log('about to call function...')
     this.getTripsByUserId();
+
   }
 
   render() {
@@ -75,12 +81,13 @@ class App extends Component {
   }
 
   getTripsByUserId = async () => {
-    const response = await axios.get('/trips')
+    console.log('about to make axios call')
+    const response = await axios.get('/trips', {withCredentials: true})
+    console.log('from app. trips:', response)
     
     await this.setState({
       trips: response.data
     })
-    await console.log('from app. trips:',response)
   }
 
   getUserById = async () => {
@@ -89,7 +96,7 @@ class App extends Component {
     await this.setState({
       user: response.data
     })
-    await console.log('from app. user:',response)
+    console.log('from app. user:',response)
   }
 
 }
