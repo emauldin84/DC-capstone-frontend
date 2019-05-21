@@ -18,15 +18,17 @@ input:focus {
 /* .is-selected {
     background-color: #AB47BC !important;
 } */
-
+body {
+    overflow:hidden;
+}
 
 .addTrip {
     font-size: 1.5rem;
 }
 
 .trip-list {
-    border-right: 1px solid lightgrey;
-
+    border-right: 3px solid #b2dfdb;
+    overflow-y: auto;
 }
 
 .fa-map-pin:hover {
@@ -35,7 +37,24 @@ input:focus {
 }
 
 .trip-list-item:hover {
-    background-color: lightgrey;
+    background-color: #b2dfdb;
+    margin-right: 20px;
 }
+
+.dashboard.section {
+    margin-right: 11.25px;
+    /* margin-bottom: 11.25px; */
+}
+
+#mapbox {
+    display: flex;
+    height: 88vh;
+    overflow:hidden;
+}
+
+.mapbox-gl {
+    height: 100%;
+}
+
 
 
