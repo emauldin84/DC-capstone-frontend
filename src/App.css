@@ -25,8 +25,7 @@ input:focus {
 }
 
 .trip-list {
-    border-right: 1px solid lightgrey;
-
+    border-right: 1px solid #b2dfdb;
 }
 
 .fa-map-pin:hover {
@@ -35,7 +34,8 @@ input:focus {
 }
 
 .trip-list-item:hover {
-    background-color: lightgrey;
+    background-color: #b2dfdb;
+    margin-right: 20px;
 }
 
 
