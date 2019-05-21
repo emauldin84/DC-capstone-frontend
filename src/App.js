@@ -43,11 +43,7 @@ class App extends Component {
 
   componentDidMount() {
     // call functions here to retrieve trip and user data?
-    const trips = this.getTripsByUserId();
-    console.log(trips);
-    this.setState({
-      trips
-    });
+    this.getTripsByUserId();
   }
 
   render() {
