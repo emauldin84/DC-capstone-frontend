@@ -42,7 +42,7 @@ render() {
 return (
       <MapGL
         {...viewport}
-        mapStyle="mapbox://styles/mapbox/dark-v8"
+        mapStyle="mapbox://styles/mapbox/satellite-streets-v9"
         onViewportChange={this._onChangeHandler}
         mapboxApiAccessToken={TOKEN}>
         {arrayOfMarkers}

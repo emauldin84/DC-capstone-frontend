@@ -22,8 +22,6 @@ export default function TripList({trips}) {
                     
                 </ul>
             </div>
-
-        
         </div>
     )
 }
