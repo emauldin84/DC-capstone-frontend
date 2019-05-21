@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './App.css';
-
 import axios from 'axios'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
@@ -32,6 +31,12 @@ class App extends Component {
       ]
     }
   }
+
+  componentDidMount() {
+    // call functions here to retrieve trip and user data?
+    this.getTripsByUserId();
+  }
+
   render() {
     return (
       <Router>
@@ -45,7 +50,7 @@ class App extends Component {
 
             <Route exact path='/trips'
               render={(props) =>
-                <Trips {...props} trips={this.state.trips}/>}
+                <Trips {...props} trips={this.state.trips} result={this.getTripsByUserId}/>}
                 />
 
             <Route path='/trips/:id' component={ TripDetails } />
@@ -60,12 +65,13 @@ class App extends Component {
     );
   }
 
-  getAllTrips= async () => {
-    const response = await axios.get('/trips')
-    console.log(response)
-    this.setState({
+  getTripsByUserId = async () => {
+    const response = await axios.get('/usertrips')
+    
+    await this.setState({
       trips: response.data
     })
+    await console.log('from app',response)
   }
 
 }
