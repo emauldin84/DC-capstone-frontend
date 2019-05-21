@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { NavLink } from 'react-router-dom'
-import Map from './Map'
 import TripList from '../trips/TripList'
 import Mapbox from './Mapbox';
 

@@ -4,7 +4,7 @@ import TripSummary from './TripSummary'
 import TripList from './TripList'
 
 export default function Trips({trips, result}) {
-    console.log({result})
+    // console.log({result})
     return (
         <div className='future-trips section'>
             <div className='row'>

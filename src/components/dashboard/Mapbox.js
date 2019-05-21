@@ -27,7 +27,6 @@ render() {
     const {viewport} = this.state;
     const { trips } = this.props
     const arrayOfMarkers = trips && trips.map((trip,i) => {
-      console.log(trip);
       return(
         <Marker
           latitude={parseFloat(trip.lat)}
