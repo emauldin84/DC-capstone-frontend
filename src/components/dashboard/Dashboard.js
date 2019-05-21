@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { NavLink } from 'react-router-dom'
 import Map from './Map'
 import TripList from '../trips/TripList'
+import Mapbox from './Mapbox';
+
 
 export default class Dashboard extends Component {
     render() {
@@ -13,12 +15,10 @@ export default class Dashboard extends Component {
                     <NavLink  className='addTrip btn-floating waves-effect waves-light' to='/addtrip' title='add trip'><i className="material-icons">add</i></NavLink>
                     <TripList trips={trips}/>
                 </div>
-                <div className='col s6 m10'>
-                    <Map />
-                    
+                <div id="mapbox" className='col s6 m10'>
+                    <Mapbox trips={trips} />
                 </div>
             </div>
-
         </div>
         )
     }
