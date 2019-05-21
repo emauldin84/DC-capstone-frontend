@@ -44,7 +44,7 @@ export default class AddTrip extends Component {
     render() {
         return (
         <div className='container'>
-            <form onSubmit={this.handleSubmit} className='white'>
+            <form onSubmit={this.handleSubmit} className='white' method='post' encType='multipart/form-data' action='/upload'>
                 <h5 className='grey-text text-darken-3'>Add a New Trip</h5>
 
                 {/* location selector field */}
@@ -62,23 +62,21 @@ export default class AddTrip extends Component {
                 </div>
 
                 {/* text input field */}
-                <div class="input-field">
-                    <label for="tripdetails">Trip Details / Itinerary</label>
+                <div className="input-field">
+                    <label htmlFor="tripdetails">Trip Details / Itinerary</label>
                     <textarea id="tripdetails" className="materialize-textarea" onChange={this.handleChange}></textarea>
                 </div>
 
                 {/* file input */}
-                <form method='post' enctype='multipart/form-data' action='/upload'>
-                    <div class="file-field input-field">
-                        <div class="btn">
+                    <div className="file-field input-field">
+                        <div className="btn">
                             <span>File</span>
                             <input type="file" name='file' multiple/>
                         </div>
-                        <div class="file-path-wrapper">
-                            <input class="file-path validate" type="text" placeholder="Select multiple trip images for upload"/>
+                        <div className="file-path-wrapper">
+                            <input className="file-path validate" type="text" placeholder="Select multiple trip images for upload"/>
                         </div>
                     </div>
-                </form>
 
                 {/* submit button */}
                 <div className='input-field'>
