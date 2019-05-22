@@ -54,7 +54,7 @@ export default class AddTrip extends Component {
     }
 
     geocodeSearch = async () => {
-        const TOKEN = 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmbDZmangifQ.-g_vE53SD2WrJ6tFX7QHmA';
+        const TOKEN = 'pk.eyJ1IjoiZW1hdWxkaW4iLCJhIjoiY2p2dmdhdjExMWMzMDQ5bDlwdzl0b2p1ZSJ9.HBj_nqaAQpYjoZx5vHOLOg';
 
         let response = await axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${this.state.location}.json?access_token=${TOKEN}`)
         // await console.log(response.data.features)
