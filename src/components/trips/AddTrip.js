@@ -3,26 +3,16 @@ import 'materialize-css/dist/css/materialize.min.css'
 import M, {options, elem} from 'materialize-css'
 import axios from 'axios'
 
-// import M, {options} from 'materialize-css'
-import {DatePicker, Autocomplete} from 'react-materialize'
+
+import {DatePicker, Autocomplete}from 'react-materialize'
 
 export default class AddTrip extends Component {
     state = {
-        location: '',
+        location: 'Madison',
         date: null,
         tripdetails: '',
         response: null
     }
-
-    componentDidMount() {
-        document.addEventListener('DOMContentLoaded', function() {
-            var elems = document.querySelectorAll('.autocomplete');
-            var instances = M.Autocomplete.init(elems, options);
-            var instance = M.Autocomplete.getInstance('#location');
-            
-        });
-    }
-
 
     handleChange = (e) => {
         console.log('e.target.value:',[e.target.value])
@@ -42,13 +32,11 @@ export default class AddTrip extends Component {
         })
     }
     
-
     handleDateChange = (e) => {
         console.log('event:', [e][0])
         this.setState({
             date: [e][0]
-        }
-        ) 
+        }) 
     }
 
     handleSubmit = (e) => {
@@ -57,13 +45,11 @@ export default class AddTrip extends Component {
         console.log('state:',this.state)
         console.log('event:',e)
         console.log('submit props:',this.props)
-        
-        
     }
 
     geocodeSearch = async () => {
         let {data} = await axios.post(`/cors`, {location: this.state.location})
-        console.log(data.data.features);
+        console.log('after axios', data)
 
         this.setState({
             response: data.data.features
@@ -75,29 +61,17 @@ export default class AddTrip extends Component {
         )
     }
 
-    // componentDidMount() {
-    //     document.addEventListener('DOMContentLoaded', function() {
-    //         var elems = document.querySelectorAll('.datepicker');
-    //         var instances = M.Datepicker.init(elems, options);
-    //     });
-    // }
-
     render() {
-        let data1 = {}
+        let data1 = []
         if (this.state.response){
             (this.state.response).forEach(location => {
                 // console.log(typeof location.place_name)
                 const name = location.place_name.split(',')[0]
                 console.log(name)
-                name.toString();
-                data1[name] = null})
+                // name.toString();
+                data1[name.toString()] = null})
         }
-        console.log("====================================")
-        // data1 = {'Gus Fring': null,'Saul Goodman': null,'Tuco Salamanca': 'https://placehold.it/250x250',}
-        // data1 = null
-        console.log("data object", data1)
-        // console.log(data1)
-        console.log("====================================")
+
         return (
         <div className='container'>
             <form onSubmit={this.handleSubmit} className='white' method='post' encType='multipart/form-data' action='/upload'>
@@ -107,15 +81,13 @@ export default class AddTrip extends Component {
                 
                     <Autocomplete
                         onChange={this.handleLocation}
-                        options={{data: data1}}
+                        data={data1}
                         >
                         <div className='input-field'>
                             <label htmlFor='location'>Location</label>
                             <input type='text' id='location' className='autocomplete' required  />
                         </div>
                     </Autocomplete>
-                        
-                    
                 
 
                 {/* date picker */}

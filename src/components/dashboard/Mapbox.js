@@ -26,7 +26,18 @@ export default class Map extends Component {
 render() {
     const {viewport} = this.state;
     const { trips } = this.props
+    
+    // translate today's date
+    let today = new Date();
+    let month = today.getUTCMonth() + 1; //months from 1-12
+    let day = today.getUTCDate();
+    let year = today.getUTCFullYear();
+    let todayDate = year + "-" + month + "-" + day;
+    
     const arrayOfMarkers = trips && trips.map((trip,i) => {
+      let tripDate = trip.trip_date.split("T").shift()
+      console.log('trip date',tripDate)
+      console.log('today',today)
       return(
         <Marker
           latitude={parseFloat(trip.lat)}
@@ -34,7 +45,7 @@ render() {
           offsetTop={-12}
           key={i}
         >
-          <i style={{color:"white"}} className="fas fa-map-pin"></i>
+          { tripDate > todayDate ? <i style={{color:"blue"}} className="fas fa-map-pin"></i> : <i style={{color:"red"}} className="fas fa-map-pin"></i> }
         </Marker>
       )});
 
