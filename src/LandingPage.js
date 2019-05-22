@@ -5,7 +5,7 @@ import App from './App';
 axios.defaults.withCredentials = true;
 
 
-class RealApp extends React.Component{
+class LandingPage extends React.Component{
   constructor(props){
     super(props)
     this.state = {
@@ -56,4 +56,4 @@ class RealApp extends React.Component{
     })
   }
 }
-export default RealApp;
+export default LandingPage;
