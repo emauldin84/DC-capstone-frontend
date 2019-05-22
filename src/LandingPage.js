@@ -17,8 +17,6 @@ class RealApp extends React.Component{
     
   }
   render(){
-    console.log(this.state.user);
-    console.log(typeof this.state.user);
     return(
     this.state.user.id ?
       <App user={this.state.user} />
@@ -43,7 +41,7 @@ class RealApp extends React.Component{
           float:"right", 
           paddingTop:"20vh"
         }}>
-          <SignIn handleSignIn={this._signIn} />
+          <SignIn signInUser={this._signIn} />
         </div>
       </div>
     )
@@ -53,7 +51,9 @@ class RealApp extends React.Component{
     document.body.style.backgroundImage = `url("./assets/desktop_${randomNumber}.png")`;
   }
   _signIn = (user) => {
-    this.setState({user})
+    this.setState({user}, () => {
+      document.body.style.backgroundImage = null;
+    })
   }
 }
 export default RealApp;
