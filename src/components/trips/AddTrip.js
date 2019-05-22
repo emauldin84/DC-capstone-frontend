@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import 'materialize-css/dist/css/materialize.min.css'
+import M, {options, elem} from 'materialize-css'
+import axios from 'axios'
 
 // import M, {options} from 'materialize-css'
 import {DatePicker} from 'react-materialize'
@@ -9,6 +11,17 @@ export default class AddTrip extends Component {
         location: '',
         date: null,
         tripdetails: '',
+        response: ''
+    }
+
+    componentDidMount() {
+        document.addEventListener('DOMContentLoaded', function() {
+            var elems = document.querySelectorAll('.autocomplete');
+            var instances = M.Autocomplete.init(elems, options);
+            var instance = M.Autocomplete.getInstance('#location');
+            
+        
+        });
     }
 
 
@@ -17,6 +30,8 @@ export default class AddTrip extends Component {
         console.log('event:', [e])
         this.setState({
             [e.target.id]: e.target.value,
+        }, () => {
+            this.geocodeSearch();
         })
     }
 
@@ -24,14 +39,32 @@ export default class AddTrip extends Component {
         console.log('event:', [e][0])
         this.setState({
             date: [e][0]
-        })
+        }
+        ) 
     }
 
     handleSubmit = (e) => {
         e.preventDefault()
+
         console.log('state:',this.state)
         console.log('event:',e)
         console.log('submit props:',this.props)
+        
+        
+    }
+
+    geocodeSearch = async () => {
+        const TOKEN = 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmbDZmangifQ.-g_vE53SD2WrJ6tFX7QHmA';
+
+        let response = await axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${this.state.location}.json?access_token=${TOKEN}`)
+        // await console.log(response.data.features)
+        
+        this.setState({
+            response: response.data.features
+        })
+        this.state.response.forEach(res => {
+            console.log('response state',res.place_name)
+        })
         
     }
 
@@ -51,7 +84,7 @@ export default class AddTrip extends Component {
                 {/* location selector field */}
                 <div className='input-field'>
                     <label htmlFor='location'>Location</label>
-                    <input type='text' id='location' required onChange={this.handleChange} />
+                    <input type='text' id='location' className='autocomplete' required onChange={this.handleChange} />
                 </div>
 
                 {/* date picker */}
