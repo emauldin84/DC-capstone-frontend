@@ -4,14 +4,14 @@ import M, {options, elem} from 'materialize-css'
 import axios from 'axios'
 
 // import M, {options} from 'materialize-css'
-import {DatePicker} from 'react-materialize'
+import {DatePicker, Autocomplete} from 'react-materialize'
 
 export default class AddTrip extends Component {
     state = {
         location: '',
         date: null,
         tripdetails: '',
-        response: ''
+        response: null
     }
 
     componentDidMount() {
@@ -20,7 +20,6 @@ export default class AddTrip extends Component {
             var instances = M.Autocomplete.init(elems, options);
             var instance = M.Autocomplete.getInstance('#location');
             
-        
         });
     }
 
@@ -34,6 +33,15 @@ export default class AddTrip extends Component {
             this.geocodeSearch();
         })
     }
+
+    handleLocation = (e) => {
+        this.setState({
+            location: e.target.value,
+        }, () => {
+            this.geocodeSearch();
+        })
+    }
+    
 
     handleDateChange = (e) => {
         console.log('event:', [e][0])
@@ -75,16 +83,40 @@ export default class AddTrip extends Component {
     // }
 
     render() {
+        let data1 = {}
+        if (this.state.response){
+            (this.state.response).forEach(location => {
+                // console.log(typeof location.place_name)
+                const name = location.place_name.split(',')[0]
+                console.log(name)
+                name.toString();
+                data1[name] = null})
+        }
+        console.log("====================================")
+        // data1 = {'Gus Fring': null,'Saul Goodman': null,'Tuco Salamanca': 'https://placehold.it/250x250',}
+        // data1 = null
+        console.log("data object", data1)
+        // console.log(data1)
+        console.log("====================================")
         return (
         <div className='container'>
             <form onSubmit={this.handleSubmit} className='white' method='post' encType='multipart/form-data' action='/upload'>
                 <h5 className='grey-text text-darken-3'>Add a New Trip</h5>
 
                 {/* location selector field */}
-                <div className='input-field'>
-                    <label htmlFor='location'>Location</label>
-                    <input type='text' id='location' className='autocomplete' required onChange={this.handleChange} />
-                </div>
+                
+                    <Autocomplete
+                        onChange={this.handleLocation}
+                        options={{data: data1}}
+                        >
+                        <div className='input-field'>
+                            <label htmlFor='location'>Location</label>
+                            <input type='text' id='location' className='autocomplete' required  />
+                        </div>
+                    </Autocomplete>
+                        
+                    
+                
 
                 {/* date picker */}
                 <div className='input-field'>
