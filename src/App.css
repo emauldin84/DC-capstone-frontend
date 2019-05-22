@@ -33,7 +33,9 @@ body {
 
 .fa-map-pin:hover {
     transform: scale(1.4);
-
+}
+.fa-map-pin-hover {
+    transform: scale(1.4);
 }
 
 .trip-list-item {
@@ -45,6 +47,9 @@ body {
 .trip-list-item:hover {
     background-color: #b2dfdb;
     /* margin-right: 20px; */
+}
+.trip-list-item-hover{
+    background-color: #b2dfdb;
 }
 
 .dashboard.section {

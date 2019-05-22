@@ -35,28 +35,30 @@ export default class Map extends Component {
       let year = today.getUTCFullYear();
       let todayDate = year + "-" + month + "-" + day;
       
-      const arrayOfMarkers = trips && trips.map((trip,i) => {
-        let tripDate = trip.trip_date.split("T").shift()
+      const arrayOfMarkers = trips && trips.map(({id, trip_location, trip_date, trip_details, lat, lon}) => {
+        let selected = ''
+        this.props.selectedTrip === id ? selected = 'fa-map-pin-hover' : selected = '';
+        let tripDate = trip_date.split("T").shift()
         console.log('trip date',tripDate)
         console.log('today',today)
         return(
-          <div key={trip.id}>
+          <div key={id}>
             <TripDetails 
-            name={trip.trip_location}
-            id={trip.id}
-            details={trip.trip_details}
-            date={trip.trip_date}
-            lat={trip.lat}
-            lon={trip.lon}
+            name={trip_location}
+            id={id}
+            details={trip_details}
+            date={trip_date}
+            lat={lat}
+            lon={lon}
             />
-            <a href={`#${trip.id}`} className="modal-trigger" style={{color:"black"}} >
+            <a href={`#${id}`} className="modal-trigger" style={{color:"black"}} onMouseEnter={()=>{this.props.tripSelector(id)}} onMouseLeave={this.props.tripDeselector}>
               <Marker
-                latitude={parseFloat(trip.lat)}
-                longitude={parseFloat(trip.lon)} 
+                latitude={parseFloat(lat)}
+                longitude={parseFloat(lon)} 
                 offsetTop={-12}
-                key={i}
+                key={id}
                 >
-                { tripDate > todayDate ? <i style={{color:"blue"}} className="fas fa-map-pin"></i> : <i style={{color:"red"}} className="fas fa-map-pin"></i> }
+                { tripDate > todayDate ? <i style={{color:"blue"}} className={`fas fa-map-pin ${selected}`}></i> : <i style={{color:"red"}} className="fas fa-map-pin"></i> }
               </Marker>
             </a>
           </div>

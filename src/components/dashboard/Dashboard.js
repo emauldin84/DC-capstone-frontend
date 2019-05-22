@@ -21,10 +21,20 @@ export default class Dashboard extends Component {
                 <div className='col s3 m2'>
                     <NavLink  className='addTrip btn-floating waves-effect waves-light' to='/addtrip' title='add trip'><i className="material-icons">add</i></NavLink>
                     {/* <TripToggle /> */}
-                    <TripList tripSelector={this._selectTripId} trips={trips}/>
+                    <TripList 
+                        tripDeselector={this._deSelectTrip} 
+                        tripSelector={this._selectTripId} 
+                        trips={trips}
+                        selectedTrip={this.state.selectedTripId}
+                    />
                 </div>
                 <div id="mapbox" className='col s6 m10'>
-                    <Mapbox trips={trips} />
+                    <Mapbox 
+                        trips={trips} 
+                        tripDeselector={this._deSelectTrip} 
+                        tripSelector={this._selectTripId} 
+                        selectedTrip={this.state.selectedTripId}
+                    />
                 </div>
             </div>
         </div>
