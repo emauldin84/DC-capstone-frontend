@@ -54,15 +54,17 @@ export default class AddTrip extends Component {
     }
 
     geocodeSearch = async () => {
-        let response = await axios.post(`/cors`, {location: this.state.location})
+        let {data} = await axios.post(`/cors`, {location: this.state.location})
+        console.log(data.data.features);
 
         this.setState({
-            response: response.data.features
-        })
-        this.state.response.forEach(res => {
-            console.log('response state',res.place_name)
-        })
-        
+            response: data.data.features
+        }, () => {
+            this.state.response.forEach(res => {
+                console.log('response state',res.place_name)
+            })
+        }
+        )
     }
 
     // componentDidMount() {
