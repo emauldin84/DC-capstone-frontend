@@ -11,7 +11,10 @@ export default class AddTrip extends Component {
         location: '',
         date: null,
         tripdetails: '',
-        response: null
+        response: null,
+        fileName:null,
+        tripId:null,
+        message:null,
     }
 
     componentDidMount() {
@@ -149,7 +152,46 @@ export default class AddTrip extends Component {
                 </div>
             </form>
             
+            <div>
+                <form id="myform"  encType="multipart/form-data">
+                    <input name="foo" onChange={this._changeFileName} type="file" accept="image/png, image/jpeg, image/jpg, image/gif"></input>
+                    <button type="submit" onClick={this._getFormData}>Submit</button>
+                    <h4>{this.state.message}</h4>
+                </form>
+            </div>
+
         </div>
         )
+    }
+    _changeFileName = (e) => {
+        console.log("The file name is ,", e.target.files);
+        this.setState({
+            fileName:e.target.files[0]
+        })
+    }
+    _getFormData = (e) => {
+        e.preventDefault();
+        this._uploadFile(this.state.fileName)
+            .then((response)=>{
+                console.log("should be a json rspons", response.data);
+            })
+    
+    }
+    
+    _uploadFile = (file) => {
+            console.log("_upload file running");
+            //this will pass the user id in
+        const url = `/photos`;
+        const formData = new FormData();
+        formData.append('file',file)
+        formData.append('tripId',2)
+        const config = {
+            headers: {
+                'content-type': 'multipart/form-data'
+            }
+        }
+        return  axios.post(url, formData, config)
+        
+        
     }
 }
