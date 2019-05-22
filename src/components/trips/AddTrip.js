@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import 'materialize-css/dist/css/materialize.min.css'
 import M, {options, elem} from 'materialize-css'
 import axios from 'axios'
-import cors from 'cors'
 
 // import M, {options} from 'materialize-css'
 import {DatePicker} from 'react-materialize'

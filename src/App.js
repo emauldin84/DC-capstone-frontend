@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
 import axios from 'axios'
-import cors from 'cors'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
 import Navbar from './components/layout/Navbar'
