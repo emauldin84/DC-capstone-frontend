@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import 'materialize-css/dist/css/materialize.min.css'
 import M, {options, elem} from 'materialize-css'
 import axios from 'axios'
+import cors from 'cors'
 
 // import M, {options} from 'materialize-css'
 import {DatePicker} from 'react-materialize'
@@ -54,11 +55,8 @@ export default class AddTrip extends Component {
     }
 
     geocodeSearch = async () => {
-        const TOKEN = 'pk.eyJ1IjoiZW1hdWxkaW4iLCJhIjoiY2p2dmdhdjExMWMzMDQ5bDlwdzl0b2p1ZSJ9.HBj_nqaAQpYjoZx5vHOLOg';
+        let response = await axios.post(`/cors`, this.state.location)
 
-        let response = await axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${this.state.location}.json?access_token=${TOKEN}`)
-        // await console.log(response.data.features)
-        
         this.setState({
             response: response.data.features
         })
