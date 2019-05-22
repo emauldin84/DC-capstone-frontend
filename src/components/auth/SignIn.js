@@ -1,43 +1,118 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import axios from 'axios';
+axios.defaults.withCredentials = true;
+
 
 export default class SignIn extends Component {
-    state = {
-        email: '',
-        password: '',
+    constructor(props){
+        super(props);
+        this.state = {
+            signIn : {
+                email: '',
+                password: '',
+            },
+            signUp : {
+                email: '',
+                password: '',
+                firstName: '',
+                lastName: '',
+            },
+            showSignUp : false,
+        };
     }
-
-    handleChange = (e) => {
-        this.setState({
-            [e.target.id]: e.target.value,
-        })
-    }
-
-    handleSubmit = (e) => {
-        e.preventDefault()
-        console.log(this.state)
-        
-        
-    }
-
     render() {
         return (
         <div className='container'>
-            <form onSubmit={this.handleSubmit} className='white'>
+            <form onSubmit={this._handleSignIn} className='white'>
                 <h5 className='grey-text text-darken-3'>Sign In</h5>
                 <div className='input-field'>
                     <label htmlFor='email'>Email</label>
-                    <input type='email' id='email' onChange={this.handleChange} />
+                    <input type='email' id='email' onChange={this._handleSignInChange} />
                 </div>
                 <div className='input-field'>
                     <label htmlFor='password'>Password</label>
-                    <input type='password' id='password' onChange={this.handleChange} />
+                    <input type='password' id='password' onChange={this._handleSignInChange} />
                 </div>
                 <div className='input-field'>
-                    <button className='btn teal lighten-1 z-depth-0'>Login</button>
+                    <button type="submit" className='btn teal lighten-1 z-depth-0'>Sign In</button>
                 </div>
             </form>
-            
+            {this.state.showSignUp ?
+                <form onSubmit={this._handleSignUp} className='white'>
+                    {/* <h5 className='grey-text text-darken-3'>Sign In</h5> */}
+                    <div className='input-field'>
+                        <label htmlFor='firstName'>First Name</label>
+                        <input type='name' id='firstName' onChange={this._handleSignUpChange} />
+                    </div>
+                    <div className='input-field'>
+                        <label htmlFor='lastName'>Last Name</label>
+                        <input type='name' id='lastName' onChange={this._handleSignUpChange} />
+                    </div>
+                    <div className='input-field'>
+                        <button className='btn teal lighten-1 z-depth-0'>Sign Up</button>
+                    </div>
+                </form>
+            : 
+                null
+            }
         </div>
         )
+    }
+    _handleSignInChange = (e) => {
+        this.setState({
+            signIn : {
+                ...this.state.signIn,
+                [e.target.id]: e.target.value,
+            },
+            signUp : {
+                ...this.state.signUp,
+                [e.target.id]: e.target.value,
+            }
+        })
+    }
+    _handleSignUpChange = (e) => {
+        this.setState({
+            signUp : {
+                ...this.state.signUp,
+                [e.target.id]: e.target.value,
+            },
+        })
+    }
+    _handleSignIn = async (e) => {
+        e.preventDefault();
+        const signInCheck = await axios.post('/signin', this.state.signIn)
+        const {data} = signInCheck;
+        if (signInCheck.status !== 200){
+            console.log("Something is wrong with the backend");
+        }
+        else{
+            if(data.id){
+                this.props.signInUser(data)
+            }
+            else{
+                this.setState({
+                    showSignUp : true
+                })
+            }
+        }
+    }
+    _handleSignUp = async (e) => {
+        e.preventDefault();
+        // const 
+        const signInCheck = await axios.post('/signin', this.state.signUp)
+        const {data} = signInCheck;
+        if (signInCheck.status !== 200){
+            console.log("Something is wrong with the backend");
+        }
+        else{
+            if(data.id){
+                this.props.signInUser(data)
+            }
+            else{
+                this.setState({
+                    showSignUp : true
+                })
+            }
+        }
     }
 }

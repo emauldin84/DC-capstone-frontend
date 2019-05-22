@@ -16,7 +16,7 @@ import SignIn from './components/auth/SignIn';
 import Register from './components/auth/Register';
 import AddTrip from './components/trips/AddTrip';
 
-// axios.get('/trips', {withCredentials: true});
+axios.defaults.withCredentials = true;
 
 class App extends Component {
   constructor(props) {
