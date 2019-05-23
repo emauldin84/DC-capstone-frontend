@@ -63,7 +63,6 @@ class App extends Component {
 
   getTripsByUserId = async () => {
     const response = await axios.get('/trips', {withCredentials: true})
-    
     this.setState({
       trips: response.data
     })

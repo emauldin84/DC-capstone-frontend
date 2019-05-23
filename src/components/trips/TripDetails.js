@@ -10,11 +10,8 @@ export default class TripDetails extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            editName : false, // changing the location?
             name : this.props.name,
-            editDate : false, // changing the date?
             date : this.props.date,
-            editDetails : false, // changing the details?
             details : this.props.details,
             editPhotos : false, // changing the photos?
             photos : this.props.photos,
@@ -29,23 +26,12 @@ export default class TripDetails extends React.Component{
             <Modal id={`${id}`} header={this.state.name} options={options}>
                 <div className="modal-content">
                     <span className='card-title'>
-                        {this.state.editName?
-                            <textarea onChange={(e)=>{this._updateName(e.target.value)}} defaultValue={name} /> // this will have to turn into an Autocomplete component
-                            :
-                            <p onClick={this._editName}>{name}</p>
-                        } - id:{id}</span>
-                        <div className='card-action grey-text'>
-                            {this.state.editDate?
-                            <textarea onChange={(e)=>{this._updateDate(e.target.value)}} defaultValue={date} /> // should be a Date picker
-                            :
-                            <div onClick={this._editDate}>{date}</div>
-                            }
-                        </div>
-                    {this.state.editDetails?
-                        <textarea onChange={(e)=>{this._updateDetails(e.target.value)}} defaultValue={details} style={{height:"100%"}} />
-                        :
-                        <p onClick={this._editDetails}>{details}</p>
-                    }
+                        <p onBlur={(e)=>{this._updateName(e.target.textContent);}} contentEditable={true} suppressContentEditableWarning={true} >{name}</p>
+                    </span>
+                    <div className='card-action grey-text'>
+                        <div onBlur={(e)=>{this._updateDate(e.target.textContent);}} contentEditable={true} suppressContentEditableWarning={true} >{date}</div>
+                    </div>
+                    <p onBlur={(e)=>{this._updateDetails(e.target.textContent);}} contentEditable={true} suppressContentEditableWarning={true} >{details}</p>
                 </div>
                 {this.state.editPhotos?
                     <textarea onChange={(e)=>{this._updatePhotos(e.target.value)}} defaultValue={"Change your pictures!"} /> // this should be a FileUpload component
@@ -57,9 +43,6 @@ export default class TripDetails extends React.Component{
     }
     _saveChanges = () => {
         this.setState({
-            editName : false, 
-            editDate : false, 
-            editDetails : false, 
             editPhotos : false,
         }, () => {
             const {name, date, details, photos, lat, lon} = this.state
@@ -94,9 +77,10 @@ export default class TripDetails extends React.Component{
             //     this.props.updateApp()
             // }
             if((name!==this.props.name)||(date!==this.props.date)||(details!==this.props.details)||(photos!==this.props.photos)){
-                console.log(this.state)
+                console.log("prop id: ", this.props.id);
                 axios.post(`/trips/edit/${this.props.id}`, body)
-                .then(()=> this.props.updateApp())
+                // .then(({r}) => {console.log(destination)})
+                .then(this.props.updateApp)
             }
         })
         

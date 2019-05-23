@@ -51,7 +51,7 @@ export default class Map extends Component {
             lat={lat}
             lon={lon}
             photos={photos}
-            updateApp={this.props.updateApp}
+            updateApp={this.props.updateAppDashboard}
             />
             <a href={`#${id}`} className="modal-trigger" style={{color:"black"}} onMouseEnter={()=>{this.props.tripSelector(id)}} onMouseLeave={this.props.tripDeselector}>
               <Marker

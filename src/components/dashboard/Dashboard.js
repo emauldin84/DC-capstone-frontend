@@ -22,11 +22,11 @@ export default class Dashboard extends Component {
                     <NavLink  className='addTrip btn-floating waves-effect waves-light' to='/addtrip' title='add trip'><i className="material-icons">add</i></NavLink>
                     {/* <TripToggle /> */}
                     <TripList 
+                        trips={trips}
                         tripDeselector={this._deSelectTrip} 
                         tripSelector={this._selectTripId} 
-                        trips={trips}
                         selectedTrip={this.state.selectedTripId}
-                        updateApp={updateApp}
+                        updateAppDashboard={updateApp}
                     />
                 </div>
                 <div id="mapbox" className='col s6 m10'>
@@ -35,7 +35,7 @@ export default class Dashboard extends Component {
                         tripDeselector={this._deSelectTrip} 
                         tripSelector={this._selectTripId} 
                         selectedTrip={this.state.selectedTripId}
-                        updateApp={this._getUpdatedTrips}
+                        updateAppDashboard={updateApp}
                     />
                 </div>
             </div>
