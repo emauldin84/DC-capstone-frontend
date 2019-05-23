@@ -10,7 +10,7 @@ export default function TripDetails({id, name, date, details, lat, lon}){
                         <div className='card-action grey-text'>
                             <div>{date}</div>
                         </div>
-                    <p>{details}</p>
+                    <p contenteditable="true" >{details}</p>
                 </div>
                 <Slider />
         </Modal>
