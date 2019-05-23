@@ -5,7 +5,7 @@ export default function TripList({trips, tripSelector, tripDeselector, selectedT
     return (
         <div className='trip-list section'>
             <ul>
-                    {trips && trips.map(({id, trip_location, trip_date, trip_details, lat, lon}) => {
+                    {trips && trips.map(({id, trip_location, trip_date, trip_details, lat, lon, photos}) => {
                         let selected = '';
                         selectedTrip === id ? selected = 'trip-list-item-hover' : selected = '';
                         return(
@@ -17,9 +17,10 @@ export default function TripList({trips, tripSelector, tripDeselector, selectedT
                                     date={trip_date}
                                     lat={lat}
                                     lon={lon}
+                                    photos={photos}
                                     updateApp={updateApp}
                                 />
-                                <a href={`#${id}`} onMouseEnter={()=>{tripSelector(id)}} onMouseLeave={tripDeselector} className={`modal-trigger ${selected}`} style={{color:"black"}} >
+                                <a href={`#${id}`} onClick={()=>console.log("TripList id:", id)} onMouseEnter={()=>{tripSelector(id)}} onMouseLeave={tripDeselector} className={`modal-trigger ${selected}`} style={{color:"black"}} >
                                     {trip_location}
                                 </a>
                             </li>

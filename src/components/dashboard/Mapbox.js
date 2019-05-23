@@ -35,7 +35,7 @@ export default class Map extends Component {
       let year = today.getUTCFullYear();
       let todayDate = year + "-" + month + "-" + day;
       
-      const arrayOfMarkers = trips && trips.map(({id, trip_location, trip_date, trip_details, lat, lon}) => {
+      const arrayOfMarkers = trips && trips.map(({id, trip_location, trip_date, trip_details, lat, lon, photos}) => {
         let selected = ''
         this.props.selectedTrip === id ? selected = 'fa-map-pin-hover' : selected = '';
         let tripDate = trip_date.split("T").shift()
@@ -50,6 +50,7 @@ export default class Map extends Component {
             date={trip_date}
             lat={lat}
             lon={lon}
+            photos={photos}
             updateApp={this.props.updateApp}
             />
             <a href={`#${id}`} className="modal-trigger" style={{color:"black"}} onMouseEnter={()=>{this.props.tripSelector(id)}} onMouseLeave={this.props.tripDeselector}>

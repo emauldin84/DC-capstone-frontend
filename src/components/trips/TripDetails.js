@@ -2,6 +2,7 @@ import React from 'react';
 import Slider from './Slider';
 import {Modal} from 'react-materialize';
 import axios from 'axios';
+import { variance } from '@babel/types';
 
 // export default function TripDetails({id, name, date, details, lat, lon})
 
@@ -14,15 +15,16 @@ export default class TripDetails extends React.Component{
             editDate : false, // changing the date?
             date : this.props.date,
             editDetails : false, // changing the details?
-            details : this.props.deatils,
+            details : this.props.details,
             editPhotos : false, // changing the photos?
             photos : this.props.photos,
+            lat : this.props.lat,
+            lon : this.props.lon,
         };
     }
-    
     render(){
         const {id, name, date, details, lat, lon} = this.props;
-        const options = {onCloseStart : ()=>{this._saveChanges();}};
+        const options = {onCloseStart : ()=>{this._saveChanges();}, onOpenEnd : ()=> {console.log(this.state.name, id)}};
         return (
             <Modal id={`${id}`} header={this.state.name} options={options}>
                 <div className="modal-content">
@@ -60,37 +62,48 @@ export default class TripDetails extends React.Component{
             editDetails : false, 
             editPhotos : false,
         }, () => {
-            const {name, date, details, photos} = this.state
+            const {name, date, details, photos, lat, lon} = this.state
             let shouldDashboardUpdate = false;
                 // we need to POST to db as well as alert the Dashboard 
                 // component that it's time to freshly render with the latest from DB
-            if(name!==this.props.name){
-                // axios post
-                axios.post(`/trips/edit/${this.props.id}`)
-                console.log("sent post");
-                shouldDashboardUpdate = true;
+            const body = {
+                trip_location : name,
+                trip_date : date,
+                lat,
+                lon,
+                trip_details : details,
+                trip_photos : photos,
             }
-            if(date!==this.props.date){
-                // axios post
-                shouldDashboardUpdate = true;
-            }
-            if(details!==this.props.details)
-            {
-                // axios post
-                shouldDashboardUpdate = true;            
-            }
-            if(photos!==this.props.photos){
-                // axios post
-                shouldDashboardUpdate = true;            
-            }
-            if(shouldDashboardUpdate){
-                this.props.updateApp()
+            // if(name!==this.props.name){
+            //     axios.post(`/trips/edit/${this.props.id}`, body)
+            //     shouldDashboardUpdate = true;
+            // }
+            // if(date!==this.props.date){
+            //     axios.post(`/trips/edit/${this.props.id}`, body)
+            //     shouldDashboardUpdate = true;
+            // }
+            // if(details!==this.props.details){
+            //     axios.post(`/trips/edit/${this.props.id}`, body)
+            //     shouldDashboardUpdate = true;            
+            // }
+            // if(photos!==this.props.photos){
+            //     axios.post(`/trips/edit/${this.props.id}`, body)
+            //     shouldDashboardUpdate = true;            
+            // }
+            // if(shouldDashboardUpdate){
+            //     this.props.updateApp()
+            // }
+            if((name!==this.props.name)||(date!==this.props.date)||(details!==this.props.details)||(photos!==this.props.photos)){
+                console.log(this.state)
+                axios.post(`/trips/edit/${this.props.id}`, body)
+                .then(()=> this.props.updateApp())
             }
         })
         
     }
     _updateName = (name) => {
         this.setState({name})
+        // this will also have to update lat/lon in state too
     }
     _editName = (e) => {
         this.setState({
