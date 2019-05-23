@@ -13,13 +13,16 @@ export default class AddTrip extends Component {
         this.state = {
             location: '',
             date: null,
-            tripdetails: '',
+            lat:null,
+            lon:null,
+            details: '',
             response: [],
             fileName:null,
             tripId:null,
             message:null,
             value: '',
             suggestions: [],
+            photoFormData: [],
         };
     }
 
@@ -48,12 +51,29 @@ export default class AddTrip extends Component {
         }) 
     }
 
-    handleSubmit = (e) => {
+    handleSubmit = async (e) => {
         e.preventDefault()
 
-        console.log('state:',this.state)
-        console.log('event:',e)
-        console.log('submit props:',this.props)
+        // upload form data
+        const {location, date, lat, lon, details, photoFormData } = this.state
+        const formData = {
+            location,
+            date,
+            lat,
+            lon,
+            details,
+        }
+        const {data} =  await axios.post('/trips/add', formData)
+
+        // photo upload too
+        photoFormData.append('tripId', data.tripID.id)
+        await axios.post('/photos', photoFormData, {headers:{'content-type':'multipart/form-data'}})
+        
+        // shutdown the modal
+        
+        // trigger a fresh get of trips from App component
+        console.log("about to update App.js");
+        this.props.updateApp()
     }
 
     geocodeSearch = async () => {
@@ -65,15 +85,22 @@ export default class AddTrip extends Component {
             suggestions : data.data.features,
         }, () => {
             this.state.response.forEach(res => {
-                console.log('response state',res.place_name)
+                // console.log('response state',res.place_name)
             })
         }
         )
     }
 
-    getSuggestionValue = (suggestion) => suggestion;
+    getSuggestionValue = ({place_name, center}) => {
+        const lat = center[1]
+        const lon = center[0]
+        this.setState({
+            lat,
+            lon,
+        })
+        return (place_name)
+    };
 
-    
     // This will allows the component to be a controlled component
     updateAutosuggestField = (event, { newValue }) => {
         this.setState({
@@ -96,10 +123,6 @@ export default class AddTrip extends Component {
         onSuggestionsFetchRequested = ({ value }) => {
             this.setState({
                 suggestions: this.getSuggestions(value)
-            },
-            ()=>{
-                console.log("Here are your suggestions: ")
-                console.log(this.state.suggestions)
             });
         };
     
@@ -124,13 +147,11 @@ export default class AddTrip extends Component {
 
         const { value, suggestions } = this.state; // a little destructuring for conveinence 
         const inputProps = {
-            placeholder: 'Type a programming language', // "Choose a destination"
+            placeholder: 'Choose a destination',
             value, // this.state.value aka what's in the input box right now
             onChange: this.updateAutosuggestField
         };
         const renderSuggestion = suggestion => {
-            console.log("from renderSuggestion:");
-            console.log(suggestion)
             return(
             <div>
                 {suggestion.place_name}
@@ -151,7 +172,7 @@ export default class AddTrip extends Component {
                     renderSuggestion={renderSuggestion} // the div of suggestion below input field
                     inputProps={inputProps} // placeholder, final value, and the onChange function
                 />
-
+                <input style={{display:"none"}} id="" />
 
                 <div className='input-field'>
                     <label htmlFor='date'>Date</label>
@@ -162,8 +183,8 @@ export default class AddTrip extends Component {
 
                 {/* text input field */}
                 <div className="input-field">
-                    <label htmlFor="tripdetails">Trip Details / Itinerary</label>
-                    <textarea id="tripdetails" className="materialize-textarea" onChange={this.handleChange}></textarea>
+                    <label htmlFor="details">Trip Details / Itinerary</label>
+                    <textarea id="details" className="materialize-textarea" onChange={this.handleChange}></textarea>
                 </div>
 
                 {/* file input */}
@@ -179,7 +200,7 @@ export default class AddTrip extends Component {
 
                 {/* submit button */}
                 <div className='input-field'>
-                    <button className='btn teal lighten-1 z-depth-0'type="submit" onClick={this._getFormData}>Submit</button>
+                    <button className='btn teal lighten-1 z-depth-0'type="submit" onClick={this.handleSubmit}>Submit</button>
                 </div>
             </form>
             
@@ -195,34 +216,24 @@ export default class AddTrip extends Component {
         )
     }
     _changeFileName = (e) => {
-        console.log("The file name is ,", e.target.files);
+        console.log("The file name is ,", e.target.files[0]);
+        console.log("The file name is ,", e.target.files[0].name);
         this.setState({
             fileName:e.target.files[0]
-        })
+        },() => {this._uploadFile(this.state.fileName)})
     }
-    _getFormData = (e) => {
-        e.preventDefault();
-        this._uploadFile(this.state.fileName)
-            .then((response)=>{
-                console.log("should be a json rspons", response.data);
-            })
-    
-    }
+    // _getFormData = () => {
+    //     this._uploadFile(this.state.fileName)
+    //         .then((response)=>{
+    //             console.log("should be a json rspons", response.data);
+    //         })
+    // }
     
     _uploadFile = (file) => {
-            console.log("_upload file running");
-            //this will pass the user id in
-        const url = `/photos`;
-        const formData = new FormData();
-        formData.append('file',file)
-        formData.append('tripId',2)
-        const config = {
-            headers: {
-                'content-type': 'multipart/form-data'
-            }
-        }
-        return  axios.post(url, formData, config)
-        
-        
+        const photoFormData = new FormData();
+        photoFormData.append('file',file)
+        this.setState({
+            photoFormData
+        })
     }
 }
