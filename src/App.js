@@ -1,29 +1,23 @@
 import React, { Component } from 'react';
 import './App.css';
-import axios from 'axios'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-
-import Navbar from './components/layout/Navbar'
-import Dashboard from './components/dashboard/Dashboard'
-import Trips from './components/trips/Trips'
-
-
-
-// PastTrips is no longer necessary. Decided to list all trips in single component
-// import PastTrips from './components/trips/PastTrips';
+import axios from 'axios';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Navbar from './components/layout/Navbar';
+import Dashboard from './components/dashboard/Dashboard';
+import Trips from './components/trips/Trips';
 import TripDetails from './components/trips/TripDetails';
 import SignIn from './components/auth/SignIn';
 import Register from './components/auth/Register';
 import AddTrip from './components/trips/AddTrip';
-
 axios.defaults.withCredentials = true;
 
-class App extends Component {
+export default class App extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-      trips:[],
-    }
+      trips : [],
+      viewableTrips : [],
+    };
   }
 
   componentDidMount() {
@@ -77,8 +71,3 @@ class App extends Component {
   }
 
 }
-
-export default App;
-
-
-
