@@ -23,7 +23,6 @@ export default class Map extends Component {
     window.addEventListener('resize', this._assignMapDimensions);
   }
 
-
   render() {
       const {viewport} = this.state;
       const { trips } = this.props
@@ -35,12 +34,10 @@ export default class Map extends Component {
       let year = today.getUTCFullYear();
       let todayDate = year + "-" + month + "-" + day;
       
-      const arrayOfMarkers = trips && trips.map(({id, trip_location, trip_date, trip_details, lat, lon}) => {
-        let selected = ''
+      const arrayOfMarkers = trips && trips.map(({id, trip_location, trip_date, trip_details, lat, lon, photos}) => {
+        let selected = '';
         this.props.selectedTrip === id ? selected = 'fa-map-pin-hover' : selected = '';
-        let tripDate = trip_date.split("T").shift()
-        console.log('trip date',tripDate)
-        console.log('today',today)
+        let tripDate = trip_date.split("T").shift();
         return(
           <div key={id}>
             <TripDetails 
@@ -50,6 +47,8 @@ export default class Map extends Component {
             date={trip_date}
             lat={lat}
             lon={lon}
+            photos={photos}
+            updateApp={this.props.updateAppDashboard}
             />
             <a href={`#${id}`} className="modal-trigger" style={{color:"black"}} onMouseEnter={()=>{this.props.tripSelector(id)}} onMouseLeave={this.props.tripDeselector}>
               <Marker
@@ -63,7 +62,6 @@ export default class Map extends Component {
             </a>
           </div>
         )});
-
     return (
           <MapGL
             className='mapbox-gl'
