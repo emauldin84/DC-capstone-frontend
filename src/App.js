@@ -41,7 +41,7 @@ class App extends Component {
           <Switch>
             <Route exact path='/' 
               render={(props) =>
-                <Dashboard {...props} trips={this.state.trips}/>}
+                <Dashboard {...props} trips={this.state.trips} updateApp={this.getTripsByUserId} />}
                 />
 
             <Route exact path='/trips'
@@ -64,7 +64,7 @@ class App extends Component {
   getTripsByUserId = async () => {
     const response = await axios.get('/trips', {withCredentials: true})
     
-    await this.setState({
+    this.setState({
       trips: response.data
     })
   }
@@ -72,7 +72,7 @@ class App extends Component {
   getUserById = async () => {
     const response = await axios.get('/users', {withCredentials: true})
     
-    await this.setState({
+    this.setState({
       user: response.data
     })
   }

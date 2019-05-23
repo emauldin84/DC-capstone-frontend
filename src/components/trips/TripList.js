@@ -1,7 +1,7 @@
 import React from 'react';
 import TripDetails from './TripDetails';
 
-export default function TripList({trips, tripSelector, tripDeselector, selectedTrip}) {
+export default function TripList({trips, tripSelector, tripDeselector, selectedTrip, updateApp}) {
     return (
         <div className='trip-list section'>
             <ul>
@@ -17,6 +17,7 @@ export default function TripList({trips, tripSelector, tripDeselector, selectedT
                                     date={trip_date}
                                     lat={lat}
                                     lon={lon}
+                                    updateApp={updateApp}
                                 />
                                 <a href={`#${id}`} onMouseEnter={()=>{tripSelector(id)}} onMouseLeave={tripDeselector} className={`modal-trigger ${selected}`} style={{color:"black"}} >
                                     {trip_location}

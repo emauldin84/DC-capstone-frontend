@@ -14,7 +14,7 @@ export default class Dashboard extends Component {
         };
     }
     render() {
-        const { trips } = this.props
+        const { trips, updateApp } = this.props
         return (
         <div className='dashboard section'>
             <div className='row'>
@@ -26,6 +26,7 @@ export default class Dashboard extends Component {
                         tripSelector={this._selectTripId} 
                         trips={trips}
                         selectedTrip={this.state.selectedTripId}
+                        updateApp={updateApp}
                     />
                 </div>
                 <div id="mapbox" className='col s6 m10'>
@@ -34,6 +35,7 @@ export default class Dashboard extends Component {
                         tripDeselector={this._deSelectTrip} 
                         tripSelector={this._selectTripId} 
                         selectedTrip={this.state.selectedTripId}
+                        updateApp={this._getUpdatedTrips}
                     />
                 </div>
             </div>
