@@ -58,7 +58,7 @@ export default class Map extends Component {
                 offsetTop={-12}
                 key={id}
                 >
-                { tripDate > todayDate ? <i style={{color:"blue"}} className={`fas fa-map-pin ${selected}`}></i> : <i style={{color:"red"}} className="fas fa-map-pin"></i> }
+                { tripDate > todayDate ? <i style={{color:"blue"}} className={`fas fa-map-pin ${selected}`}></i> : <i style={{color:"red"}} className={`fas fa-map-pin ${selected}`}></i> }
               </Marker>
             </a>
           </div>
