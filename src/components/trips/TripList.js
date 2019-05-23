@@ -6,7 +6,7 @@ class TripList extends React.Component{
         super(props);
         const {trips,} = this.props;
         this.state = {
-            trips,
+            trips: this.props.trips
         };
     }
     static getDerivedStateFromProps(props, state) {
@@ -21,8 +21,10 @@ class TripList extends React.Component{
         return null;
     }
     render(){
-        const {selectedTrip, tripSelector, tripDeselector, updateAppDashboard,} = this.props;
+        const {selectedTrip, tripSelector, tripDeselector, updateAppDashboard, } = this.props;
         const {trips,} = this.state;
+        // console.log('trips',trips)
+
         return(
             <div className='trip-list section'>
                 <ul>
