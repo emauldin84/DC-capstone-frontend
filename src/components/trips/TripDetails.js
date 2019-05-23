@@ -1,10 +1,8 @@
 import React from 'react';
 import Slider from './Slider';
-import {Modal} from 'react-materialize';
+import { Modal } from 'react-materialize';
 import axios from 'axios';
-import { variance } from '@babel/types';
-
-// export default function TripDetails({id, name, date, details, lat, lon})
+// import { variance } from '@babel/types';
 
 export default class TripDetails extends React.Component{
     constructor(props){
@@ -45,10 +43,9 @@ export default class TripDetails extends React.Component{
         this.setState({
             editPhotos : false,
         }, () => {
+            // we need to POST to db as well as alert the Dashboard 
+            // component that it's time to freshly render with the latest from DB
             const {name, date, details, photos, lat, lon} = this.state
-            let shouldDashboardUpdate = false;
-                // we need to POST to db as well as alert the Dashboard 
-                // component that it's time to freshly render with the latest from DB
             const body = {
                 trip_location : name,
                 trip_date : date,
@@ -57,6 +54,7 @@ export default class TripDetails extends React.Component{
                 trip_details : details,
                 trip_photos : photos,
             }
+            // let shouldDashboardUpdate = false;
             // if(name!==this.props.name){
             //     axios.post(`/trips/edit/${this.props.id}`, body)
             //     shouldDashboardUpdate = true;
