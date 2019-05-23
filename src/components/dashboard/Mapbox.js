@@ -39,8 +39,8 @@ export default class Map extends Component {
         let selected = ''
         this.props.selectedTrip === id ? selected = 'fa-map-pin-hover' : selected = '';
         let tripDate = trip_date.split("T").shift()
-        console.log('trip date',tripDate)
-        console.log('today',today)
+        // console.log('trip date',tripDate)
+        // console.log('today',today)
         return(
           <div key={id}>
             <TripDetails 
