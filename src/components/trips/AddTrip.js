@@ -232,6 +232,8 @@ export default class AddTrip extends Component {
     _uploadFile = (file) => {
         const photoFormData = new FormData();
         photoFormData.append('file',file)
+        console.log(photoFormData);
+        console.log(photoFormData.file);
         this.setState({
             photoFormData
         })
