@@ -77,7 +77,7 @@ export default class AddTrip extends Component {
 
         return (
         <div className='container'>
-            <form onSubmit={this.handleSubmit} className='white' method='post' encType='multipart/form-data' action='/upload'>
+            <form onSubmit={this.handleSubmit} id="myform" className='white' method='post' encType='multipart/form-data' action='/upload'>
                 <h5 className='grey-text text-darken-3'>Add a New Trip</h5>
 
                 {/* location selector field */}
@@ -111,7 +111,7 @@ export default class AddTrip extends Component {
                     <div className="file-field input-field">
                         <div className="btn">
                             <span>File</span>
-                            <input type="file" name='file' multiple/>
+                            <input type="file" name="foo" onChange={this._changeFileName} accept="image/png, image/jpeg, image/jpg, image/gif" multiple/>
                         </div>
                         <div className="file-path-wrapper">
                             <input className="file-path validate" type="text" placeholder="Select multiple trip images for upload"/>
@@ -120,17 +120,17 @@ export default class AddTrip extends Component {
 
                 {/* submit button */}
                 <div className='input-field'>
-                    <button className='btn teal lighten-1 z-depth-0'>Submit</button>
+                    <button className='btn teal lighten-1 z-depth-0'type="submit" onClick={this._getFormData}>Submit</button>
                 </div>
             </form>
             
-            <div>
+            {/* <div>
                 <form id="myform"  encType="multipart/form-data">
                     <input name="foo" onChange={this._changeFileName} type="file" accept="image/png, image/jpeg, image/jpg, image/gif"></input>
                     <button type="submit" onClick={this._getFormData}>Submit</button>
                     <h4>{this.state.message}</h4>
                 </form>
-            </div>
+            </div> */}
 
         </div>
         )
