@@ -45,7 +45,11 @@ export default class App extends Component {
             <Route path='/trips/:id' component={ TripDetails } />
             <Route path='/signin' component={ SignIn } />
             <Route path='/register' component={ Register } />
-            <Route path='/addtrip' component={ AddTrip } />
+            <Route path='/addtrip' 
+              render={(props) => 
+                <AddTrip {...props} updateApp={this.getTripsByUserId} />
+              }
+            />
   
           </Switch>
         </div>
