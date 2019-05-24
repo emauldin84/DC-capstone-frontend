@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom'
 import 'materialize-css/dist/css/materialize.min.css';
 import M, {options, elem} from 'materialize-css';
 import axios from 'axios';
@@ -7,7 +8,7 @@ import Autosuggest from 'react-autosuggest';
 
 import {DatePicker, Autocomplete}from 'react-materialize';
 
-export default class AddTrip extends Component {
+class AddTrip extends Component {
     constructor(props){
         super(props);
         this.state = {
@@ -74,6 +75,11 @@ export default class AddTrip extends Component {
         // trigger a fresh get of trips from App component
         console.log("about to update App.js");
         this.props.updateApp()
+
+            setTimeout(()=> {
+                this.props.history.push('/');
+            }, 2000)
+        
     }
 
     geocodeSearch = async () => {
@@ -239,3 +245,5 @@ export default class AddTrip extends Component {
         })
     }
 }
+
+export default withRouter(AddTrip)
