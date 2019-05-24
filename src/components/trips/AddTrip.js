@@ -29,6 +29,7 @@ export default class AddTrip extends Component {
 
     componentWillUnmount(){
         this.props.updateAppDashboard();
+        this.props.comeBack();
     }
     handleChange = (e) => {
         this.setState({

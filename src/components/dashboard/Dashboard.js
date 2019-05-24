@@ -61,7 +61,7 @@ export default class Dashboard extends Component {
                     <div className='col s3 m2'>
                         {/* <NavLink  className='addTrip btn-floating waves-effect waves-light' to='/addtrip' title='add trip'></NavLink> */}
                         {this.state.showModal?
-                        <AddTrip hushModal={this._goAwayModal} updateAppDashboard={updateApp} />
+                        <AddTrip hushModal={this._goAwayModal} comeBack={this._comeBackModal} updateAppDashboard={updateApp} />
                         :
                         null
                         }
@@ -99,6 +99,9 @@ export default class Dashboard extends Component {
     }
     _goAwayModal = () => {
         this.setState({showModal:false})
+    }
+    _comeBackModal = () => {
+        this.setState({showModal:true})
     }
     _selectTripId = (selectedTripId) => {
         this.setState({
