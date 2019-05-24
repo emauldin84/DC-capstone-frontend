@@ -5,8 +5,8 @@
 .btn-flat, .is-today{
     color: #AB47BC !important;
 } */
-/* 
-input:focus {
+
+/* input:focus {
     border-bottom:1px solid #6A1B9A !important;
     box-shadow: 0 1px 0 0 #6A1B9A !important;
     -webkit-box-shadow:0 1px 0 0 #6A1B9A !important;
@@ -26,18 +26,24 @@ body {
     font-size: 1.5rem;
 }
 
-.trip-list {
+.trip-list.section {
     border-right: 3px solid #b2dfdb;
-    height: 30%;
+    height: 60vh;
     overflow-y: auto;
 }
 
 
 .fa-map-pin:hover {
     transform: scale(1.4);
+    box-shadow: 0px 0px 15px 5px rgba(255, 255, 190, .75);
+    border-radius: 50%;
+    background-color: rgba(255, 255, 190, .4);;
 }
 .fa-map-pin-hover {
     transform: scale(1.4);
+    box-shadow: 0px 0px 15px 5px rgba(255, 255, 190, .75);
+    border-radius: 50%;
+    background-color: rgba(255, 255, 190, .4);;
 }
 
 .trip-list-item {
