@@ -171,14 +171,14 @@ export default class AddTrip extends Component {
                             focusInputOnSuggestionClick={false} // when you take a suggestion, the input blurs
                         />
                         <div className='input-field'>
-                            <label htmlFor='date'>Date</label>
-                            <DatePicker type='text' id='date' className='datepicker' required onChange={this.handleDateChange}/>
+                            <label htmlFor='date' ></label>
+                            <DatePicker type='text' id='date' placeholder='Date' className='datepicker' required onChange={this.handleDateChange}/>
                         </div>
 
                         {/* text input field */}
                         <div className="input-field">
-                            <label htmlFor="details">Trip Details / Itinerary</label>
-                            <textarea id="details" className="materialize-textarea" onChange={this.handleChange}></textarea>
+                            <label htmlFor="details"></label>
+                            <textarea id="details" className="materialize-textarea" placeholder='Trip Details / Itinerary'  onChange={this.handleChange}></textarea>
                         </div>
 
                         {/* file input */}
