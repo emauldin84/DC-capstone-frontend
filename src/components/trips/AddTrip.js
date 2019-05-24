@@ -74,6 +74,8 @@ export default class AddTrip extends Component {
         // trigger a fresh get of trips from App component
         console.log("about to update App.js");
         this.props.updateApp()
+
+        
     }
 
     geocodeSearch = async () => {
