@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import 'materialize-css/dist/css/materialize.min.css';
-import M, {options, elem} from 'materialize-css';
+import M, {options, elem,} from 'materialize-css';
 import axios from 'axios';
 import Autosuggest from 'react-autosuggest';
 
 
-import {DatePicker, Autocomplete}from 'react-materialize';
+import {DatePicker, Button}from 'react-materialize';
 
 export default class AddTrip extends Component {
     constructor(props){
@@ -27,8 +27,6 @@ export default class AddTrip extends Component {
     }
 
     handleChange = (e) => {
-        console.log('e.target.value:',[e.target.value])
-        console.log('event:', [e])
         this.setState({
             [e.target.id]: e.target.value,
         }, () => {
@@ -45,7 +43,6 @@ export default class AddTrip extends Component {
     }
     
     handleDateChange = (e) => {
-        console.log('event:', [e][0])
         this.setState({
             date: [e][0]
         }) 
@@ -63,14 +60,11 @@ export default class AddTrip extends Component {
             lon,
             details,
         }
-        if(!lat){
-            return null
-        }
+
         const {data} =  await axios.post('/trips/add', formData)
 
         // photo upload too
         // only send if there is a photo to upload
-        console.log(photoFormData);
         if(this.state.fileName){
             photoFormData.append('tripId', data.tripID.id)
             await axios.post('/photos', photoFormData, {headers:{'content-type':'multipart/form-data'}})
@@ -84,8 +78,6 @@ export default class AddTrip extends Component {
 
     geocodeSearch = async () => {
         let {data} = await axios.post(`/cors`, {location: this.state.location})
-        console.log('after axios', data)
-
         this.setState({
             response: data.data.features,
             suggestions : data.data.features,
@@ -169,8 +161,6 @@ export default class AddTrip extends Component {
                     highlightFirstSuggestion={true} // cues the user that they need to select one of these options
                     focusInputOnSuggestionClick={false} // when you take a suggestion, the input blurs
                 />
-                <input style={{display:"none"}} id="" />
-
                 <div className='input-field'>
                     <label htmlFor='date'>Date</label>
                     <DatePicker type='text' id='date' className='datepicker' required onChange={this.handleDateChange}/>
@@ -195,11 +185,24 @@ export default class AddTrip extends Component {
 
                 {/* submit button */}
                 <div className='input-field'>
-                    <button className='btn teal lighten-1 z-depth-0'type="submit" onClick={this.handleSubmit}>Submit</button>
+                    {this.state.lat && this.state.date?
+                        <button onMouseEnter={this._onMouseEnter} onMouseLeave={this._onMouseLeave} className='btn teal lighten-1 z-depth-1' type="submit" onClick={this.handleSubmit}>Submit</button>
+                    :
+                        <Button disabled={true} >Submit</Button>
+                    }
                 </div>
             </form>
         </div>
         )
+    }
+    // The following two functions are a hackish way to give the Submit button a hover style
+    _onMouseLeave = ({target}) => {
+        target.classList.remove("lighten-2");
+        target.classList.add("lighten-1");
+    }
+    _onMouseEnter = ({target}) => {
+        target.classList.remove("lighten-1");
+        target.classList.add("lighten-2");
     }
     _changeFileName = (e) => {
         // If we are to implement multiple files per upload, we will have to change the logic to a forEach or Map.
@@ -209,12 +212,9 @@ export default class AddTrip extends Component {
         },() => {this._uploadFile(this.state.fileName)})
     }
     _uploadFile = (file) => {
-        console.log("file: ", file);
         let formData = new FormData();
         formData.append('file',file)
-        formData.append('username', 'Chris');
         const photoFormData = formData
-        console.log("photoFormData: ", formData);
         this.setState({
             photoFormData
         })
