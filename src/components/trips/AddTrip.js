@@ -78,9 +78,11 @@ export default class AddTrip extends Component {
         
         // trigger a fresh get of trips from App component
         console.log("about to update App.js");
+
         const modal = document.getElementById("newtrip")
         this.props.hushModal()
         this.props.updateAppDashboard()
+
     }
 
     geocodeSearch = async () => {

@@ -27,7 +27,7 @@ class TripList extends React.Component{
 
         return(
             <div className='trip-list section'>
-                <ul>
+                <ul className='trip-unordered-list'>
                         {trips && trips.map(({id, trip_location, trip_date, trip_details, lat, lon, photos}) => {
                             let selected = '';
                             selectedTrip === id ? selected = 'trip-list-item-hover' : selected = '';
