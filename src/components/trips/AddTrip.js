@@ -71,7 +71,7 @@ export default class AddTrip extends Component {
         // photo upload too
         // only send if there is a photo to upload
         console.log(photoFormData);
-        if(photoFormData.length > 0){
+        if(this.state.fileName){
             photoFormData.append('tripId', data.tripID.id)
             await axios.post('/photos', photoFormData, {headers:{'content-type':'multipart/form-data'}})
         }        
