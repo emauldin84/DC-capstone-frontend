@@ -177,8 +177,8 @@ export default class AddTrip extends Component {
 
                         {/* text input field */}
                         <div className="input-field">
-                            <label htmlFor="details">Trip Details / Itinerary</label>
-                            <textarea id="details" className="materialize-textarea" onChange={this.handleChange}></textarea>
+                            <label htmlFor="details"></label>
+                            <textarea id="details" className="materialize-textarea" placeholder='Trip Details / Itinerary'  onChange={this.handleChange}></textarea>
                         </div>
 
                         {/* file input */}
