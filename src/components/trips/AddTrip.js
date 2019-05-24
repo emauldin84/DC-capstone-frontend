@@ -5,12 +5,13 @@ import axios from 'axios';
 import Autosuggest from 'react-autosuggest';
 
 
-import {DatePicker, Button}from 'react-materialize';
+import { DatePicker, Button, Modal, }from 'react-materialize';
 
 export default class AddTrip extends Component {
     constructor(props){
         super(props);
         this.state = {
+            shouldDisplay: true,
             location: '',
             date: null,
             lat:null,
@@ -26,6 +27,9 @@ export default class AddTrip extends Component {
         };
     }
 
+    componentWillUnmount(){
+        this.props.updateAppDashboard();
+    }
     handleChange = (e) => {
         this.setState({
             [e.target.id]: e.target.value,
@@ -73,7 +77,9 @@ export default class AddTrip extends Component {
         
         // trigger a fresh get of trips from App component
         console.log("about to update App.js");
-        this.props.updateApp()
+        const modal = document.getElementById("newtrip")
+        this.props.hushModal()
+        this.props.updateAppDashboard()
     }
 
     geocodeSearch = async () => {
@@ -145,54 +151,55 @@ export default class AddTrip extends Component {
             </div>
             )
         }
-
         return (
-        <div className='container'>
-            <form onSubmit={this.handleSubmit} id="myform" className='white' method='post' encType='multipart/form-data' action='/upload'>
-                <h5 className='grey-text text-darken-3'>Add a New Trip</h5>
-                
-                <Autosuggest 
-                    suggestions={suggestions} // this.state.suggestions to select from
-                    onSuggestionsFetchRequested={this.onSuggestionsFetchRequested} // where Axios and the filtering happens
-                    onSuggestionsClearRequested={this.onSuggestionsClearRequested} // onBlur(-ish), clears the rendered suggestions
-                    getSuggestionValue={this.getSuggestionValue} // selector for suggestion, drops into state of final value
-                    renderSuggestion={renderSuggestion} // the div of suggestion below input field
-                    inputProps={inputProps} // placeholder, final value, and the onChange function
-                    highlightFirstSuggestion={true} // cues the user that they need to select one of these options
-                    focusInputOnSuggestionClick={false} // when you take a suggestion, the input blurs
-                />
-                <div className='input-field'>
-                    <label htmlFor='date'>Date</label>
-                    <DatePicker type='text' id='date' className='datepicker' required onChange={this.handleDateChange}/>
-                </div>
-
-                {/* text input field */}
-                <div className="input-field">
-                    <label htmlFor="details">Trip Details / Itinerary</label>
-                    <textarea id="details" className="materialize-textarea" onChange={this.handleChange}></textarea>
-                </div>
-
-                {/* file input */}
-                    <div className="file-field input-field">
-                        <div className="btn">
-                            <span>File</span>
-                            <input type="file" name="foo" onChange={this._changeFileName} accept="image/png, image/jpeg, image/jpg, image/gif" multiple/>
+            <Modal id={`newtrip`} header={"New Trip"} className="Modal">
+                <div className='container'>
+                    <form onSubmit={this.handleSubmit} id="myform" className='white' method='post' encType='multipart/form-data' action='/upload'>
+                        <h5 className='grey-text text-darken-3'>Add a New Trip</h5>
+                        
+                        <Autosuggest 
+                            suggestions={suggestions} // this.state.suggestions to select from
+                            onSuggestionsFetchRequested={this.onSuggestionsFetchRequested} // where Axios and the filtering happens
+                            onSuggestionsClearRequested={this.onSuggestionsClearRequested} // onBlur(-ish), clears the rendered suggestions
+                            getSuggestionValue={this.getSuggestionValue} // selector for suggestion, drops into state of final value
+                            renderSuggestion={renderSuggestion} // the div of suggestion below input field
+                            inputProps={inputProps} // placeholder, final value, and the onChange function
+                            highlightFirstSuggestion={true} // cues the user that they need to select one of these options
+                            focusInputOnSuggestionClick={false} // when you take a suggestion, the input blurs
+                        />
+                        <div className='input-field'>
+                            <label htmlFor='date'>Date</label>
+                            <DatePicker type='text' id='date' className='datepicker' required onChange={this.handleDateChange}/>
                         </div>
-                        <div className="file-path-wrapper">
-                            <input className="file-path validate" type="text" placeholder="Select multiple trip images for upload"/>
-                        </div>
-                    </div>
 
-                {/* submit button */}
-                <div className='input-field'>
-                    {this.state.lat && this.state.date?
-                        <button onMouseEnter={this._onMouseEnter} onMouseLeave={this._onMouseLeave} className='btn teal lighten-1 z-depth-1' type="submit" onClick={this.handleSubmit}>Submit</button>
-                    :
-                        <Button disabled={true} >Submit</Button>
-                    }
+                        {/* text input field */}
+                        <div className="input-field">
+                            <label htmlFor="details">Trip Details / Itinerary</label>
+                            <textarea id="details" className="materialize-textarea" onChange={this.handleChange}></textarea>
+                        </div>
+
+                        {/* file input */}
+                            <div className="file-field input-field">
+                                <div className="btn">
+                                    <span>File</span>
+                                    <input type="file" name="foo" onChange={this._changeFileName} accept="image/png, image/jpeg, image/jpg, image/gif" multiple/>
+                                </div>
+                                <div className="file-path-wrapper">
+                                    <input className="file-path validate" type="text" placeholder="Select multiple trip images for upload"/>
+                                </div>
+                            </div>
+
+                        {/* submit button */}
+                        <div className='input-field'>
+                            {this.state.lat && this.state.date?
+                                <button data-dismiss="modal" onMouseEnter={this._onMouseEnter} onMouseLeave={this._onMouseLeave} className='btn teal lighten-1 z-depth-1' type="submit" onClick={this.handleSubmit}>Submit</button>
+                            :
+                                <Button disabled={true} >Submit</Button>
+                            }
+                        </div>
+                    </form>
                 </div>
-            </form>
-        </div>
+            </Modal>
         )
     }
     // The following two functions are a hackish way to give the Submit button a hover style
