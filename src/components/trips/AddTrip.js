@@ -28,8 +28,73 @@ export default class AddTrip extends Component {
     }
 
     componentWillUnmount(){
-        this.props.updateAppDashboard();
         this.props.comeBack();
+    }
+    
+    render() {
+        const { value, suggestions } = this.state; // a little destructuring for conveinence 
+        const inputProps = {
+            placeholder: 'Choose a destination',
+            value, // this.state.value aka what's in the input box right now
+            onChange: this.updateAutosuggestField
+        };
+        const renderSuggestion = (suggestion, { query, isHighlighted }) => {
+            return(
+            <div>
+                {suggestion.place_name}
+            </div>
+            )
+        }
+        return (
+            <Modal id={`newtrip`} header={"New Trip"} className="Modal">
+                <div className='container'>
+                    <form onSubmit={this.handleSubmit} id="myform" className='white' method='post' encType='multipart/form-data' action='/upload'>
+                        <h5 className='grey-text text-darken-3'>Add a New Trip</h5>
+                        
+                        <Autosuggest 
+                            suggestions={suggestions} // this.state.suggestions to select from
+                            onSuggestionsFetchRequested={this.onSuggestionsFetchRequested} // where Axios and the filtering happens
+                            onSuggestionsClearRequested={this.onSuggestionsClearRequested} // onBlur(-ish), clears the rendered suggestions
+                            getSuggestionValue={this.getSuggestionValue} // selector for suggestion, drops into state of final value
+                            renderSuggestion={renderSuggestion} // the div of suggestion below input field
+                            inputProps={inputProps} // placeholder, final value, and the onChange function
+                            highlightFirstSuggestion={true} // cues the user that they need to select one of these options
+                            focusInputOnSuggestionClick={false} // when you take a suggestion, the input blurs
+                        />
+                        <div className='input-field'>
+                            <label htmlFor='date' ></label>
+                            <DatePicker type='text' id='date' placeholder='Date' className='datepicker' required onChange={this.handleDateChange}/>
+                        </div>
+
+                        {/* text input field */}
+                        <div className="input-field">
+                            <label htmlFor="details"></label>
+                            <textarea id="details" className="materialize-textarea" placeholder='Trip Details / Itinerary'  onChange={this.handleChange}></textarea>
+                        </div>
+
+                        {/* file input */}
+                            <div className="file-field input-field">
+                                <div className="btn">
+                                    <span>File</span>
+                                    <input type="file" name="foo" onChange={this._changeFileName} accept="image/png, image/jpeg, image/jpg, image/gif" multiple/>
+                                </div>
+                                <div className="file-path-wrapper">
+                                    <input className="file-path validate" type="text" placeholder="Select multiple trip images for upload"/>
+                                </div>
+                            </div>
+
+                        {/* submit button */}
+                        <div className='input-field'>
+                            {this.state.lat && this.state.date?
+                                <button data-dismiss="modal" onMouseEnter={this._onMouseEnter} onMouseLeave={this._onMouseLeave} className='btn teal lighten-1 z-depth-1' type="submit" onClick={this.handleSubmit}>Submit</button>
+                            :
+                                <Button disabled={true} >Submit</Button>
+                            }
+                        </div>
+                    </form>
+                </div>
+            </Modal>
+        )
     }
     handleChange = (e) => {
         this.setState({
@@ -140,71 +205,6 @@ export default class AddTrip extends Component {
         });
     };
 
-    render() {
-        const { value, suggestions } = this.state; // a little destructuring for conveinence 
-        const inputProps = {
-            placeholder: 'Choose a destination',
-            value, // this.state.value aka what's in the input box right now
-            onChange: this.updateAutosuggestField
-        };
-        const renderSuggestion = (suggestion, { query, isHighlighted }) => {
-            return(
-            <div>
-                {suggestion.place_name}
-            </div>
-            )
-        }
-        return (
-            <Modal id={`newtrip`} header={"New Trip"} className="Modal">
-                <div className='container'>
-                    <form onSubmit={this.handleSubmit} id="myform" className='white' method='post' encType='multipart/form-data' action='/upload'>
-                        <h5 className='grey-text text-darken-3'>Add a New Trip</h5>
-                        
-                        <Autosuggest 
-                            suggestions={suggestions} // this.state.suggestions to select from
-                            onSuggestionsFetchRequested={this.onSuggestionsFetchRequested} // where Axios and the filtering happens
-                            onSuggestionsClearRequested={this.onSuggestionsClearRequested} // onBlur(-ish), clears the rendered suggestions
-                            getSuggestionValue={this.getSuggestionValue} // selector for suggestion, drops into state of final value
-                            renderSuggestion={renderSuggestion} // the div of suggestion below input field
-                            inputProps={inputProps} // placeholder, final value, and the onChange function
-                            highlightFirstSuggestion={true} // cues the user that they need to select one of these options
-                            focusInputOnSuggestionClick={false} // when you take a suggestion, the input blurs
-                        />
-                        <div className='input-field'>
-                            <label htmlFor='date' ></label>
-                            <DatePicker type='text' id='date' placeholder='Date' className='datepicker' required onChange={this.handleDateChange}/>
-                        </div>
-
-                        {/* text input field */}
-                        <div className="input-field">
-                            <label htmlFor="details"></label>
-                            <textarea id="details" className="materialize-textarea" placeholder='Trip Details / Itinerary'  onChange={this.handleChange}></textarea>
-                        </div>
-
-                        {/* file input */}
-                            <div className="file-field input-field">
-                                <div className="btn">
-                                    <span>File</span>
-                                    <input type="file" name="foo" onChange={this._changeFileName} accept="image/png, image/jpeg, image/jpg, image/gif" multiple/>
-                                </div>
-                                <div className="file-path-wrapper">
-                                    <input className="file-path validate" type="text" placeholder="Select multiple trip images for upload"/>
-                                </div>
-                            </div>
-
-                        {/* submit button */}
-                        <div className='input-field'>
-                            {this.state.lat && this.state.date?
-                                <button data-dismiss="modal" onMouseEnter={this._onMouseEnter} onMouseLeave={this._onMouseLeave} className='btn teal lighten-1 z-depth-1' type="submit" onClick={this.handleSubmit}>Submit</button>
-                            :
-                                <Button disabled={true} >Submit</Button>
-                            }
-                        </div>
-                    </form>
-                </div>
-            </Modal>
-        )
-    }
     // The following two functions are a hackish way to give the Submit button a hover style
     _onMouseLeave = ({target}) => {
         target.classList.remove("lighten-2");

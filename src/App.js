@@ -25,36 +25,16 @@ export default class App extends Component {
     this.getTripsByUserId();
 
   }
+  componentWillUnmount(){
+
+  }
 
   render() {
     return (
-      <Router>
         <div className="App">
-          <Navbar />
-          <Switch>
-            <Route exact path='/' 
-              render={(props) =>
-                <Dashboard {...props} trips={this.state.trips} updateApp={this.getTripsByUserId} />}
-                />
-
-            <Route exact path='/trips'
-              render={(props) =>
-                <Trips {...props} trips={this.state.trips} result={this.getTripsByUserId}/>}
-                />
-
-            <Route path='/trips/:id' component={ TripDetails } />
-            <Route path='/signin' component={ SignIn } />
-            <Route path='/register' component={ Register } />
-            <Route path='/addtrip' 
-              render={(props) => 
-                <AddTrip {...props} updateApp={this.getTripsByUserId} />
-              }
-            />
-  
-          </Switch>
+          <Navbar user={this.props.user} clearState={this.props.handleSignOut} />
+          <Dashboard trips={this.state.trips} updateApp={this.getTripsByUserId} />
         </div>
-  
-      </Router>
     );
   }
 
