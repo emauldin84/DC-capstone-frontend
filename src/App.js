@@ -21,12 +21,12 @@ export default class App extends Component {
 
   componentDidMount() {
     // call functions here to retrieve trip and user data?
-    console.log("I shouldn't see me");
+
     this.getTripsByUserId();
 
   }
   componentWillUnmount(){
-    console.log("Night night");
+
   }
 
   render() {
@@ -39,7 +39,6 @@ export default class App extends Component {
   }
 
   getTripsByUserId = async () => {
-    console.log("Triggered much?");
     const response = await axios.get('/trips', {withCredentials: true})
     this.setState({
       trips: response.data
