@@ -19,7 +19,7 @@ class LandingPage extends React.Component{
   render(){
     return(
     this.state.user.id ?
-      <App user={this.state.user} />
+      <App user={this.state.user} handleSignOut={this._clearUser} />
     :
       <div style={{
         display:"flex",
@@ -54,6 +54,9 @@ class LandingPage extends React.Component{
     this.setState({user}, () => {
       document.body.style.backgroundImage = null;
     })
+  }
+  _clearUser = () => {
+    this.setState({user:{}})
   }
 }
 export default LandingPage;

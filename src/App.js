@@ -21,44 +21,25 @@ export default class App extends Component {
 
   componentDidMount() {
     // call functions here to retrieve trip and user data?
-
+    console.log("I shouldn't see me");
     this.getTripsByUserId();
 
+  }
+  componentWillUnmount(){
+    console.log("Night night");
   }
 
   render() {
     return (
-      <Router>
         <div className="App">
-          <Navbar />
-          <Switch>
-            <Route exact path='/' 
-              render={(props) =>
-                <Dashboard {...props} trips={this.state.trips} updateApp={this.getTripsByUserId} />}
-                />
-
-            <Route exact path='/trips'
-              render={(props) =>
-                <Trips {...props} trips={this.state.trips} result={this.getTripsByUserId}/>}
-                />
-
-            <Route path='/trips/:id' component={ TripDetails } />
-            <Route path='/signin' component={ SignIn } />
-            <Route path='/register' component={ Register } />
-            <Route path='/addtrip' 
-              render={(props) => 
-                <AddTrip {...props} updateApp={this.getTripsByUserId} />
-              }
-            />
-  
-          </Switch>
+          <Navbar user={this.props.user} clearState={this.props.handleSignOut} />
+          <Dashboard trips={this.state.trips} updateApp={this.getTripsByUserId} />
         </div>
-  
-      </Router>
     );
   }
 
   getTripsByUserId = async () => {
+    console.log("Triggered much?");
     const response = await axios.get('/trips', {withCredentials: true})
     this.setState({
       trips: response.data
