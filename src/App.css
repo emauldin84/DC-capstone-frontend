@@ -82,3 +82,60 @@ body {
 }
 
 
+.liquorcabinet {
+    width : 100%;
+    position: absolute;
+    top :50px;
+    /* display: grid; */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+/* picture frame */
+.gallery-wall{
+    float: right;
+    right: -6vw;
+    position: relative;
+}
+.picture-frame {
+    width:56px; 
+    height:56px;
+    float: left;
+    margin-top: 10px;
+    margin-right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    border-radius: 50px;
+    border: 2px solid teal;
+}
+.picture-frame:hover {
+    opacity: 0.5;
+    transform: scale(1.01);
+}
+
+.picture-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50px;
+}
+
+.foward-action-shown{
+    position: absolute;
+    top: 80px;
+    right: 5vw;
+    color: white;
+    z-index: 999;
+}
+.foward-action-removed{
+    position: absolute;
+    top: 80px;
+    right: 5vw;
+    color: white;
+    z-index: 0;
+    display: none !important;
+}

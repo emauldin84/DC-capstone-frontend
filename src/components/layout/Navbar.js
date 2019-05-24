@@ -4,6 +4,7 @@ import SignedInLinks from './SignedInLinks'
 import SignedOutLinks from './SignedOutLinks'
 import { longStackSupport } from 'q';
 import axios from 'axios';
+import ProfileButton from './ProfileButton';
 
 export default function Navbar({user,clearState}) {
     async function logOut(e){
@@ -17,9 +18,9 @@ export default function Navbar({user,clearState}) {
         <nav className='nav-wrapper grey darken-3'>
             <div className='container'>
                 {/* <div className='brand-logo left'>Interactive Travel Map</div> */}
-
+                <ProfileButton />
                 <div style={{position:"relative", fontFamily:"sans-serif"}}>
-                <Button   
+                {/* <Button   
                     floating
                     fab={{direction: 'bottom'}}
                     icon={`EM`}
@@ -27,14 +28,14 @@ export default function Navbar({user,clearState}) {
                     large
                     style={styles}
                     className='btn btn-floating teal lighten-1'
-                    >
+                    > */}
                     {/* {`${user.firstName[0]}${user.lastName[0]}`} */}
                     {/* <i className="fas fa-user-cog"></i> */}
-                    <div onClick={(e)=> logOut(e) } className="btn btn-floating teal'"><i className="fas fa-door-open"></i></div>
-                    <a href={`#profile`} className={`modal-trigger`} >
-                        <div className="btn btn-floating teal'"><i className="fas fa-user-cog"></i></div>
-                    </a>
-                </Button>
+                    {/* <div onClick={(e)=> logOut(e) } className="btn btn-floating teal'"><i className="fas fa-door-open"></i></div> */}
+                    {/* <a href={`#profile`} className={`modal-trigger`} > */}
+                        {/* <div className="btn btn-floating teal'"><i className="fas fa-user-cog"></i></div> */}
+                    {/* </a> */}
+                {/* </Button> */}
 
                 {/* <div
                 id="potato"
