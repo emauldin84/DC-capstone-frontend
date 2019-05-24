@@ -1,16 +1,12 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
+import moment from 'moment'
 import TripList from '../trips/TripList';
 import Mapbox from './Mapbox';
 import TripToggle from '../trips/TripToggle'
 
 // translate today's date
-let today = new Date();
-let month = today.getUTCMonth() + 1; //months from 1-12
-let day = today.getUTCDate();
-let year = today.getUTCFullYear();
-let todayDate = year + "-" + month + "-" + day;
-
+let today = moment(new Date()).format();
 
 export default class Dashboard extends Component {
     constructor(props){
@@ -127,8 +123,8 @@ export default class Dashboard extends Component {
         if (!this.state.pastTrips && this.state.futureTrips) {
             // return only future trips
             this.props.trips.forEach(trip => {
-                let tripDate = trip.trip_date.split("T").shift();
-                if (tripDate > todayDate) {
+                let tripDate = moment(trip.trip_date.split("T").shift()).format();
+                if (tripDate > today) {
                     tripArray.push(trip)
                 }
             })
@@ -137,8 +133,8 @@ export default class Dashboard extends Component {
         if (!this.state.futureTrips && this.state.pastTrips){
             //return only past trips
             this.props.trips.forEach(trip => {
-                let tripDate = trip.trip_date.split("T").shift();
-                if (tripDate < todayDate) {
+                let tripDate = moment(trip.trip_date.split("T").shift()).format();
+                if (tripDate < today) {
                     tripArray.push(trip)
                 }
             })
