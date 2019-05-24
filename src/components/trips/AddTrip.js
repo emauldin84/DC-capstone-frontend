@@ -63,12 +63,18 @@ export default class AddTrip extends Component {
             lon,
             details,
         }
+        if(!lat){
+            return null
+        }
         const {data} =  await axios.post('/trips/add', formData)
 
         // photo upload too
-        photoFormData.append('tripId', data.tripID.id)
-        await axios.post('/photos', photoFormData, {headers:{'content-type':'multipart/form-data'}})
-        
+        // only send if there is a photo to upload
+        console.log(photoFormData);
+        if(photoFormData.length > 0){
+            photoFormData.append('tripId', data.tripID.id)
+            await axios.post('/photos', photoFormData, {headers:{'content-type':'multipart/form-data'}})
+        }        
         // shutdown the modal
         
         // trigger a fresh get of trips from App component
@@ -127,7 +133,6 @@ export default class AddTrip extends Component {
         };
     
     // Autosuggest will call this function every time you need to clear suggestions.
-    // Housekeeping
     onSuggestionsClearRequested = () => {
         this.setState({
             suggestions: []
@@ -135,23 +140,13 @@ export default class AddTrip extends Component {
     };
 
     render() {
-        // let data1 = []
-        // if (this.state.response){
-        //     (this.state.response).forEach(location => {
-        //         // console.log(typeof location.place_name)
-        //         const name = location.place_name.split(',')[0]
-        //         console.log(name)
-        //         // name.toString();
-        //         data1[name.toString()] = null})
-        // }
-
         const { value, suggestions } = this.state; // a little destructuring for conveinence 
         const inputProps = {
             placeholder: 'Choose a destination',
             value, // this.state.value aka what's in the input box right now
             onChange: this.updateAutosuggestField
         };
-        const renderSuggestion = suggestion => {
+        const renderSuggestion = (suggestion, { query, isHighlighted }) => {
             return(
             <div>
                 {suggestion.place_name}
@@ -171,14 +166,14 @@ export default class AddTrip extends Component {
                     getSuggestionValue={this.getSuggestionValue} // selector for suggestion, drops into state of final value
                     renderSuggestion={renderSuggestion} // the div of suggestion below input field
                     inputProps={inputProps} // placeholder, final value, and the onChange function
+                    highlightFirstSuggestion={true} // cues the user that they need to select one of these options
+                    focusInputOnSuggestionClick={false} // when you take a suggestion, the input blurs
                 />
                 <input style={{display:"none"}} id="" />
 
                 <div className='input-field'>
                     <label htmlFor='date'>Date</label>
                     <DatePicker type='text' id='date' className='datepicker' required onChange={this.handleDateChange}/>
-                    
-                    {/* <input type='text' className='datepicker' id='date' onChange={this.handleDateChange} /> */}
                 </div>
 
                 {/* text input field */}
@@ -203,37 +198,23 @@ export default class AddTrip extends Component {
                     <button className='btn teal lighten-1 z-depth-0'type="submit" onClick={this.handleSubmit}>Submit</button>
                 </div>
             </form>
-            
-            {/* <div>
-                <form id="myform"  encType="multipart/form-data">
-                    <input name="foo" onChange={this._changeFileName} type="file" accept="image/png, image/jpeg, image/jpg, image/gif"></input>
-                    <button type="submit" onClick={this._getFormData}>Submit</button>
-                    <h4>{this.state.message}</h4>
-                </form>
-            </div> */}
-
         </div>
         )
     }
     _changeFileName = (e) => {
-        console.log("The file name is ,", e.target.files[0]);
-        console.log("The file name is ,", e.target.files[0].name);
+        // If we are to implement multiple files per upload, we will have to change the logic to a forEach or Map.
+        console.log(e.target.files[0].name);
         this.setState({
             fileName:e.target.files[0]
         },() => {this._uploadFile(this.state.fileName)})
     }
-    // _getFormData = () => {
-    //     this._uploadFile(this.state.fileName)
-    //         .then((response)=>{
-    //             console.log("should be a json rspons", response.data);
-    //         })
-    // }
-    
     _uploadFile = (file) => {
-        const photoFormData = new FormData();
-        photoFormData.append('file',file)
-        console.log(photoFormData);
-        console.log(photoFormData.file);
+        console.log("file: ", file);
+        let formData = new FormData();
+        formData.append('file',file)
+        formData.append('username', 'Chris');
+        const photoFormData = formData
+        console.log("photoFormData: ", formData);
         this.setState({
             photoFormData
         })
