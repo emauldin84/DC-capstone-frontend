@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom';
 import moment from 'moment'
+
 import TripList from '../trips/TripList';
 import Mapbox from './Mapbox';
-import TripToggle from '../trips/TripToggle'
+import TripToggle from '../trips/TripToggle';
+import { Modal, } from 'react-materialize';
+import AddTrip from '../trips/AddTrip';
 
 // translate today's date
 let today = moment(new Date()).format();
@@ -18,6 +20,7 @@ export default class Dashboard extends Component {
             trips: [],
             viewableTrips: [],
             didSetTrips: false,
+            showModal:true,
         };
         console.log(this.props.trips)
     }
@@ -29,6 +32,11 @@ export default class Dashboard extends Component {
             return {
                 trips: props.trips,
                 didSetTrips: true,
+                viewableTrips: props.trips,
+            }
+        }else if(props.trips.length !== state.trips.length){ // had to add this to get Dashboard to update state after AddTrip modal created new trip
+            return{
+                trips: props.trips,
                 viewableTrips: props.trips,
             }
         }else{
@@ -47,10 +55,15 @@ export default class Dashboard extends Component {
             <div className='dashboard section'>
                 <div className='row'>
                     <div className='col s3 m2'>
-                        <NavLink  className='addTrip btn-floating waves-effect waves-light' to='/addtrip' title='add trip'><i className="material-icons">add</i></NavLink>
-                        <p>
-
-                        </p>
+                        {/* <NavLink  className='addTrip btn-floating waves-effect waves-light' to='/addtrip' title='add trip'></NavLink> */}
+                        {this.state.showModal?
+                        <AddTrip hushModal={this._goAwayModal} comeBack={this._comeBackModal} updateAppDashboard={updateApp} />
+                        :
+                        null
+                        }
+                        <a href={`#newtrip`} className={`modal-trigger addTrip btn-floating waves-effect waves-light`} >
+                            <i className="material-icons">add</i>
+                        </a>
                         <TripToggle 
                             past={this.state.pastTrips} 
                             future={this.state.futureTrips} 
@@ -79,6 +92,12 @@ export default class Dashboard extends Component {
                 </div>
             </div>
         )
+    }
+    _goAwayModal = () => {
+        this.setState({showModal:false})
+    }
+    _comeBackModal = () => {
+        this.setState({showModal:true})
     }
     _selectTripId = (selectedTripId) => {
         this.setState({
