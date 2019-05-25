@@ -185,11 +185,10 @@ body {
 .profile-picture-frame p{
     font-size: 1.7em;
 }
-
 .profile-picture-frame:hover {
     /* background-color:  #4db6ac; */
     /* border: 2px solid #4db6ac; */
-    transform: scale(1.01);
+    /* transform: scale(1.01); */
 }
 
 .profile-picture-frame img {
@@ -220,11 +219,19 @@ body {
 .profile-second-row{
     padding-top: 9vh;
     display: flex;
-    flex-direction: row-reverse;
+    flex-direction: row;
     justify-content: space-between;
     align-items: center;
 }
 
 .profile-second-row button{
     background-color: teal;
+}
+
+.old-password-input {
+    visibility: hidden;
+}
+
+.new-password-input {
+    visibility: hidden;
 }

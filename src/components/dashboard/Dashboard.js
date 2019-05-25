@@ -22,12 +22,12 @@ export default class Dashboard extends Component {
             didSetTrips: false,
             showModal:true,
         };
-        console.log(this.props.trips)
+        // console.log(this.props.trips)
     }
 
     static getDerivedStateFromProps(props, state){
-        console.log('state', state)
-        console.log('props', props)
+        // console.log('state', state)
+        // console.log('props', props)
         if(props.trips.length > 0 && !state.didSetTrips) {
             return {
                 trips: props.trips,
@@ -150,7 +150,7 @@ export default class Dashboard extends Component {
         },
         this._filterTrips
         )
-        console.log('viewableTrips', this.state.viewableTrips)
+        // console.log('viewableTrips', this.state.viewableTrips)
     }
 
     _onFutureChange = () => {
@@ -160,7 +160,7 @@ export default class Dashboard extends Component {
         this._filterTrips
         
         )
-        console.log('viewableTrips', this.state.viewableTrips)
+        // console.log('viewableTrips', this.state.viewableTrips)
     }
     _filterTrips = () => {
         let tripArray = []

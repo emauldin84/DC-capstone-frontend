@@ -32,12 +32,15 @@ export default class ProfileModal extends React.Component{
                 </h3>
             </div>
             <div className="profile-second-row">
+                <button onClick={this._showPasswordCheck}>
+                    Change Password
+                </button>
+                  <input id="oldpassword"  type="password" className="old-password-input" onFocus={this._attachListener} onBlur={(e) => {this._detachListener(e); this._checkPassword();}}></input>
+                  <input id="newpassword1" type="password" className="new-password-input" onFocus={this._attachListener} onBlur={(e) => {this._detachListener(e); this._showNewPassword2();}}></input>
+                  <input id="newpassword2" type="password" className="new-password-input" onFocus={this._attachListener} onBlur={(e) => {this._detachListener(e);}}></input>
                 <h5 id="email" onBlur={this._updateField}  contentEditable={true} suppressContentEditableWarning={true}>
                     {user.email}
                 </h5>
-                <button>
-                    Change Password
-                </button>
             </div>
         </div>
       </Modal>
@@ -48,7 +51,6 @@ export default class ProfileModal extends React.Component{
       [target.id] : target.textContent
     })
   }
-
   _saveChanges = () => {
     // we need to POST to db as well as alert the Landing Page 
     const { firstName, lastName, email, photoURL, } = this.state
@@ -58,14 +60,72 @@ export default class ProfileModal extends React.Component{
       email,
       photoURL, 
     }
-    
     if((firstName!==this.props.firstName)||(lastName!==this.props.lastName)||(email!==this.props.email)||(photoURL!==this.props.photoURL)){
         axios.post(`/users`, body)
         .then(this.props.updateLanding)
     }
   }
+  _showPasswordCheck = () => {
+    const oldPassword = document.getElementById("oldpassword");
+    oldPassword.style="visibility: visible;"
+    oldPassword.addEventListener('keypress', this._listenForEnter);
+    oldPassword.focus() // put cursor in the input field
+  }
+  _checkPassword = async () => {
+    const password = document.getElementById("oldpassword").value
+    const {data} = await axios.post('/signin', {email: this.props.user.email, password})
+    if(data.id){
+      document.getElementById("oldpassword").removeEventListener('keypress', this._listenForEnter)
+      this._showNewPassword1()
+    }
+    else if(data.status === 401){
+      // Wrong password! We can alert the user to that here.
+    }
+  }
 
+  _showNewPassword1 = () => {
+    const newPassword = document.getElementById("newpassword1")
+    newPassword.style="visibility: visible;"
+    newPassword.focus()
+  }
+  _showNewPassword2 = () => {
+    const newPassword = document.getElementById("newpassword1")
+    const newPassword2 = document.getElementById("newpassword2")
+    if(newPassword.value){
+      newPassword2.style="visibility: visible;"
+      newPassword2.focus()
+    }else{
+      newPassword2.style="visibility: hidden;"
+      newPassword.focus()
+    }
+  }
 
-
+  _attachListener = (e) => {
+    (e.target).addEventListener('keypress', this._listenForEnter)
+  }
+  _detachListener = (e) => {
+    (e.target).removeEventListener('keypress', this._listenForEnter)
+  }
+  _listenForEnter = (e) => { // allows users to either press "Enter" or click outside of the password field to submit their request
+    if (e.keyCode === 13){
+      console.log(e.srcElement.id);
+      if(e.srcElement.id === "oldpassword"){
+        this._checkPassword();
+      }
+      else if (e.srcElement.id === "newpassword1"){
+        this._showNewPassword2()
+      }
+      else if (e.srcElement.id === "newpassword2"){
+        const newPassword = e.srcElement.value
+        const firstPassword = document.getElementById("newpassword1").value
+        if (newPassword === firstPassword){
+          this.setState({newPassword})
+        }
+        else{
+          // let the user know that their passwords don't match
+        }
+      }
+    }
+  }
 
 }

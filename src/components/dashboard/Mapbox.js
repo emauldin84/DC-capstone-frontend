@@ -30,14 +30,14 @@ export default class Map extends Component {
       
       // translate today's date
       let today = moment(new Date()).format();
-      console.log('moment:', today)
+      // console.log('moment:', today)
       
       const arrayOfMarkers = trips && trips.map(({id, trip_location, trip_date, trip_details, lat, lon, photos}) => {
         let selected = '';
         this.props.selectedTrip === id ? selected = 'fa-map-pin-hover' : selected = '';
         // translate trip date
         let tripDate = moment(trip_date.split("T").shift()).format()
-        console.log('tripDate',tripDate)
+        // console.log('tripDate',tripDate)
         return(
           <div key={id}>
             <TripDetails
