@@ -14,21 +14,23 @@ export default class ProfileModal extends React.Component{
       newPassword : null,
       fileName : null,
       photoFormData : null,
+      latestPhotoURL : null,
     };
   }
   render(){
     const {user} = this.props;
+    const photo = this.state.latestPhotoURL? this.state.latestPhotoURL : user.photoURL;
     const options = {onCloseStart : this._saveChanges};
     return(
       <Modal id={"profile"}  options={options}>
         <div className="profile-modal">
             <div className="profile-top-row">
                 <div className="profile-picture-frame" onClick={this._choosePicture} onMouseEnter={this._showPhotoInput} onMouseLeave={this._hidePhotoInput} >
-                    {user.photoURL?
-                      <img src={`photos/${this.state.photoURL}`} ></img>
-                    :
-                      <p>{`${this.state.firstName[0]}${this.state.lastName[0]}`}</p>
-                    }
+                      {photo?
+                        <img src={`photos/${photo}`} ></img>
+                      :
+                        <p>{`${this.state.firstName[0]}${this.state.lastName[0]}`}</p>
+                      }
                 {/* <div className="file-field input-field"> */}
                   {/* <div className="btn"> */}
                       {/* <span>File</span> */}
@@ -168,9 +170,11 @@ export default class ProfileModal extends React.Component{
   _changeFileName = (e) => {
     // If we are to implement multiple files per upload, we will have to change the logic to a forEach or Map.
     console.log(e.target.files[0]);
-    this.setState({
+    if(e.target.files[0]){
+      this.setState({
         fileName:e.target.files[0]
     },() => {this._uploadFile(this.state.fileName)})
+    }
   }
   _uploadFile = (file) => {
     let formData = new FormData();
@@ -178,9 +182,11 @@ export default class ProfileModal extends React.Component{
     const photoFormData = formData
     this.setState({
         photoFormData
-    }, () => {
-      console.log(this.state.fileName);
-      console.log(this.state.photoFormData);
+    }, async () => {
+      console.log(photoFormData);
+      const {data} = await axios.post('/users/profilepic', this.state.photoFormData, {headers:{'content-type':'multipart/form-data'}} )
+      const latestPhotoURL = data.newPic[0].photo_url
+      this.setState({latestPhotoURL})
     })
   }
 
