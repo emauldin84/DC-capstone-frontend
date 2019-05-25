@@ -3,6 +3,7 @@ import { Button, Modal, } from 'react-materialize'
 import SignedInLinks from './SignedInLinks'
 import SignedOutLinks from './SignedOutLinks'
 import ProfileButton from './ProfileButton';
+import ProfileModal from './ProfileModal';
 
 export default function Navbar({user,clearState}) {
     console.log(user);
@@ -10,51 +11,9 @@ export default function Navbar({user,clearState}) {
     return (
         <nav className='nav-wrapper grey darken-3'>
             <div className='container'>
-                {/* <div className='brand-logo left'>Interactive Travel Map</div> */}
                 <ProfileButton user={user} clearState={clearState}/>
-                <div style={{position:"relative", fontFamily:"sans-serif"}}>
-                {/* <Button   
-                    floating
-                    fab={{direction: 'bottom'}}
-                    icon={`EM`}
-                    //   className="red"
-                    large
-                    style={styles}
-                    className='btn btn-floating teal lighten-1'
-                    > */}
-                    {/* {`${user.firstName[0]}${user.lastName[0]}`} */}
-                    {/* <i className="fas fa-user-cog"></i> */}
-                    {/* <div onClick={(e)=> logOut(e) } className="btn btn-floating teal'"><i className="fas fa-door-open"></i></div> */}
-                    {/* <a href={`#profile`} className={`modal-trigger`} > */}
-                        {/* <div className="btn btn-floating teal'"><i className="fas fa-user-cog"></i></div> */}
-                    {/* </a> */}
-                {/* </Button> */}
-
-                {/* <div
-                id="potato"
-                className="right"
-                style={{
-                    position:'absolute',
-                    height:"56px",
-                    width:"56px",
-                    right:"-43px",
-                    top:"4.5px",
-
-                }}
-                ><img 
-                    style={{width:"100%",borderRadius:"50%"}} 
-                    src={user.photo||null}></img> </div> */}
-                </div>
-
-                {/* <SignedInLinks />
-                <SignedOutLinks /> */}
+                <ProfileModal user={user} />
             </div>
-
-            <Modal id={"profile"} header={`${user.firstName} ${user.lastName}`} options={null}>
-                <div>
-                    {user.firstName}
-                </div>
-            </Modal>
         </nav>
     )
 }

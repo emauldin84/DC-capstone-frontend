@@ -27,7 +27,7 @@ export default function ProfileButton({user, clearState}){
       <div className="gallery-wall" onMouseEnter={hoverOn} >
         <div className="picture-frame">
           {/* <img src="https://cdn.pixabay.com/photo/2016/08/31/11/54/user-1633249_1280.png"></img> */}
-          <p style={{fontSize:"1.7em", fontWeight:"200"}} >{`${user.firstName[0]}${user.lastName[0]}`}</p>
+          <p>{`${user.firstName[0]}${user.lastName[0]}`}</p>
         </div>
       </div>
       <div id="fab" className="foward-action-removed"  >
