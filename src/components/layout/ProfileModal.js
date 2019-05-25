@@ -11,7 +11,9 @@ export default class ProfileModal extends React.Component{
       lastName, 
       email, 
       photoURL,
-      newPassword : null
+      newPassword : null,
+      fileName : null,
+      photoFormData : null,
     };
   }
   render(){
@@ -21,7 +23,7 @@ export default class ProfileModal extends React.Component{
       <Modal id={"profile"}  options={options}>
         <div className="profile-modal">
             <div className="profile-top-row">
-                <div className="profile-picture-frame" onClick={this._choosePicture}>
+                <div className="profile-picture-frame" onClick={this._choosePicture} onMouseEnter={this._showPhotoInput} onMouseLeave={this._hidePhotoInput} >
                     {user.photoURL?
                       <img src={`photos/${this.state.photoURL}`} ></img>
                     :
@@ -165,7 +167,7 @@ export default class ProfileModal extends React.Component{
   }
   _changeFileName = (e) => {
     // If we are to implement multiple files per upload, we will have to change the logic to a forEach or Map.
-    console.log(e.target.files[0].name);
+    console.log(e.target.files[0]);
     this.setState({
         fileName:e.target.files[0]
     },() => {this._uploadFile(this.state.fileName)})
@@ -176,6 +178,9 @@ export default class ProfileModal extends React.Component{
     const photoFormData = formData
     this.setState({
         photoFormData
+    }, () => {
+      console.log(this.state.fileName);
+      console.log(this.state.photoFormData);
     })
   }
 
@@ -183,6 +188,12 @@ export default class ProfileModal extends React.Component{
 
   }
 
+  _showPhotoInput = () => {
+    document.getElementsByClassName("fileupload-icon")[0].style="opacity: 1;"
+  }
+  _hidePhotoInput = () => {
+    document.getElementsByClassName("fileupload-icon")[0].style="opacity: 0;"
+  }
 }
 
 
