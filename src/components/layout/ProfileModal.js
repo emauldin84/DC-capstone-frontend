@@ -23,9 +23,9 @@ export default class ProfileModal extends React.Component{
             <div className="profile-top-row">
                 <div className="profile-picture-frame">
                     {user.photoURL?
-                    <img src={user.photoURL} ></img>
+                      <img src={`photos/${user.photoURL}`} ></img>
                     :
-                    <p>{`${this.state.firstName[0]}${this.state.lastName[0]}`}</p>
+                      <p>{`${this.state.firstName[0]}${this.state.lastName[0]}`}</p>
                     }
                 </div>
                 <h3>
