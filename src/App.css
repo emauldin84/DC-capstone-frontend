@@ -98,14 +98,14 @@ body {
 .gallery-wall{
     float: right;
     right: -6vw;
-    position: relative;
+    /* position: relative; */
 }
 .picture-frame {
     width:56px; 
     height:56px;
     float: left;
-    margin-top: 10px;
-    margin-right: 10px;
+    /* margin-top: 10px; */
+    /* margin-right: 10px; */
     display: flex;
     justify-content: center;
     align-items:center;
@@ -126,16 +126,33 @@ body {
 
 .foward-action-shown{
     position: absolute;
-    top: 80px;
-    right: 5vw;
+    top: 60px;
+    /* right: 5vw; */
     color: white;
     z-index: 999;
 }
 .foward-action-removed{
-    position: absolute;
+    /* position: absolute;
     top: 80px;
     right: 5vw;
     color: white;
-    z-index: 0;
+    z-index: 0; */
     display: none !important;
+}
+
+.museum{
+    border: solid 2px blue;
+    height: 50vh; 
+    width: 56px; 
+    position: absolute; 
+    top: .3vw;
+    right: 5vw;
+    z-index: 999;
+}
+
+.fab-buttons{
+    margin-top: 4vh;
+}
+.fab-buttons :hover{
+    background-color:  #4db6ac;
 }

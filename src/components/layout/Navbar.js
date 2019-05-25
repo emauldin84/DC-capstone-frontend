@@ -2,23 +2,16 @@ import React from 'react'
 import { Button, Modal, } from 'react-materialize'
 import SignedInLinks from './SignedInLinks'
 import SignedOutLinks from './SignedOutLinks'
-import { longStackSupport } from 'q';
-import axios from 'axios';
 import ProfileButton from './ProfileButton';
 
 export default function Navbar({user,clearState}) {
-    async function logOut(e){
-        e.preventDefault();
-        await axios.get('/signout');
-        clearState();
-    }
     console.log(user);
     const styles = user.photo? {content:"url(https://sc01.alicdn.com/kf/HTB1Fw69B3KTBuNkSne1q6yJoXXa3/Fresh-potato-market-Fresh-potato-factory-Holland.jpg_50x50.jpg)", top:"0px", borderRadius:"1000px"} : {top:"0px"};
     return (
         <nav className='nav-wrapper grey darken-3'>
             <div className='container'>
                 {/* <div className='brand-logo left'>Interactive Travel Map</div> */}
-                <ProfileButton />
+                <ProfileButton clearState={clearState}/>
                 <div style={{position:"relative", fontFamily:"sans-serif"}}>
                 {/* <Button   
                     floating
