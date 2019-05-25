@@ -22,8 +22,38 @@ body {
     overflow:hidden;
 }
 
-.addTrip {
+.addtrip {
     font-size: 1.5rem;
+    display: inline-block;
+    
+}
+
+.tooltip {
+    visibility: visible;
+    width: 120px;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 9999;
+    top: 73px;
+    left: 55px;
+    
+}
+.tooltip-hidden {
+    visibility: hidden;
+}
+.tooltip::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 100%;
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent #424242 transparent transparent;
 }
 
 .trip-list.section {
@@ -81,4 +111,11 @@ body {
 
 }
 
+.searchbar {
+    margin-top: 20px;
+}
 
+.triptoggle {
+    margin-top: 20px;
+    text-align: center;
+}
