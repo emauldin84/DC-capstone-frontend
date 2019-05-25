@@ -57,6 +57,7 @@ class LandingPage extends React.Component{
   }
   _clearUser = () => {
     this.setState({user:{}})
+    this._getRandomBackground();
   }
 }
 export default LandingPage;
