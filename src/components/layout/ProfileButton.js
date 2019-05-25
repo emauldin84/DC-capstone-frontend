@@ -33,7 +33,7 @@ export default function ProfileButton({user, clearState}){
       <div id="fab" className="foward-action-removed"  >
         <ul >
           <a href="#profile" className={`modal-trigger`}>
-            <li className="btn btn-floating fab-buttons">
+            <li title="Edit Profile"  className="btn btn-floating fab-buttons">
               <i className="fas fa-user-cog"></i>
             </li>
           </a>
@@ -41,7 +41,7 @@ export default function ProfileButton({user, clearState}){
                 Rather than unstyle the tag above to match the button below, the lazy programmer
                 behind this choice decided to apply the styles here instead, cheaply, with a useless
                 anchor tag. */}
-            <li onClick={(e)=> logOut(e) } className="btn btn-floating fab-buttons">
+            <li title="Sign Out" onClick={(e)=> logOut(e) } className="btn btn-floating fab-buttons">
               <i className="fas fa-door-open"></i>
             </li>
           </a>
