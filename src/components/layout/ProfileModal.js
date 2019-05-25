@@ -11,12 +11,12 @@ export default class ProfileModal extends React.Component{
       lastName, 
       email, 
       photoURL,
-      newPassword : ''
+      newPassword : null
     };
   }
   render(){
     const {user} = this.props;
-    const options = {onCloseStart : ()=>{this._saveChanges();},};
+    const options = {onCloseStart : this._saveChanges};
     return(
       <Modal id={"profile"}  options={options}>
         <div className="profile-modal">
@@ -35,9 +35,9 @@ export default class ProfileModal extends React.Component{
                 <button onClick={this._showPasswordCheck}>
                     Change Password
                 </button>
-                  <input id="oldpassword"  type="password" className="old-password-input" onFocus={this._attachListener} onBlur={(e) => {this._detachListener(e); this._checkPassword();}}></input>
-                  <input id="newpassword1" type="password" className="new-password-input" onFocus={this._attachListener} onBlur={(e) => {this._detachListener(e); this._showNewPassword2();}}></input>
-                  <input id="newpassword2" type="password" className="new-password-input" onFocus={this._attachListener} onBlur={(e) => {this._detachListener(e);}}></input>
+                  <input id="oldpassword"  type="password" data-password className="old-password-input" onFocus={this._attachListener} onBlur={(e) => {this._detachListener(e); this._checkPassword();}}></input>
+                  <input id="newpassword1" type="password" data-password className="new-password-input" onFocus={this._attachListener} onBlur={(e) => {this._detachListener(e); this._showNewPassword2();}}></input>
+                  <input id="newpassword2" type="password" data-password className="new-password-input" onFocus={this._attachListener} onBlur={(e) => {this._detachListener(e); this._compareTwoPasswords();}}></input>
                 <h5 id="email" onBlur={this._updateField}  contentEditable={true} suppressContentEditableWarning={true}>
                     {user.email}
                 </h5>
@@ -51,18 +51,27 @@ export default class ProfileModal extends React.Component{
       [target.id] : target.textContent
     })
   }
-  _saveChanges = () => {
+  _saveChanges = async () => {
+    // Remember to clear and hide all those password fields
+    const passwords =  document.querySelectorAll("[data-password]")
+    passwords.forEach(password => {
+      password.style="visibility: hidden;"
+      password.value=""
+    })
     // we need to POST to db as well as alert the Landing Page 
-    const { firstName, lastName, email, photoURL, } = this.state
+    const { firstName, lastName, email, photoURL, newPassword } = this.state
     const body = { 
       firstName, 
       lastName, 
       email,
       photoURL, 
     }
-    if((firstName!==this.props.firstName)||(lastName!==this.props.lastName)||(email!==this.props.email)||(photoURL!==this.props.photoURL)){
-        axios.post(`/users`, body)
-        .then(this.props.updateLanding)
+    if (newPassword){
+      await axios.post('/users/password', {password : newPassword})
+    }
+    if((firstName!==this.props.firstName)||(lastName!==this.props.lastName)||(email!==this.props.email)||(photoURL!==this.props.photoURL)||(newPassword!==null)){
+        await axios.post(`/users`, body)
+        this.props.updateLanding()
     }
   }
   _showPasswordCheck = () => {
@@ -80,8 +89,22 @@ export default class ProfileModal extends React.Component{
     }
     else if(data.status === 401){
       // Wrong password! We can alert the user to that here.
+      document.getElementById("profile").classList.add("shake")
+      setTimeout(()=>{document.getElementById("profile").classList.remove("shake")}, 830)
     }
   }
+  _compareTwoPasswords = () => {
+    const firstPassword = document.getElementById("newpassword1").value
+    const secondPassword = document.getElementById("newpassword2").value
+    if (firstPassword === secondPassword){
+      this.setState({newPassword:secondPassword})
+    }
+    else{
+      console.log("Passwords don't match!");
+      document.getElementById("profile").classList.add("shake")
+      setTimeout(()=>{document.getElementById("profile").classList.remove("shake")}, 830)
+    }
+  } 
 
   _showNewPassword1 = () => {
     const newPassword = document.getElementById("newpassword1")
@@ -106,6 +129,7 @@ export default class ProfileModal extends React.Component{
   _detachListener = (e) => {
     (e.target).removeEventListener('keypress', this._listenForEnter)
   }
+
   _listenForEnter = (e) => { // allows users to either press "Enter" or click outside of the password field to submit their request
     if (e.keyCode === 13){
       console.log(e.srcElement.id);
@@ -116,14 +140,7 @@ export default class ProfileModal extends React.Component{
         this._showNewPassword2()
       }
       else if (e.srcElement.id === "newpassword2"){
-        const newPassword = e.srcElement.value
-        const firstPassword = document.getElementById("newpassword1").value
-        if (newPassword === firstPassword){
-          this.setState({newPassword})
-        }
-        else{
-          // let the user know that their passwords don't match
-        }
+        this._compareTwoPasswords()
       }
     }
   }
