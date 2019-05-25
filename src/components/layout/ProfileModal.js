@@ -22,8 +22,11 @@ export default class ProfileModal extends React.Component{
         <div className="profile-modal">
             <div className="profile-top-row">
                 <div className="profile-picture-frame">
-                    {/* <img src="https://cdn.pixabay.com/photo/2016/08/31/11/54/user-1633249_1280.png"></img> */}
+                    {user.photoURL?
+                    <img src={user.photoURL} ></img>
+                    :
                     <p>{`${this.state.firstName[0]}${this.state.lastName[0]}`}</p>
+                    }
                 </div>
                 <h3>
                   <div id="firstName" onBlur={this._updateField} contentEditable={true} suppressContentEditableWarning={true}>{user.firstName}</div>
