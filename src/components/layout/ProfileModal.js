@@ -21,13 +21,29 @@ export default class ProfileModal extends React.Component{
       <Modal id={"profile"}  options={options}>
         <div className="profile-modal">
             <div className="profile-top-row">
-                <div className="profile-picture-frame">
+                <div className="profile-picture-frame" onClick={this._choosePicture}>
                     {user.photoURL?
-                      <img src={`photos/${user.photoURL}`} ></img>
+                      <img src={`photos/${this.state.photoURL}`} ></img>
                     :
                       <p>{`${this.state.firstName[0]}${this.state.lastName[0]}`}</p>
                     }
+                {/* <div className="file-field input-field"> */}
+                  {/* <div className="btn"> */}
+                      {/* <span>File</span> */}
+                      <div className="fileupload-wrapper">
+                        <input type="file" name="foo" onChange={this._changeFileName} accept="image/png, image/jpeg, image/jpg, image/gif" multiple/>
+                      </div>
+                      <div className="fileupload-icon">
+                        <i className="material-icons">add</i>
+                      </div>
+                  {/* </div> */}
+                  {/* <div className="file-path-wrapper"> */}
+                      {/* <input className="file-path validate" type="text" placeholder="Select multiple trip images for upload"/> */}
+                  {/* </div> */}
+                {/* </div> */}
                 </div>
+
+
                 <h3>
                   <div id="firstName" onBlur={this._updateField} contentEditable={true} suppressContentEditableWarning={true}>{user.firstName}</div>
                   <div style={{opacity:"0"}}>_</div> {/*Flex was behaving "too well," so the most efficient way this programmer found was to add a "hidden" space between the two names. If you are reading this and would like to make a better suggestion, the programmer would welcome a Pull Request! */}
@@ -147,5 +163,28 @@ export default class ProfileModal extends React.Component{
       }
     }
   }
+  _changeFileName = (e) => {
+    // If we are to implement multiple files per upload, we will have to change the logic to a forEach or Map.
+    console.log(e.target.files[0].name);
+    this.setState({
+        fileName:e.target.files[0]
+    },() => {this._uploadFile(this.state.fileName)})
+  }
+  _uploadFile = (file) => {
+    let formData = new FormData();
+    formData.append('file',file)
+    const photoFormData = formData
+    this.setState({
+        photoFormData
+    })
+  }
+
+  _choosePicture = () => {
+
+  }
 
 }
+
+
+
+
