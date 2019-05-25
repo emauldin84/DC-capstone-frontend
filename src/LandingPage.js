@@ -19,7 +19,7 @@ class LandingPage extends React.Component{
   render(){
     return(
     this.state.user.id ?
-      <App user={this.state.user} handleSignOut={this._clearUser} />
+      <App user={this.state.user} handleSignOut={this._clearUser} updateLanding={this._updateUser} />
     :
       <div style={{
         display:"flex",
@@ -47,7 +47,7 @@ class LandingPage extends React.Component{
     )
   }
   _getRandomBackground = async () => {
-    const randomNumber = Math.floor(Math.random() * Math.floor(3)) // gets random number, 1 - 3
+    const randomNumber = Math.floor(Math.random() * Math.floor(3)) // gets random number, 0 - 3
     document.body.style.backgroundImage = `url("./assets/desktop_${randomNumber}.png")`;
   }
   _signIn = (user) => {
@@ -58,6 +58,11 @@ class LandingPage extends React.Component{
   _clearUser = () => {
     this.setState({user:{}})
     this._getRandomBackground();
+  }
+  _updateUser = async () => {
+    const {data} = await axios.get('/users')
+    const {user} = data
+    this.setState({user});
   }
 }
 export default LandingPage;

@@ -32,7 +32,7 @@ export default class App extends Component {
   render() {
     return (
         <div className="App">
-          <Navbar user={this.props.user} clearState={this.props.handleSignOut} />
+          <Navbar user={this.props.user} clearState={this.props.handleSignOut} updateLanding={this.props.updateLanding} />
           <Dashboard trips={this.state.trips} updateApp={this.getTripsByUserId} />
         </div>
     );

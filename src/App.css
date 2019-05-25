@@ -182,6 +182,10 @@ body {
     background-color: teal;
     border: 2px solid teal;
 }
+.profile-picture-frame p{
+    font-size: 1.7em;
+}
+
 .profile-picture-frame:hover {
     /* background-color:  #4db6ac; */
     /* border: 2px solid #4db6ac; */
@@ -209,10 +213,14 @@ body {
     justify-content: space-between;
     align-items: baseline;
 }
+.profile-top-row h3{
+    display: flex;
+}
 
 .profile-second-row{
+    padding-top: 9vh;
     display: flex;
-    flex-direction: row;
+    flex-direction: row-reverse;
     justify-content: space-between;
     align-items: center;
 }
