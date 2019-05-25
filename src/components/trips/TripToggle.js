@@ -13,7 +13,7 @@ export default class tripToggle extends Component {
     render() {
         const {past, future, changePast, changeFuture} = this.props
         return (
-            <div>
+            <div className='triptoggle'>
                   {/* Past Trips Switch */}
                 <label>Past Trips</label>
                 <div className="switch">
