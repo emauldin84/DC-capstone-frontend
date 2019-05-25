@@ -31,6 +31,7 @@ export default class ProfileModal extends React.Component{
                       :
                         <p>{`${this.state.firstName[0]}${this.state.lastName[0]}`}</p>
                       }
+
                 {/* <div className="file-field input-field"> */}
                   {/* <div className="btn"> */}
                       {/* <span>File</span> */}
@@ -46,6 +47,8 @@ export default class ProfileModal extends React.Component{
                   {/* </div> */}
                 {/* </div> */}
                 </div>
+                
+                  <span id="phototip" onClick={this._undoPhoto} className={!this.state.latestPhotoURL > 0 ? "grey darken-3 tooltip-hidden" : "grey darken-3 tooltip" }>Undo?</span>
 
 
                 <h3>
@@ -173,7 +176,7 @@ export default class ProfileModal extends React.Component{
     if(e.target.files[0]){
       this.setState({
         fileName:e.target.files[0]
-    },() => {this._uploadFile(this.state.fileName)})
+      },() => {this._uploadFile(this.state.fileName)})
     }
   }
   _uploadFile = (file) => {
@@ -199,6 +202,18 @@ export default class ProfileModal extends React.Component{
   }
   _hidePhotoInput = () => {
     document.getElementsByClassName("fileupload-icon")[0].style="opacity: 0;"
+  }
+  _undoPhoto = async() => {
+    const {data} = await axios.post('/users/profilepic/undo', {url: this.state.photoURL})
+    const latestPhotoURL = data.newPic[0].photo_url
+    this.setState({latestPhotoURL}, () => {
+      // turn off tool tip
+      document.getElementById("phototip").classList.remove("tooltip")
+      document.getElementById("phototip").classList.add("tooltip-hidden")
+      this.setState({
+        // need to come up with logic to let tool tip come back if user wants to undo a second time
+      })
+    })
   }
 }
 
