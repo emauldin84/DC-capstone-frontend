@@ -22,14 +22,46 @@ body {
     overflow:hidden;
 }
 
-.addTrip {
+.addtrip {
     font-size: 1.5rem;
+    display: inline-block;
+    
+}
+
+.tooltip {
+    visibility: visible;
+    width: 120px;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+    top: 73px;
+    left: 55px;
+    
+}
+.tooltip-hidden {
+    visibility: hidden;
+}
+.tooltip::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 100%;
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent #424242 transparent transparent;
 }
 
 .trip-list.section {
     border-right: 3px solid #b2dfdb;
     height: 60vh;
     overflow-y: auto;
+    padding-top: 0;
+    padding-bottom: 50px;
 }
 
 
@@ -49,15 +81,22 @@ body {
 .trip-list-item {
     margin: 10px;
     margin-right: 20px;
-    font-size: 16px;
+    font-size: 14px;
+    /* color: #616161  !important; */
+}
+.modal-trigger {
+    color: #616161  !important;
 }
 
 .trip-list-item:hover {
     background-color: #b2dfdb;
     /* margin-right: 20px; */
+    color: #004d40 !important;
+    
 }
 .trip-list-item-hover{
     background-color: #b2dfdb;
+    color: #004d40 !important;
 }
 
 .dashboard.section {
@@ -81,4 +120,12 @@ body {
 
 }
 
+.searchbar {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
 
+.triptoggle {
+    margin-top: 10px;
+    text-align: center;
+}
