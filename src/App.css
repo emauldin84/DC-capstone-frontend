@@ -132,6 +132,7 @@ body {
     /* right: 5vw; */
     color: white;
     z-index: 999;
+    transform: translateX(-9px);
     transition: top 5s;
     -webkit-transition: top 5s;
 }
@@ -146,7 +147,7 @@ body {
 
 .museum{
     /* border: solid 2px blue; */
-    height: 50vh; 
+    height: 26.5vh; 
     width: 56px; 
     position: absolute; 
     top: .3vw;
