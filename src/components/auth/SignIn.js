@@ -20,6 +20,12 @@ export default class SignIn extends Component {
             showSignUp : false,
         };
     }
+    componentDidMount() {
+        // On mount, let's check to see if the backend already has session data on this user
+        axios.get('/session')
+        .then(({data}) => {this.props.signInUser(data.user)}); 
+        // the backend either send the user object that LandingPage needs to unmount this component or it came back with an empty object.
+    }
     render() {
         return (
         <div className='container'>
