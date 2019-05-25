@@ -125,7 +125,228 @@ body {
     margin-bottom: 10px;
 }
 
+
+.liquorcabinet {
+    width : 100%;
+    position: absolute;
+    top :50px;
+    /* display: grid; */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+/* picture frame */
+.gallery-wall{
+    float: right;
+    right: -6vw;
+    /* position: relative; */
+}
+.picture-frame {
+    font-size: 1.7em;
+    font-weight: 200;
+    width:56px; 
+    height:56px;
+    float: left;
+    /* margin-top: 10px; */
+    /* margin-right: 10px; */
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    border-radius: 50px;
+    background-color: teal;
+    /* border: 2px solid teal; */
+}
+.picture-frame:hover {
+    /* background-color:  #4db6ac; */
+    /* border: 2px solid #4db6ac; */
+    transform: scale(1.01);
+}
+
+.picture-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50px;
+}
+
+.foward-action-shown{
+    position: absolute;
+    top: 60px;
+    /* right: 5vw; */
+    color: white;
+    z-index: 999;
+    transform: translateX(-9px);
+    transition: top 5s;
+    -webkit-transition: top 5s;
+}
+.foward-action-removed{
+    /* position: absolute;
+    top: 80px;
+    right: 5vw;
+    color: white;
+    z-index: 0; */
+    display: none !important;
+}
+
+.museum{
+    /* border: solid 2px blue; */
+    height: 26.5vh; 
+    width: 56px; 
+    position: absolute; 
+    top: .3vw;
+    right: 5vw;
+    z-index: 999;
+}
+
+.fab-buttons{
+    margin-top: 4vh;
+}
+.fab-buttons :hover{
+    background-color:  #4db6ac;
+}
+
+
+
+.profile-picture-frame {
+    color: white;
+    font-size: 2em;
+    font-weight: 200;
+    width:100px; 
+    height:100px;
+    float: left;
+    /* margin-top: 10px; */
+    /* margin-right: 10px; */
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    border-radius: 50px;
+    background-color: teal;
+    border: 2px solid teal;
+}
+.profile-picture-frame p{
+    font-size: 1.7em;
+}
+.profile-picture-frame:hover {
+    /* background-color:  #4db6ac; */
+    /* border: 2px solid #4db6ac; */
+    /* transform: scale(1.01); */
+}
+
+.profile-picture-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50px;
+}
+
+.profile-modal {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: space-between;
+
+}
+
+.profile-top-row{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+}
+.profile-top-row h3{
+    display: flex;
+}
+
+.profile-second-row{
+    padding-top: 9vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.profile-second-row button{
+    background-color: teal;
+}
+
+.old-password-input {
+    visibility: hidden;
+}
+
+.new-password-input {
+    visibility: hidden;
+}
+
+.shake {
+    animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+@keyframes shake {
+10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+}
+
+20%, 80% {
+    transform: translate3d(2px, 0, 0);
+}
+
+30%, 50%, 70% {
+    transform: translate3d(-4px, 0, 0);
+}
+
+40%, 60% {
+    transform: translate3d(4px, 0, 0);
+}
+}
+
+.fileupload-wrapper{
+    /* opacity: 0; */
+    width : 100px;
+    height: 100px; 
+    position: absolute;
+    border-radius: 50px;
+    /* float: left; */
+}
+.fileupload-wrapper input{
+    border-radius: 50px;
+    width : 100%;
+    height: 100%; 
+    /* float: left; */
+}
+
+.fileupload-icon{
+    /* opacity: 0; */
+    /* width : 100px; */
+    /* height: 100px;  */
+    position: absolute;
+    transform: translateY(35px);
+    z-index: 999;
+    /* border-radius: 60px; */
+    background-color: rgba(255, 255, 255, .4);
+    text-align: center;
+    width: 100px;
+    /* border-radius: 50px; */
+    /* float: left; */
+}
+.fileupload-icon i{
+    /* opacity: 0; */
+    /* width : 100px; */
+    /* height: 100px;  */
+    /* justify-content: baseline;
+    align-items: flex-end;  */
+    /* position: absolute; */
+    /* border-radius: 50px; */
+    /* float: left; */
+} 
+
 .triptoggle {
     margin-top: 10px;
     text-align: center;
 }
+
