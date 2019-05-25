@@ -11,7 +11,7 @@ export default function Navbar({user,clearState}) {
         <nav className='nav-wrapper grey darken-3'>
             <div className='container'>
                 {/* <div className='brand-logo left'>Interactive Travel Map</div> */}
-                <ProfileButton clearState={clearState}/>
+                <ProfileButton user={user} clearState={clearState}/>
                 <div style={{position:"relative", fontFamily:"sans-serif"}}>
                 {/* <Button   
                     floating

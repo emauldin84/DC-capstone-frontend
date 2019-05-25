@@ -6,11 +6,16 @@ export default function ProfileButton({user, clearState}){
     const fab = document.getElementById("fab");
     fab.classList.remove("foward-action-removed");
     fab.classList.add("foward-action-shown");
+    const pictureFrame = document.getElementsByClassName("picture-frame")[0]
+    pictureFrame.style="background-color:  #4db6ac";
   }
   function hoverOff(){
     const fab = document.getElementById("fab");
     fab.classList.remove("foward-action-shown");
     fab.classList.add("foward-action-removed");
+    const pictureFrame = document.getElementsByClassName("picture-frame")[0]
+    pictureFrame.style="background-color: #26a69a";
+
   }
   async function logOut(e){
     e.preventDefault();
@@ -21,7 +26,8 @@ export default function ProfileButton({user, clearState}){
     <div className="museum" onMouseLeave={hoverOff} >
       <div className="gallery-wall" onMouseEnter={hoverOn} >
         <div className="picture-frame">
-          <img src="https://cdn.pixabay.com/photo/2016/08/31/11/54/user-1633249_1280.png"></img>
+          {/* <img src="https://cdn.pixabay.com/photo/2016/08/31/11/54/user-1633249_1280.png"></img> */}
+          <p style={{fontSize:"1.7em", fontWeight:"200"}} >{`${user.firstName[0]}${user.lastName[0]}`}</p>
         </div>
       </div>
       <div id="fab" className="foward-action-removed"  >
@@ -31,11 +37,14 @@ export default function ProfileButton({user, clearState}){
               <i className="fas fa-user-cog"></i>
             </li>
           </a>
-
+          <a> {/* Reduntant/Useless `<a></a>` tag because they impart their own padding/margin. 
+                Rather than unstyle the tag above to match the button below, the lazy programmer
+                behind this choice decided to apply the styles here instead, cheaply, with a useless
+                anchor tag. */}
             <li onClick={(e)=> logOut(e) } className="btn btn-floating fab-buttons">
-            <i className="fas fa-door-open"></i>
+              <i className="fas fa-door-open"></i>
             </li>
-
+          </a>
         </ul>
       </div>
     </div>

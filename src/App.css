@@ -110,10 +110,12 @@ body {
     justify-content: center;
     align-items:center;
     border-radius: 50px;
-    border: 2px solid teal;
+    background-color: teal;
+    /* border: 2px solid teal; */
 }
 .picture-frame:hover {
-    opacity: 0.5;
+    /* background-color:  #4db6ac; */
+    /* border: 2px solid #4db6ac; */
     transform: scale(1.01);
 }
 
@@ -130,6 +132,8 @@ body {
     /* right: 5vw; */
     color: white;
     z-index: 999;
+    transition: top 5s;
+    -webkit-transition: top 5s;
 }
 .foward-action-removed{
     /* position: absolute;
@@ -141,7 +145,7 @@ body {
 }
 
 .museum{
-    border: solid 2px blue;
+    /* border: solid 2px blue; */
     height: 50vh; 
     width: 56px; 
     position: absolute; 
