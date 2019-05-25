@@ -6,9 +6,17 @@ import Mapbox from './Mapbox';
 import TripToggle from '../trips/TripToggle';
 import { Modal, } from 'react-materialize';
 import AddTrip from '../trips/AddTrip';
+import SearchBar from '../trips/SearchBar'
 
 // translate today's date
 let today = moment(new Date()).format();
+
+function searchingFor(searchWord) {
+    return function(trip) {
+
+        return trip.trip_location.toLowerCase().includes(searchWord.toLowerCase()) || !searchWord;
+    }
+}
 
 export default class Dashboard extends Component {
     constructor(props){
@@ -21,6 +29,7 @@ export default class Dashboard extends Component {
             viewableTrips: [],
             didSetTrips: false,
             showModal:true,
+            searchWord: '',
         };
         // console.log(this.props.trips)
     }
@@ -95,18 +104,21 @@ export default class Dashboard extends Component {
                         :
                         null
                         }
-                        <a href={`#newtrip`} className={`modal-trigger addTrip btn-floating waves-effect waves-light`} >
-                            <i className="material-icons">add</i>
+                        <a href={`#newtrip`} title='add new trip' className={`modal-trigger addTrip btn-floating waves-effect waves-light`} >
+                            <i className="material-icons addtrip" >add</i>
                         </a>
+                            <span className={trips.length > 0 ? "grey darken-3 tooltip-hidden" : "grey darken-3 tooltip" }>Click me to add your first trip!</span>
                         <TripToggle 
                             past={this.state.pastTrips} 
                             future={this.state.futureTrips} 
                             changePast={this._onPastChange}
                             changeFuture={this._onFutureChange}
                             />
-
+                        <SearchBar 
+                            search={this._searchHandler}
+                            />
                         <TripList 
-                            trips={viewableTrips}
+                            trips={viewableTrips.filter(searchingFor(this.state.searchWord)).map(trip => trip)}
                             tripDeselector={this._deSelectTrip} 
                             tripSelector={this._selectTripId} 
                             selectedTrip={this.state.selectedTripId}
@@ -114,9 +126,9 @@ export default class Dashboard extends Component {
                             
                         />
                     </div>
-                    <div id="mapbox" className='col s6 m10'>
+                    <div id="mapbox" className='col s9 m10'>
                         <Mapbox 
-                            trips={viewableTrips} 
+                            trips={viewableTrips.filter(searchingFor(this.state.searchWord)).map(trip => trip)} 
                             tripDeselector={this._deSelectTrip} 
                             tripSelector={this._selectTripId} 
                             selectedTrip={this.state.selectedTripId}
@@ -148,7 +160,7 @@ export default class Dashboard extends Component {
         this.setState({
             pastTrips: !this.state.pastTrips
         },
-        this._filterTrips
+        this._filterTripsByDate
         )
         // console.log('viewableTrips', this.state.viewableTrips)
     }
@@ -157,12 +169,13 @@ export default class Dashboard extends Component {
         this.setState({
             futureTrips: !this.state.futureTrips
         },
-        this._filterTrips
+        this._filterTripsByDate
         
         )
         // console.log('viewableTrips', this.state.viewableTrips)
     }
-    _filterTrips = () => {
+
+    _filterTripsByDate = () => {
         let tripArray = []
 
         // if both are true
@@ -200,4 +213,11 @@ export default class Dashboard extends Component {
             viewableTrips: tripArray,
         })
     }
+
+    _searchHandler = (e) => {
+        this.setState({
+            searchWord: e.target.value
+        })
+        // console.log(this.state.searchWord)
+    } 
 }
