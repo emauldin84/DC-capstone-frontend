@@ -13,7 +13,7 @@ let today = moment(new Date()).format();
 
 function searchingFor(searchWord) {
     return function(trip) {
-        console.log('searchingFor trip:', trip.trip_location)
+
         return trip.trip_location.toLowerCase().includes(searchWord.toLowerCase()) || !searchWord;
     }
 }
@@ -218,6 +218,6 @@ export default class Dashboard extends Component {
         this.setState({
             searchWord: e.target.value
         })
-        console.log(this.state.searchWord)
+        // console.log(this.state.searchWord)
     } 
 }

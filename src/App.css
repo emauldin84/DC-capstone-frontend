@@ -37,7 +37,7 @@ body {
     border-radius: 6px;
     /* Position the tooltip text - see examples below! */
     position: absolute;
-    z-index: 9999;
+    z-index: 1;
     top: 73px;
     left: 55px;
     
@@ -60,6 +60,8 @@ body {
     border-right: 3px solid #b2dfdb;
     height: 60vh;
     overflow-y: auto;
+    padding-top: 0;
+    padding-bottom: 50px;
 }
 
 
@@ -79,15 +81,22 @@ body {
 .trip-list-item {
     margin: 10px;
     margin-right: 20px;
-    font-size: 16px;
+    font-size: 14px;
+    /* color: #616161  !important; */
+}
+.modal-trigger {
+    color: #616161  !important;
 }
 
 .trip-list-item:hover {
     background-color: #b2dfdb;
     /* margin-right: 20px; */
+    color: #004d40 !important;
+    
 }
 .trip-list-item-hover{
     background-color: #b2dfdb;
+    color: #004d40 !important;
 }
 
 .dashboard.section {
@@ -113,9 +122,10 @@ body {
 
 .searchbar {
     margin-top: 20px;
+    margin-bottom: 10px;
 }
 
 .triptoggle {
-    margin-top: 20px;
+    margin-top: 10px;
     text-align: center;
 }
