@@ -104,10 +104,10 @@ export default class Dashboard extends Component {
                         :
                         null
                         }
-                        <a href={`#newtrip`} title='add new trip' className={trips.length > 0 ? `modal-trigger addTrip btn-floating waves-effect waves-light` : "pulse modal-trigger addTrip btn-floating waves-effect waves-light" }>
+                        <a href={`#newtrip`} title='add new trip' className={trips.length <= 0 ? "pulse modal-trigger addTrip btn-floating waves-effect waves-light" : `modal-trigger addTrip btn-floating waves-effect waves-light`}>
                             <i className="pulse material-icons addtrip" >add</i>
                         </a>
-                            <span className={trips.length > 0 ? "grey darken-3 tooltip-hidden" : "grey darken-3 tooltip" }>Click me to add your first trip!</span>
+                            <span className={trips.length <= 0 ? "grey darken-3 tooltip" : "grey darken-3 tooltip-hidden" }>Click me to add your first trip!</span>
                         <TripToggle 
                             past={this.state.pastTrips} 
                             future={this.state.futureTrips} 
