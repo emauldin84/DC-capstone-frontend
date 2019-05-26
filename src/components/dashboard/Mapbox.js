@@ -23,6 +23,9 @@ export default class Map extends Component {
     this._assignMapDimensions();
     window.addEventListener('resize', this._assignMapDimensions);
   }
+  componentWillUnmount(){
+    window.removeEventListener('resize', this._assignMapDimensions);
+  }
 
   render() {
       const {viewport} = this.state;
