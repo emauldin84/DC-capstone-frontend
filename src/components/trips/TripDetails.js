@@ -18,9 +18,10 @@ export default class TripDetails extends React.Component{
             lon : this.props.lon,
             deleteThisTrip : false,
         };
+        this._updateDate.bind(this);
     }
     componentDidMount(){
-        M.Datepicker.init(document.getElementById('editTripDate'), {autoClose:true});
+        M.Datepicker.init(document.getElementById(`editTripDate${this.props.id}`), {autoClose:true, onSelect:this._updateDate});
     }
     render(){
         const {id, name, date, details, lat, lon} = this.props;
@@ -32,8 +33,8 @@ export default class TripDetails extends React.Component{
                         <h2 onBlur={(e)=>{this._updateName(e.target.textContent);}} contentEditable={true} suppressContentEditableWarning={true} >{name}</h2>
                     </span>
                     <div className='card-action grey-text'>
-                        <div onBlur={(e)=>{this._updateDate(e.target.textContent);}} contentEditable={true} suppressContentEditableWarning={true} >{date}</div>
-                        <input type="text" id="editTripDate" className="datepicker"></input>
+                        {/* <div onBlur={(e)=>{this._updateDate(e.target.textContent);}} contentEditable={true} suppressContentEditableWarning={true} >{date}</div> */}
+                        <input type="text" id={`editTripDate${id}`} className="datepicker" defaultValue={date} ></input>
                     </div>
                     <p onBlur={(e)=>{this._updateDetails(e.target.textContent);}} contentEditable={true} suppressContentEditableWarning={true} >{details}</p>
 
@@ -55,7 +56,8 @@ export default class TripDetails extends React.Component{
         }, () => {
             // we need to POST to db as well as alert the Dashboard 
             // component that it's time to freshly render with the latest from DB
-            const {name, date, details, photos, lat, lon} = this.state
+            const {name, details, photos, lat, lon} = this.state
+            const date = document.getElementById(`editTripDate${this.props.id}`).value.toString()
             const body = {
                 trip_location : name,
                 trip_date : date,
@@ -86,8 +88,9 @@ export default class TripDetails extends React.Component{
             editName : true
         })
     }
-    _updateDate = (date) => {
-        this.setState({date})
+    _updateDate = (d) => {
+        const date = d.toString()
+        document.getElementById(`editTripDate${this.props.id}`).value = date
     }
     _editDate = (e) => {
         this.setState({
