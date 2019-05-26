@@ -11,27 +11,37 @@ export default class ProfileModal extends React.Component{
       lastName, 
       email, 
       photoURL,
-      newPassword : null
+      newPassword : null,
+      fileName : null,
+      photoFormData : null,
+      latestPhotoURL : null,
+      tooltipShouldShow : false,
     };
   }
   render(){
+    console.log("=======STATE========");
+    console.log(this.state);
+    console.log("=======STATE========");
     const {user} = this.props;
+    const photo = this.state.latestPhotoURL? this.state.latestPhotoURL : this.state.photoURL;
+    console.log(photo);
     const options = {onCloseStart : this._saveChanges};
     return(
       <Modal id={"profile"}  options={options}>
         <div className="profile-modal">
             <div className="profile-top-row">
-                <div className="profile-picture-frame" onClick={this._choosePicture}>
-                    {user.photoURL?
-                      <img src={`photos/${this.state.photoURL}`} ></img>
-                    :
-                      <p>{`${this.state.firstName[0]}${this.state.lastName[0]}`}</p>
-                    }
+                <div className="profile-picture-frame" onClick={this._choosePicture} onMouseEnter={this._showPhotoInput} onMouseLeave={this._hidePhotoInput} >
+                      {photo?
+                        <img src={`photos/${photo}`} ></img>
+                      :
+                        <p>{`${this.state.firstName[0]}${this.state.lastName[0]}`}</p>
+                      }
+
                 {/* <div className="file-field input-field"> */}
                   {/* <div className="btn"> */}
                       {/* <span>File</span> */}
                       <div className="fileupload-wrapper">
-                        <input type="file" name="foo" onChange={this._changeFileName} accept="image/png, image/jpeg, image/jpg, image/gif" multiple/>
+                        <input type="file" id="pictureinput" onChange={this._changeFileName} accept="image/png, image/jpeg, image/jpg, image/gif" />
                       </div>
                       <div className="fileupload-icon">
                         <i className="material-icons">add</i>
@@ -42,6 +52,9 @@ export default class ProfileModal extends React.Component{
                   {/* </div> */}
                 {/* </div> */}
                 </div>
+                
+                  {/* <span id="phototip" onClick={this._undoPhoto} className={!this.state.latestPhotoURL > 0 ? "grey darken-3 tooltip-hidden" : "grey darken-3 tooltip" }>Undo?</span> */}
+                  <span id="phototip" onClick={this._undoPhoto} className={!this.state.tooltipShouldShow? "grey darken-3 tooltip-hidden" : "grey darken-3 tooltip profile-tool-tip" }>Undo?</span>
 
 
                 <h3>
@@ -77,13 +90,15 @@ export default class ProfileModal extends React.Component{
       password.style="visibility: hidden;"
       password.value=""
     })
+    // Clear the tool tip for next time
+    this.setState({tooltipShouldShow : false})
     // we need to POST to db as well as alert the Landing Page 
-    const { firstName, lastName, email, photoURL, newPassword } = this.state
+    const { firstName, lastName, email, photoURL, newPassword, latestPhotoURL, } = this.state
     const body = { 
       firstName, 
       lastName, 
       email,
-      photoURL, 
+      photoURL : latestPhotoURL, 
     }
     if (newPassword){
       await axios.post('/users/password', {password : newPassword})
@@ -164,11 +179,14 @@ export default class ProfileModal extends React.Component{
     }
   }
   _changeFileName = (e) => {
+    console.log(" ******** ********** ********** _changeFileName firing");
     // If we are to implement multiple files per upload, we will have to change the logic to a forEach or Map.
-    console.log(e.target.files[0].name);
-    this.setState({
+    console.log(e.target.files[0]);
+    if(e.target.files[0]){
+      this.setState({
         fileName:e.target.files[0]
-    },() => {this._uploadFile(this.state.fileName)})
+      },() => {this._uploadFile(this.state.fileName)})
+    }
   }
   _uploadFile = (file) => {
     let formData = new FormData();
@@ -176,12 +194,35 @@ export default class ProfileModal extends React.Component{
     const photoFormData = formData
     this.setState({
         photoFormData
+    }, async () => {
+      console.log(photoFormData);
+      const {data} = await axios.post('/users/profilepic', this.state.photoFormData, {headers:{'content-type':'multipart/form-data'}} )
+      const latestPhotoURL = data.newPic[0].photo_url
+      this.setState({latestPhotoURL, tooltipShouldShow:true,})
     })
   }
 
   _choosePicture = () => {
 
   }
+
+  _showPhotoInput = () => {
+    document.getElementsByClassName("fileupload-icon")[0].style="opacity: 1;"
+  }
+  _hidePhotoInput = () => {
+    document.getElementsByClassName("fileupload-icon")[0].style="opacity: 0;"
+  }
+  _undoPhoto = async() => {
+    const {data} = await axios.post('/users/profilepic/undo', {url: this.state.photoURL})
+    const latestPhotoURL = data.newPic[0].photo_url
+    this.setState({latestPhotoURL}, () => {
+      // turn off tool tip
+      this.setState({tooltipShouldShow:false, fileName:null})
+      let input = document.getElementById("pictureinput")
+      input.value = null
+    })
+  }
+
 
 }
 
