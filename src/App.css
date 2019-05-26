@@ -28,6 +28,12 @@ body {
     
 }
 
+/* new trip modal resize issue fix */
+#newtrip {
+    width: 80%;
+    max-height: 80%;
+}
+
 .tooltip {
     visibility: visible;
     width: 120px;
@@ -117,7 +123,18 @@ body {
 #myform.white {
     padding: 0 !important;
     background-color: rgba(255, 255, 255, 0) !important;
+    margin: 0;
+    min-width: 100%;
+}
+.add-new-trip-container {
+    width: 80% !important;
+}
 
+.modal-footer{
+    padding-bottom: 0;
+}
+.modal{
+    width: 80% !important;
 }
 
 .searchbar {
@@ -207,8 +224,6 @@ body {
 .fab-buttons :hover{
     background-color:  #4db6ac;
 }
-
-
 
 .profile-picture-frame {
     color: white;
