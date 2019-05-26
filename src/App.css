@@ -353,3 +353,10 @@ body {
     text-align: center;
 }
 
+.profile-tool-tip{
+    left: 130px;
+    width: 60px;
+}
+.profile-tool-tip:hover{
+    left: 128px;
+}
