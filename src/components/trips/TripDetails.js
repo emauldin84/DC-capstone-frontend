@@ -3,6 +3,7 @@ import Slider from './Slider';
 import { Modal, } from 'react-materialize';
 import axios from 'axios';
 import M from 'materialize-css';
+import moment from 'moment';
 
 
 export default class TripDetails extends React.Component{
@@ -24,8 +25,9 @@ export default class TripDetails extends React.Component{
         M.Datepicker.init(document.getElementById(`editTripDate${this.props.id}`), {autoClose:true, onSelect:this._updateDate});
     }
     render(){
-        const {id, name, date, details, lat, lon} = this.props;
+        let {id, name, date, details, lat, lon} = this.props;
         const options = {onCloseStart : ()=>{this._saveChanges();}, onOpenEnd : ()=> {console.log(this.state.name, id)}};
+        date = moment(date).format("MMM Do YYYY");  
         return (
             <Modal id={`${id}`} options={options}>
                 <div className="modal-content">
