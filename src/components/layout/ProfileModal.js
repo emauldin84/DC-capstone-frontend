@@ -15,11 +15,16 @@ export default class ProfileModal extends React.Component{
       fileName : null,
       photoFormData : null,
       latestPhotoURL : null,
+      tooltipShouldShow : false,
     };
   }
   render(){
+    console.log("=======STATE========");
+    console.log(this.state);
+    console.log("=======STATE========");
     const {user} = this.props;
-    const photo = this.state.latestPhotoURL? this.state.latestPhotoURL : user.photoURL;
+    const photo = this.state.latestPhotoURL? this.state.latestPhotoURL : this.state.photoURL;
+    console.log(photo);
     const options = {onCloseStart : this._saveChanges};
     return(
       <Modal id={"profile"}  options={options}>
@@ -36,7 +41,7 @@ export default class ProfileModal extends React.Component{
                   {/* <div className="btn"> */}
                       {/* <span>File</span> */}
                       <div className="fileupload-wrapper">
-                        <input type="file" name="foo" onChange={this._changeFileName} accept="image/png, image/jpeg, image/jpg, image/gif" multiple/>
+                        <input type="file" id="pictureinput" onChange={this._changeFileName} accept="image/png, image/jpeg, image/jpg, image/gif" />
                       </div>
                       <div className="fileupload-icon">
                         <i className="material-icons">add</i>
@@ -48,7 +53,8 @@ export default class ProfileModal extends React.Component{
                 {/* </div> */}
                 </div>
                 
-                  <span id="phototip" onClick={this._undoPhoto} className={!this.state.latestPhotoURL > 0 ? "grey darken-3 tooltip-hidden" : "grey darken-3 tooltip" }>Undo?</span>
+                  {/* <span id="phototip" onClick={this._undoPhoto} className={!this.state.latestPhotoURL > 0 ? "grey darken-3 tooltip-hidden" : "grey darken-3 tooltip" }>Undo?</span> */}
+                  <span id="phototip" onClick={this._undoPhoto} className={!this.state.tooltipShouldShow? "grey darken-3 tooltip-hidden" : "grey darken-3 tooltip" }>Undo?</span>
 
 
                 <h3>
@@ -84,13 +90,15 @@ export default class ProfileModal extends React.Component{
       password.style="visibility: hidden;"
       password.value=""
     })
+    // Clear the tool tip for next time
+    this.setState({tooltipShouldShow : false})
     // we need to POST to db as well as alert the Landing Page 
-    const { firstName, lastName, email, photoURL, newPassword } = this.state
+    const { firstName, lastName, email, photoURL, newPassword, latestPhotoURL, } = this.state
     const body = { 
       firstName, 
       lastName, 
       email,
-      photoURL, 
+      photoURL : latestPhotoURL, 
     }
     if (newPassword){
       await axios.post('/users/password', {password : newPassword})
@@ -171,6 +179,7 @@ export default class ProfileModal extends React.Component{
     }
   }
   _changeFileName = (e) => {
+    console.log(" ******** ********** ********** _changeFileName firing");
     // If we are to implement multiple files per upload, we will have to change the logic to a forEach or Map.
     console.log(e.target.files[0]);
     if(e.target.files[0]){
@@ -189,7 +198,7 @@ export default class ProfileModal extends React.Component{
       console.log(photoFormData);
       const {data} = await axios.post('/users/profilepic', this.state.photoFormData, {headers:{'content-type':'multipart/form-data'}} )
       const latestPhotoURL = data.newPic[0].photo_url
-      this.setState({latestPhotoURL})
+      this.setState({latestPhotoURL, tooltipShouldShow:true,})
     })
   }
 
@@ -208,13 +217,13 @@ export default class ProfileModal extends React.Component{
     const latestPhotoURL = data.newPic[0].photo_url
     this.setState({latestPhotoURL}, () => {
       // turn off tool tip
-      document.getElementById("phototip").classList.remove("tooltip")
-      document.getElementById("phototip").classList.add("tooltip-hidden")
-      this.setState({
-        // need to come up with logic to let tool tip come back if user wants to undo a second time
-      })
+      this.setState({tooltipShouldShow:false, fileName:null})
+      let input = document.getElementById("pictureinput")
+      input.value = null
     })
   }
+
+
 }
 
 

@@ -22,12 +22,18 @@ export default function ProfileButton({user, clearState}){
     await axios.get('/signout');
     clearState();
 }
+  const photo = user.photoURL
   return(
     <div className="museum" onMouseLeave={hoverOff} >
       <div className="gallery-wall" onMouseEnter={hoverOn} >
         <div className="picture-frame">
+          {photo? 
+            <img src={`photos/${photo}`} ></img>
+          :
+            <p>{`${user.firstName[0]}${user.lastName[0]}`}</p>
+          }
           {/* <img src="https://cdn.pixabay.com/photo/2016/08/31/11/54/user-1633249_1280.png"></img> */}
-          <p>{`${user.firstName[0]}${user.lastName[0]}`}</p>
+          {/* <p>{`${user.firstName[0]}${user.lastName[0]}`}</p> */}
         </div>
       </div>
       <div id="fab" className="foward-action-removed"  >
