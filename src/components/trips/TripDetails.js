@@ -59,28 +59,7 @@ export default class TripDetails extends React.Component{
                 lon,
                 trip_details : details,
                 trip_photos : photos,
-                deleteThisTrip : false,
             }
-            // let shouldDashboardUpdate = false;
-            // if(name!==this.props.name){
-            //     axios.post(`/trips/edit/${this.props.id}`, body)
-            //     shouldDashboardUpdate = true;
-            // }
-            // if(date!==this.props.date){
-            //     axios.post(`/trips/edit/${this.props.id}`, body)
-            //     shouldDashboardUpdate = true;
-            // }
-            // if(details!==this.props.details){
-            //     axios.post(`/trips/edit/${this.props.id}`, body)
-            //     shouldDashboardUpdate = true;            
-            // }
-            // if(photos!==this.props.photos){
-            //     axios.post(`/trips/edit/${this.props.id}`, body)
-            //     shouldDashboardUpdate = true;            
-            // }
-            // if(shouldDashboardUpdate){
-            //     this.props.updateApp()
-            // }
             if(this.state.deleteThisTrip){
                 axios.delete(`trips/delete/${this.props.id}`)
                 .then(this.props.updateApp)
