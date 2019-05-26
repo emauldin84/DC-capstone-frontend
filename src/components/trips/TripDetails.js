@@ -1,6 +1,6 @@
 import React from 'react';
-import Slider from './Slider';
-import { Modal, } from 'react-materialize';
+// import SliderWrapper from './SliderWrapper';
+import { Modal, Slider, Slide } from 'react-materialize';
 import axios from 'axios';
 import M from 'materialize-css';
 import moment from 'moment';
@@ -14,7 +14,7 @@ export default class TripDetails extends React.Component{
             date : this.props.date,
             details : this.props.details,
             editPhotos : false, // changing the photos?
-            photos : this.props.photos,
+            photos : [],
             lat : this.props.lat,
             lon : this.props.lon,
             deleteThisTrip : false,
@@ -23,11 +23,18 @@ export default class TripDetails extends React.Component{
     }
     componentDidMount(){
         M.Datepicker.init(document.getElementById(`editTripDate${this.props.id}`), {autoClose:true, onSelect:this._updateDate});
+        this._getPhotos();
     }
     render(){
         let {id, name, date, details, lat, lon} = this.props;
+        const {photos} = this.state;
         const options = {onCloseStart : ()=>{this._saveChanges();}, onOpenEnd : ()=> {console.log(this.state.name, id)}};
-        date = moment(date).format("MMM Do YYYY");  
+        date = moment(date).format("MMM Do YYYY");
+        const slides = photos.forEach(photo => {
+            return(
+                <Slide image={<img src={`/photos/${photo.photo_url}`} key={photo.id} alt='' />}></Slide>
+            )
+        })
         return (
             <Modal id={`${id}`} options={options}>
                 <div className="modal-content">
@@ -41,10 +48,16 @@ export default class TripDetails extends React.Component{
                     <p onBlur={(e)=>{this._updateDetails(e.target.textContent);}} contentEditable={true} suppressContentEditableWarning={true} >{details}</p>
 
                 </div>
-                {this.state.editPhotos?
-                    <textarea onChange={(e)=>{this._updatePhotos(e.target.value)}} defaultValue={"Change your pictures!"} /> // this should be a FileUpload component
+                {this.state.photos.length === 0 ?
+                    // would be nice to add a tool tip here
+                    <a title='Upload your trip photos!' id="addTripPhotos" className="pulse btn-floating waves-effect waves-light" onClick={this._choosePicture} onMouseOver={this._removePulse} >
+                        <i className="pulse material-icons" >add</i>
+                        <input id="tripPhotoInput" style={{visibility:"hidden"}} type="file" onChange={this._changeFileName} accept="image/png, image/jpeg, image/jpg, image/gif" />
+                    </a>
                     :
-                    <Slider onClick={this._editPhotos} />
+                    <Slider>
+                        {slides}
+                    </Slider>
                 }
                 <div className="btn" onClick={this._toggleDeleteTrip}>
                     {this.state.deleteThisTrip? `Undo`:`Delete Trip`}
@@ -117,5 +130,16 @@ export default class TripDetails extends React.Component{
     }
     _toggleDeleteTrip = () => {
         this.setState({deleteThisTrip : !this.state.deleteThisTrip})
+    }
+    _getPhotos = async () => {
+        const {data} = await axios.get(`/trips/photos/${this.props.id}`);
+        const imgs = data.imgs
+        this.setState({photos:imgs})
+    }
+    _removePulse = () => {
+        document.getElementById("addTripPhotos").classList.remove("pulse")
+    }
+    _choosePicture = () => {
+        document.getElementById("tripPhotoInput").click()
     }
 }
