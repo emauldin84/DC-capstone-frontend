@@ -263,26 +263,32 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-content: space-between;
+    /* align-content: space-between; */
+}
 
+.modal-content { 
+    padding-bottom: none !important;
 }
 
 .profile-top-row{
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: baseline;
+    /* flex-direction: column; */
+    /* justify-content: space-between; */
+    align-items: center;
+
 }
+
 .profile-top-row h3{
     display: flex;
 }
 
 .profile-second-row{
-    padding-top: 9vh;
+    padding-top: 1vh;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    height: 240px;
 }
 
 .profile-second-row button{
@@ -295,6 +301,13 @@ body {
 
 .new-password-input {
     visibility: hidden;
+}
+
+.password-fields {
+    width: 60% !important;
+}
+.change-password-button {
+    margin: 20px;
 }
 
 .shake {
