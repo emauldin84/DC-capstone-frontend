@@ -16,6 +16,7 @@ export default class TripDetails extends React.Component{
             photos : this.props.photos,
             lat : this.props.lat,
             lon : this.props.lon,
+            deleteThisTrip : false,
         };
     }
     render(){
@@ -38,6 +39,9 @@ export default class TripDetails extends React.Component{
                     :
                     <Slider onClick={this._editPhotos} />
                 }
+                <div className="btn" onClick={this._toggleDeleteTrip}>
+                    {this.state.deleteThisTrip? `Undo`:`Delete Trip`}
+                </div>
             </Modal>
         )
     }
@@ -55,6 +59,7 @@ export default class TripDetails extends React.Component{
                 lon,
                 trip_details : details,
                 trip_photos : photos,
+                deleteThisTrip : false,
             }
             // let shouldDashboardUpdate = false;
             // if(name!==this.props.name){
@@ -76,6 +81,10 @@ export default class TripDetails extends React.Component{
             // if(shouldDashboardUpdate){
             //     this.props.updateApp()
             // }
+            if(this.state.deleteThisTrip){
+                axios.delete(`trips/delete/${this.props.id}`)
+                .then(this.props.updateApp)
+            }
             if((name!==this.props.name)||(date!==this.props.date)||(details!==this.props.details)||(photos!==this.props.photos)){
                 console.log("prop id: ", this.props.id);
                 axios.post(`/trips/edit/${this.props.id}`, body)
@@ -117,5 +126,8 @@ export default class TripDetails extends React.Component{
         this.setState({
             editPhotos : true
         })
+    }
+    _toggleDeleteTrip = () => {
+        this.setState({deleteThisTrip : !this.state.deleteThisTrip})
     }
 }
