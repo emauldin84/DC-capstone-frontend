@@ -43,7 +43,7 @@ class TripList extends React.Component{
                                         photos={photos}
                                         updateApp={updateAppDashboard}
                                     />
-                                    <a href={`#${id}`} onClick={()=>console.log("TripList id:", id)} onMouseEnter={()=>{tripSelector(id)}} onMouseLeave={tripDeselector} className={`modal-trigger ${selected}`} style={{color:"black"}} >
+                                    <a href={`#${id}`} onClick={()=>console.log("TripList id:", id)} onMouseEnter={()=>{tripSelector(id)}} onMouseLeave={tripDeselector} className={`modal-trigger ${selected}`} >
                                         {trip_location}
                                     </a>
                                 </li>

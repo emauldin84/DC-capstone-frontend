@@ -46,8 +46,8 @@ export default class AddTrip extends Component {
             )
         }
         return (
-            <Modal id={`newtrip`} header={"New Trip"} className="Modal">
-                <div className='container'>
+            <Modal id={`newtrip`} className="Modal">
+                <div className='container add-new-trip-container'>
                     <form onSubmit={this.handleSubmit} id="myform" className='white' method='post' encType='multipart/form-data' action='/upload'>
                         <h5 className='grey-text text-darken-3'>Add a New Trip</h5>
                         
