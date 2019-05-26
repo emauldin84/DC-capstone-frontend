@@ -1,8 +1,8 @@
 import React from 'react';
 import Slider from './Slider';
-import { Modal } from 'react-materialize';
+import { Modal, } from 'react-materialize';
 import axios from 'axios';
-// import { variance } from '@babel/types';
+import M from 'materialize-css';
 
 
 export default class TripDetails extends React.Component{
@@ -19,17 +19,21 @@ export default class TripDetails extends React.Component{
             deleteThisTrip : false,
         };
     }
+    componentDidMount(){
+        M.Datepicker.init(document.getElementById('editTripDate'), {autoClose:true});
+    }
     render(){
         const {id, name, date, details, lat, lon} = this.props;
         const options = {onCloseStart : ()=>{this._saveChanges();}, onOpenEnd : ()=> {console.log(this.state.name, id)}};
         return (
-            <Modal id={`${id}`} header={this.state.name} options={options}>
+            <Modal id={`${id}`} options={options}>
                 <div className="modal-content">
                     <span className='card-title'>
-                        <p onBlur={(e)=>{this._updateName(e.target.textContent);}} contentEditable={true} suppressContentEditableWarning={true} >{name}</p>
+                        <h2 onBlur={(e)=>{this._updateName(e.target.textContent);}} contentEditable={true} suppressContentEditableWarning={true} >{name}</h2>
                     </span>
                     <div className='card-action grey-text'>
                         <div onBlur={(e)=>{this._updateDate(e.target.textContent);}} contentEditable={true} suppressContentEditableWarning={true} >{date}</div>
+                        <input type="text" id="editTripDate" className="datepicker"></input>
                     </div>
                     <p onBlur={(e)=>{this._updateDetails(e.target.textContent);}} contentEditable={true} suppressContentEditableWarning={true} >{details}</p>
 
