@@ -19,12 +19,8 @@ export default class ProfileModal extends React.Component{
     };
   }
   render(){
-    console.log("=======STATE========");
-    console.log(this.state);
-    console.log("=======STATE========");
     const {user} = this.props;
     const photo = this.state.latestPhotoURL? this.state.latestPhotoURL : this.state.photoURL;
-    console.log(photo);
     const options = {onCloseStart : this._saveChanges};
     return(
       <Modal id={"profile"}  options={options}>

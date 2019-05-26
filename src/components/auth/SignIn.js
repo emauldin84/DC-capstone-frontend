@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { Modal } from 'react-materialize';
 axios.defaults.withCredentials = true;
 
 
@@ -19,12 +20,11 @@ export default class SignIn extends Component {
             },
             showSignUp : false,
         };
+        this.props.showModal();
     }
     componentDidMount() {
-        // On mount, let's check to see if the backend already has session data on this user
-        axios.get('/session')
-        .then(({data}) => {this.props.signInUser(data.user)}); 
-        // the backend either send the user object that LandingPage needs to unmount this component or it came back with an empty object.
+        this._getRandomBackground();
+        setTimeout(this.props.hideModal, 750);
     }
     render() {
         return (
@@ -63,6 +63,10 @@ export default class SignIn extends Component {
             }
         </div>
         )
+    }
+    _getRandomBackground = async () => {
+        const randomNumber = Math.floor(Math.random() * Math.floor(3)) // gets random number, 0 - 3
+        document.body.style.backgroundImage = `url("./assets/desktop_${randomNumber}.png")`;
     }
     _handleSignInChange = (e) => {
         this.setState({

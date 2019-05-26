@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import SignIn from './components/auth/SignIn';
 import App from './App';
+import Modal from 'react-materialize/lib/Modal';
 axios.defaults.withCredentials = true;
 
 
@@ -10,13 +11,20 @@ class LandingPage extends React.Component{
     super(props)
     this.state = {
       user : {},
+      modalShouldShow : true,
     };
-    this._getRandomBackground();
+    // // On mount, let's check to see if the backend already has session data on this user
+    axios.get('/session')
+    .then(({data}) => {this._signIn(data.user)}) 
+    // the backend either send the user object that LandingPage needs to unmount this component or it came back with an empty object.
   }
-  componentDidMount(){
-    
+  componentDidMount(){    
   }
   render(){
+    if(this.state.user.id){
+      document.body.style.backgroundImage = null;
+    }
+
     return(
     this.state.user.id ?
       <App user={this.state.user} handleSignOut={this._clearUser} updateLanding={this._updateUser} />
@@ -41,8 +49,11 @@ class LandingPage extends React.Component{
           float:"right", 
           paddingTop:"20vh"
         }}>
-          <SignIn signInUser={this._signIn} />
+          <SignIn signInUser={this._signIn} showModal={this._showModal} hideModal={this._hideModal}/>
         </div>
+        <Modal id="loading" open={this.state.modalShouldShow} options={{dismissible:false,}}>
+          <h1>Loading...</h1>
+        </Modal>
       </div>
     )
   }
@@ -51,18 +62,23 @@ class LandingPage extends React.Component{
     document.body.style.backgroundImage = `url("./assets/desktop_${randomNumber}.png")`;
   }
   _signIn = (user) => {
-    this.setState({user}, () => {
-      document.body.style.backgroundImage = null;
-    })
+    this.setState({user})
   }
   _clearUser = () => {
     this.setState({user:{}})
-    this._getRandomBackground();
+    // this._getRandomBackground();
   }
   _updateUser = async () => {
     const {data} = await axios.get('/users')
     const {user} = data
     this.setState({user});
   }
+  _showModal = () => {
+    this.setState({modalShouldShow:true,})
+  }
+  _hideModal = () => {
+    this.setState({modalShouldShow:false,})
+  }
+
 }
 export default LandingPage;
