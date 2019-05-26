@@ -157,7 +157,7 @@ body {
     align-items:center;
     border-radius: 50px;
     background-color: teal;
-    /* border: 2px solid teal; */
+    border: 3px solid teal;
 }
 .picture-frame:hover {
     /* background-color:  #4db6ac; */
