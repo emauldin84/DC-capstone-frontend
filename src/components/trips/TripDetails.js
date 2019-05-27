@@ -16,6 +16,7 @@ export default class TripDetails extends React.Component{
             photos : this.props.photos,
             lat : this.props.lat,
             lon : this.props.lon,
+            deleteThisTrip : false,
         };
     }
     render(){
@@ -38,6 +39,9 @@ export default class TripDetails extends React.Component{
                     :
                     <Slider onClick={this._editPhotos} />
                 }
+                <div className="btn" onClick={this._toggleDeleteTrip}>
+                    {this.state.deleteThisTrip? `Undo`:`Delete Trip`}
+                </div>
             </Modal>
         )
     }
@@ -56,26 +60,10 @@ export default class TripDetails extends React.Component{
                 trip_details : details,
                 trip_photos : photos,
             }
-            // let shouldDashboardUpdate = false;
-            // if(name!==this.props.name){
-            //     axios.post(`/trips/edit/${this.props.id}`, body)
-            //     shouldDashboardUpdate = true;
-            // }
-            // if(date!==this.props.date){
-            //     axios.post(`/trips/edit/${this.props.id}`, body)
-            //     shouldDashboardUpdate = true;
-            // }
-            // if(details!==this.props.details){
-            //     axios.post(`/trips/edit/${this.props.id}`, body)
-            //     shouldDashboardUpdate = true;            
-            // }
-            // if(photos!==this.props.photos){
-            //     axios.post(`/trips/edit/${this.props.id}`, body)
-            //     shouldDashboardUpdate = true;            
-            // }
-            // if(shouldDashboardUpdate){
-            //     this.props.updateApp()
-            // }
+            if(this.state.deleteThisTrip){
+                axios.delete(`trips/delete/${this.props.id}`)
+                .then(this.props.updateApp)
+            }
             if((name!==this.props.name)||(date!==this.props.date)||(details!==this.props.details)||(photos!==this.props.photos)){
                 console.log("prop id: ", this.props.id);
                 axios.post(`/trips/edit/${this.props.id}`, body)
@@ -117,5 +105,8 @@ export default class TripDetails extends React.Component{
         this.setState({
             editPhotos : true
         })
+    }
+    _toggleDeleteTrip = () => {
+        this.setState({deleteThisTrip : !this.state.deleteThisTrip})
     }
 }
