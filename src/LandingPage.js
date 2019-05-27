@@ -47,7 +47,7 @@ class LandingPage extends React.Component{
           height:"50%", 
           position:"relative", 
           float:"right", 
-          paddingTop:"20vh"
+          paddingTop:"8vh"
         }}>
           <SignIn signInUser={this._signIn} showModal={this._showModal} hideModal={this._hideModal}/>
         </div>
