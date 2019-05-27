@@ -35,6 +35,8 @@ export default class Dashboard extends Component {
     }
 
     static getDerivedStateFromProps(props, state){
+        // console.log('state', state)
+        // console.log('props', props)
         if(props.trips.length > 0 && !state.didSetTrips) {
             return {
                 trips: props.trips,
@@ -42,14 +44,14 @@ export default class Dashboard extends Component {
                 viewableTrips: props.trips,
             }
         }else if(props.trips.length !== state.trips.length){ // had to add this to get Dashboard to update state after AddTrip modal created new trip
-            let tripArray = [];
+            let tripArray = []
 
                 // if both are true
                 if (state.pastTrips && state.futureTrips) {
                     // return only future trips
                     props.trips.forEach(trip => {
-                            tripArray.push(trip);
-                    });
+                            tripArray.push(trip)
+                    })
                 }
                 // if pastTrips is false
                 if (!state.pastTrips && state.futureTrips) {
@@ -57,9 +59,9 @@ export default class Dashboard extends Component {
                     props.trips.forEach(trip => {
                         let tripDate = moment(trip.trip_date.split("T").shift()).format();
                         if (tripDate > today) {
-                            tripArray.push(trip);
+                            tripArray.push(trip)
                         }
-                    });
+                    })
                 // if futureTrips is false
                 }
                 if (!state.futureTrips && state.pastTrips){
@@ -67,9 +69,9 @@ export default class Dashboard extends Component {
                     props.trips.forEach(trip => {
                         let tripDate = moment(trip.trip_date.split("T").shift()).format();
                         if (tripDate < today) {
-                            tripArray.push(trip);
+                            tripArray.push(trip)
                         }
-                    });
+                    })
                 // if both are false
                 }
                 if (!state.futureTrips && !state.pastTrips){
@@ -79,12 +81,11 @@ export default class Dashboard extends Component {
             return{
                 trips: props.trips,
                 viewableTrips: tripArray,
-            };
+            }
         }else{
             return {
-                trips: props.trips,
-                viewableTrips : props.trips,
-            };
+                trips: props.trips
+            }
         }
     } 
 
