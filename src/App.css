@@ -412,3 +412,11 @@ body {
     border-style: solid;
     border-color: transparent transparent transparent #424242 ;
 }
+
+#saving {
+    position: absolute;
+    display: none;
+    top: 5px;
+    left: 15px;
+    color: #616161;
+}

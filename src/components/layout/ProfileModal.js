@@ -25,6 +25,9 @@ export default class ProfileModal extends React.Component{
     return(
       <Modal id={"profile"}  options={options}>
         <div className="profile-modal">
+          <div id='saving'>
+            <p>Saving changes...</p>
+          </div>
             <div className="profile-top-row row">
                 <div className="profile-picture-frame" onClick={this._choosePicture} onMouseEnter={this._showPhotoInput} onMouseLeave={this._hidePhotoInput} >
                       {photo?
@@ -79,7 +82,8 @@ export default class ProfileModal extends React.Component{
   _updateField = ({target}) => {
     this.setState({
       [target.id] : target.textContent
-    })
+    },
+    this._showSaving())
   }
   _saveChanges = async () => {
     // Remember to clear and hide all those password fields
@@ -100,8 +104,10 @@ export default class ProfileModal extends React.Component{
     }
     if (newPassword){
       await axios.post('/users/password', {password : newPassword})
+      // .then(this._showSaving())
     }
     if((firstName!==this.props.firstName)||(lastName!==this.props.lastName)||(email!==this.props.email)||(photoURL!==this.props.photoURL)||(newPassword!==null)){
+        (this._showSaving())
         await axios.post(`/users`, body)
         this.props.updateLanding()
     }
@@ -129,7 +135,8 @@ export default class ProfileModal extends React.Component{
     const firstPassword = document.getElementById("newpassword1").value
     const secondPassword = document.getElementById("newpassword2").value
     if (firstPassword === secondPassword){
-      this.setState({newPassword:secondPassword})
+      this.setState({newPassword:secondPassword},
+        this._showSaving())
     }
     else{
       console.log("Passwords don't match!");
@@ -197,7 +204,8 @@ export default class ProfileModal extends React.Component{
       const {data} = await axios.post('/users/profilepic', this.state.photoFormData, {headers:{'content-type':'multipart/form-data'}} )
       const latestPhotoURL = data.newPic[0].photo_url
       this.setState({latestPhotoURL, tooltipShouldShow:true,})
-    })
+    },
+    this._showSaving())
   }
 
   _choosePicture = () => {
@@ -218,7 +226,18 @@ export default class ProfileModal extends React.Component{
       this.setState({tooltipShouldShow:false, fileName:null})
       let input = document.getElementById("pictureinput")
       input.value = null
-    })
+    },
+    this._showSaving())
+  }
+
+  _showSaving = () => {
+    const { firstName, lastName, email, photoURL, newPassword, latestPhotoURL, } = this.state
+
+    if((newPassword || firstName!==this.props.firstName) || (lastName!==this.props.lastName) || (email!==this.props.email) || (photoURL!==this.props.photoURL) || (newPassword!==null)){
+      {document.getElementById('saving').style.display='inline'
+      setTimeout(function () {document.getElementById('saving').style.display='none'}, 2000)
+    } 
+    }
   }
 
 
