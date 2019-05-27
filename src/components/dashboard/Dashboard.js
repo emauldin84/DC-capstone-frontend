@@ -41,7 +41,7 @@ export default class Dashboard extends Component {
                 didSetTrips: true,
                 viewableTrips: props.trips,
             }
-        }else if(props.trips.length !== state.trips.length){ // had to add this to get Dashboard to update state after AddTrip modal created new trip
+        }else if((props.trips.length !== state.trips.length)||(!state.pastTrips || !state.futureTrips)){ // had to add this to get Dashboard to update state after AddTrip modal created new trip
             let tripArray = [];
 
                 // if both are true
