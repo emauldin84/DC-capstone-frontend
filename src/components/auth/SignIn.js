@@ -28,9 +28,9 @@ export default class SignIn extends Component {
     }
     render() {
         return (
-        <div className='container'>
-            <form onSubmit={this._handleSignIn} className='white'>
-                <h5 className='grey-text text-darken-3'>Sign In</h5>
+        <div className='container section'>
+            <form onSubmit={this.state.showSignUp ? this._handleSignUp : this._handleSignIn} className='white signin-signup'>
+                <h5 className='grey-text text-darken-3 section'>{this.state.showSignUp ? 'Sign Up' : 'Sign In' }</h5>
                 <div className='input-field'>
                     <label htmlFor='email'>Email</label>
                     <input type='email' id='email' onChange={this._handleSignInChange} />
@@ -39,13 +39,32 @@ export default class SignIn extends Component {
                     <label htmlFor='password'>Password</label>
                     <input type='password' id='password' onChange={this._handleSignInChange} />
                 </div>
+                {this.state.showSignUp ? null :
                 <div className='input-field'>
                     <button type="submit" className='btn teal lighten-1 z-depth-0'>Sign In</button>
                 </div>
+                }
+                {this.state.showSignUp ?
+                <div>
+                    <div className='input-field'>
+                        <label htmlFor='firstName'>First Name</label>
+                        <input type='text' id='firstName' onChange={this._handleSignUpChange} />
+                    </div>
+                    <div className='input-field'>
+                        <label htmlFor='lastName'>Last Name</label>
+                        <input type='text' id='lastName' onChange={this._handleSignUpChange} />
+                    </div>
+                    <div className='input-field'>
+                        <button className='btn teal lighten-1 z-depth-0'>Sign Up</button>
+                    </div>
+                </div>
+            : 
+                null
+            }
             </form>
-            {this.state.showSignUp ?
+            {/* {this.state.showSignUp ?
                 <form onSubmit={this._handleSignUp} className='white'>
-                    {/* <h5 className='grey-text text-darken-3'>Sign In</h5> */}
+                    {/* <h5 className='grey-text text-darken-3'>Sign In</h5> 
                     <div className='input-field'>
                         <label htmlFor='firstName'>First Name</label>
                         <input type='name' id='firstName' onChange={this._handleSignUpChange} />
@@ -60,7 +79,7 @@ export default class SignIn extends Component {
                 </form>
             : 
                 null
-            }
+            } */}
         </div>
         )
     }

@@ -25,7 +25,10 @@ export default class ProfileModal extends React.Component{
     return(
       <Modal id={"profile"}  options={options}>
         <div className="profile-modal">
-            <div className="profile-top-row">
+          <div id='saving'>
+            <p>Saving changes...</p>
+          </div>
+            <div className="profile-top-row row">
                 <div className="profile-picture-frame" onClick={this._choosePicture} onMouseEnter={this._showPhotoInput} onMouseLeave={this._hidePhotoInput} >
                       {photo?
                         <img src={`photos/${photo}`} ></img>
@@ -50,7 +53,7 @@ export default class ProfileModal extends React.Component{
                 </div>
                 
                   {/* <span id="phototip" onClick={this._undoPhoto} className={!this.state.latestPhotoURL > 0 ? "grey darken-3 tooltip-hidden" : "grey darken-3 tooltip" }>Undo?</span> */}
-                  <span id="phototip" onClick={this._undoPhoto} className={!this.state.tooltipShouldShow? "grey darken-3 tooltip-hidden" : "grey darken-3 tooltip profile-tool-tip" }>Undo?</span>
+                  <span id="phototip" onClick={this._undoPhoto} className={!this.state.tooltipShouldShow? "grey darken-3 tooltip-hidden" : "grey darken-3 profile-tool-tip" }>Undo?</span>
 
 
                 <h3 className='user-name'>
@@ -79,7 +82,8 @@ export default class ProfileModal extends React.Component{
   _updateField = ({target}) => {
     this.setState({
       [target.id] : target.textContent
-    })
+    },
+    this._showSaving())
   }
   _saveChanges = async () => {
     // Remember to clear and hide all those password fields
@@ -102,6 +106,7 @@ export default class ProfileModal extends React.Component{
       await axios.post('/users/password', {password : newPassword})
     }
     if((firstName!==this.props.firstName)||(lastName!==this.props.lastName)||(email!==this.props.email)||(photoURL!==this.props.photoURL)||(newPassword!==null)){
+        (this._showSaving())
         await axios.post(`/users`, body)
         this.props.updateLanding()
     }
@@ -126,10 +131,19 @@ export default class ProfileModal extends React.Component{
     }
   }
   _compareTwoPasswords = () => {
+    const oldPassword = document.getElementById("oldpassword");
     const firstPassword = document.getElementById("newpassword1").value
     const secondPassword = document.getElementById("newpassword2").value
     if (firstPassword === secondPassword){
-      this.setState({newPassword:secondPassword})
+      this.setState({newPassword:secondPassword},
+        this._showSaving(),
+        oldPassword.style="visibility: hidden;",
+        oldPassword.value= '',
+        document.getElementById("newpassword1").style="visibility: hidden;",
+        document.getElementById("newpassword1").value= '',
+        document.getElementById("newpassword2").style="visibility: hidden;",
+        document.getElementById("newpassword2").value= '',
+        )
     }
     else{
       console.log("Passwords don't match!");
@@ -197,7 +211,8 @@ export default class ProfileModal extends React.Component{
       const {data} = await axios.post('/users/profilepic', this.state.photoFormData, {headers:{'content-type':'multipart/form-data'}} )
       const latestPhotoURL = data.newPic[0].photo_url
       this.setState({latestPhotoURL, tooltipShouldShow:true,})
-    })
+    },
+    this._showSaving())
   }
 
   _choosePicture = () => {
@@ -218,7 +233,18 @@ export default class ProfileModal extends React.Component{
       this.setState({tooltipShouldShow:false, fileName:null})
       let input = document.getElementById("pictureinput")
       input.value = null
-    })
+    },
+    this._showSaving())
+  }
+
+  _showSaving = () => {
+    const { firstName, lastName, email, photoURL, newPassword, latestPhotoURL, } = this.state
+
+    if((newPassword || firstName!==this.props.firstName) || (lastName!==this.props.lastName) || (email!==this.props.email) || (photoURL!==this.props.photoURL) || (newPassword!==null)){
+      {document.getElementById('saving').style.display='inline'
+      setTimeout(function () {document.getElementById('saving').style.display='none'}, 2000)
+    } 
+    }
   }
 
 

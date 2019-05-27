@@ -29,30 +29,28 @@ class LandingPage extends React.Component{
     this.state.user.id ?
       <App user={this.state.user} handleSignOut={this._clearUser} updateLanding={this._updateUser} />
     :
-      <div style={{
-        display:"flex",
-        justifyContent:"center",
-        alignItems:"center",
-      }}>
-        <div style={{
-          marginTop:"-20vh",
-          paddingLeft:"5vw",
-        }}>
-          <h2>
-            Map Travel App
-          </h2>
-        </div>
-        <div style={{
-          width:"60%", 
-          height:"50%", 
-          position:"relative", 
-          float:"right", 
-          paddingTop:"20vh"
-        }}>
+      <div className='container right column'>
+        <div className='landing-page-div'>
+          <div className='container section'>
+            <h2 className='landingtitle'>Map Travel App</h2>
+
+          </div>
           <SignIn signInUser={this._signIn} showModal={this._showModal} hideModal={this._hideModal}/>
         </div>
-        <Modal id="loading" open={this.state.modalShouldShow} options={{dismissible:false,}}>
-          <h1>Loading...</h1>
+        <Modal id="loading" open={this.state.modalShouldShow} actions='&nbsp;' options={{dismissible:false,}}>
+          {/* <h4 className='loading'>Loading...</h4> */}
+          {/* <div class="loader"></div> */}
+          <div class="preloader-wrapper big active center-align">
+            <div class="spinner-layer spinner-teal-only">
+              <div class="circle-clipper left">
+                <div class="circle"></div>
+              </div><div class="gap-patch">
+                <div class="circle"></div>
+              </div><div class="circle-clipper right">
+                <div class="circle"></div>
+              </div>
+            </div>
+          </div>
         </Modal>
       </div>
     )
