@@ -14,7 +14,7 @@ export default class TripDetails extends React.Component{
             date : this.props.date,
             details : this.props.details,
             editPhotos : false, // changing the photos?
-            photos : [],
+            photos : [], // props.photos is returning an object, need to format it as an array to play nice with slides
             lat : this.props.lat,
             lon : this.props.lon,
             deleteThisTrip : false,
@@ -25,10 +25,15 @@ export default class TripDetails extends React.Component{
         M.Datepicker.init(document.getElementById(`editTripDate${this.props.id}`), {autoClose:true, onSelect:this._updateDate});
         this._getPhotos();
     }
+    componentWillUnmount(){
+        // const elem = document.getElementById(`editTripDate${this.props.id}`);
+        // const instance = M.Datepicker.getInstance(elem);
+        // instance.destroy();
+    }
     render(){
         let {id, name, date, details, lat, lon} = this.props;
         const {photos} = this.state;
-        console.log(photos);
+        // console.log(photos);
         const options = {onCloseStart : ()=>{this._saveChanges();}, onOpenEnd : ()=> {console.log(this.state.name, id)}};
         date = moment(date).format("MMM Do YYYY");
         const slides = photos.forEach(photo => {
@@ -46,7 +51,7 @@ export default class TripDetails extends React.Component{
             )
         })
         return (
-            <Modal id={`${id}`} options={options}>
+            <Modal id={`${id}`} open={true} options={options}>
                 <div className="modal-content">
                     <span className='card-title'>
                         <h2 onBlur={(e)=>{this._updateName(e.target.textContent);}} contentEditable={true} suppressContentEditableWarning={true} >{name}</h2>
@@ -85,8 +90,9 @@ export default class TripDetails extends React.Component{
             // we need to POST to db as well as alert the Dashboard 
             // component that it's time to freshly render with the latest from DB
             const {name, details, photos, lat, lon} = this.state
-            let date = document.getElementById(`editTripDate${this.props.id}`).value.toString()
-            date = moment(date).format("YYYY-MM-DD")
+            let date1 = document.getElementById(`editTripDate${this.props.id}`).value.toString() 
+            const date = moment(date1, 'MMM Do YYYY').format("YYYY-MM-DD")
+            const propsDate = moment(this.props.date).format("YYYY-MM-DD")
             const body = {
                 trip_location : name,
                 trip_date : date,
@@ -99,12 +105,13 @@ export default class TripDetails extends React.Component{
                 axios.delete(`trips/delete/${this.props.id}`)
                 .then(this.props.updateApp)
             }
-            if((name!==this.props.name)||(date!==this.props.date)||(details!==this.props.details)||(photos!==this.props.photos)){
+            if((name!==this.props.name)||(date!==propsDate)||(details!==this.props.details)||(photos!==this.props.photos)){
                 console.log("prop id: ", this.props.id);
                 axios.post(`/trips/edit/${this.props.id}`, body)
                 // .then(({r}) => {console.log(destination)})
                 .then(this.props.updateApp)
             }
+            this.props.shutTheDoorBehindYou();
         })
         
     }

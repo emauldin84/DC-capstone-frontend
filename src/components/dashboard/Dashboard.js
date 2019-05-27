@@ -6,7 +6,9 @@ import Mapbox from './Mapbox';
 import TripToggle from '../trips/TripToggle';
 import { Modal, } from 'react-materialize';
 import AddTrip from '../trips/AddTrip';
-import SearchBar from '../trips/SearchBar'
+import SearchBar from '../trips/SearchBar';
+import TripDetails from '../trips/TripDetails';
+import axios from 'axios';
 
 // translate today's date
 let today = moment(new Date()).format();
@@ -23,6 +25,7 @@ export default class Dashboard extends Component {
         super(props);
         this.state = {
             selectedTripId : null,
+            clickedTrip : null,
             pastTrips: true,
             futureTrips: true,
             trips: [],
@@ -92,7 +95,8 @@ export default class Dashboard extends Component {
     render() {
         // console.log(this.props.trips[0] ? this.props.trips[0].trip_date : null)
         const { updateApp, trips } = this.props;
-        const { viewableTrips, } = this.state;
+        const { viewableTrips, clickedTrip, } = this.state;
+        const tripDetails = clickedTrip ? <TripDetails name={clickedTrip.trip_location} id={clickedTrip.id} shutTheDoorBehindYou={this._clearClickedTrip} details={clickedTrip.trip_details} date={clickedTrip.trip_date} lat={clickedTrip.lat} lon={clickedTrip.lon} photos={clickedTrip.trip_photos} updateApp={this.props.updateAppDashboard} /> : null;        
         return (
             <div className='dashboard section'>
                 <div className='row'>
@@ -116,6 +120,7 @@ export default class Dashboard extends Component {
 
 
                         </div>
+                        {tripDetails}
                         {trips.length <= 0 ? null :
                         <TripToggle 
                             past={this.state.pastTrips} 
@@ -131,6 +136,7 @@ export default class Dashboard extends Component {
                             tripSelector={this._selectTripId} 
                             selectedTrip={this.state.selectedTripId}
                             updateAppDashboard={updateApp}
+                            clickedTrip={this._clickedOnTrip}
                             
                         />}
                     </div>
@@ -141,6 +147,7 @@ export default class Dashboard extends Component {
                             tripSelector={this._selectTripId} 
                             selectedTrip={this.state.selectedTripId}
                             updateAppDashboard={updateApp}
+                            clickedTrip={this._clickedOnTrip}
                         />
                     </div>
                 </div>
@@ -228,4 +235,24 @@ export default class Dashboard extends Component {
         })
         // console.log(this.state.searchWord)
     } 
+    _clickedOnTrip = async(clickedTripId) => {
+        const {data} = await axios.get(`/trips/${clickedTripId}`)
+        const {clickedTrip} = data
+        this.setState({clickedTrip})
+    }
+    _clearClickedTrip = () => {
+        this.setState({clickedTrip:null})
+        console.log("Door is shut, thanks!")
+    }
 }
+
+// <TripDetails
+// name={trip_location}
+// id={id}
+// details={trip_details}
+// date={trip_date}
+// lat={lat}
+// lon={lon}
+// photos={photos}
+// updateApp={this.props.updateAppDashboard}
+// />
