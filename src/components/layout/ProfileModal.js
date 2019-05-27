@@ -104,7 +104,6 @@ export default class ProfileModal extends React.Component{
     }
     if (newPassword){
       await axios.post('/users/password', {password : newPassword})
-      // .then(this._showSaving())
     }
     if((firstName!==this.props.firstName)||(lastName!==this.props.lastName)||(email!==this.props.email)||(photoURL!==this.props.photoURL)||(newPassword!==null)){
         (this._showSaving())
@@ -132,11 +131,19 @@ export default class ProfileModal extends React.Component{
     }
   }
   _compareTwoPasswords = () => {
+    const oldPassword = document.getElementById("oldpassword");
     const firstPassword = document.getElementById("newpassword1").value
     const secondPassword = document.getElementById("newpassword2").value
     if (firstPassword === secondPassword){
       this.setState({newPassword:secondPassword},
-        this._showSaving())
+        this._showSaving(),
+        oldPassword.style="visibility: hidden;",
+        oldPassword.value= '',
+        document.getElementById("newpassword1").style="visibility: hidden;",
+        document.getElementById("newpassword1").value= '',
+        document.getElementById("newpassword2").style="visibility: hidden;",
+        document.getElementById("newpassword2").value= '',
+        )
     }
     else{
       console.log("Passwords don't match!");
