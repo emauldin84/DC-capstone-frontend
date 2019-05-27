@@ -72,9 +72,12 @@ export default class TripDetails extends React.Component{
                     <img src="photos/1_pillows_1558981007810.jpeg"></img>
                     </>
                 }
-                <div className="btn" onClick={this._toggleDeleteTrip}>
-                    {this.state.deleteThisTrip? `Undo`:`Delete Trip`}
-                </div>
+                {/* <div className="btn" onClick={this._toggleDeleteTrip}>
+                    {this.state.deleteThisTrip ? `Undo`:`Delete Trip`}
+                </div> */}
+
+                <a className="btn-floating right" title={this.state.deleteThisTrip ? 'undo': 'delete'} onClick={this._toggleDeleteTrip}><i className="material-icons">{this.state.deleteThisTrip ? 'undo':'delete'}</i></a>
+                <span className={this.state.deleteThisTrip ? "grey darken-3 undodelete-tooltip" : "grey darken-3 tooltip-hidden" }>Undo Delete</span>
             </Modal>
         )
     }
