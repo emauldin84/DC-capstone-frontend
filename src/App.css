@@ -22,9 +22,9 @@ body {
     overflow:hidden;
 }
 
-.addtrip {
+.addTrip {
     font-size: 1.5rem;
-    display: inline-block;
+    min-width: 40px !important;
     
 }
 
@@ -35,7 +35,7 @@ body {
 }
 
 .tooltip {
-    visibility: visible;
+    /* visibility: visible; */
     width: 120px;
     color: #fff;
     text-align: center;
@@ -49,7 +49,7 @@ body {
     
 }
 .tooltip-hidden {
-    visibility: hidden;
+    display: none;
 }
 .tooltip::after {
     content: "";
@@ -60,6 +60,17 @@ body {
     border-width: 5px;
     border-style: solid;
     border-color: transparent #424242 transparent transparent;
+}
+.searchbar {
+    margin: 0 10px 10px 10px;
+    width: 70%;
+}
+
+.addtrip-searchtrip {
+    display: flex;
+    margin-left: 0 !important;
+    margin-bottom: 0 !important;
+
 }
 
 .trip-list.section {
@@ -137,13 +148,6 @@ body {
 .modal-footer{
     padding-bottom: 0;
 }
-
-
-.searchbar {
-    margin-top: 20px;
-    margin-bottom: 10px;
-}
-
 
 .liquorcabinet {
     width : 100%;
@@ -380,6 +384,7 @@ body {
 
 .triptoggle {
     margin-top: 10px;
+    margin-bottom: 15px;
     text-align: center;
 }
 
