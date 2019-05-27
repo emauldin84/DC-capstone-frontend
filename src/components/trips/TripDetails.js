@@ -1,6 +1,6 @@
 import React from 'react';
 // import SliderWrapper from './SliderWrapper';
-import { Modal, Slider, Slide } from 'react-materialize';
+import { Modal, Slider, Slide, Caption, } from 'react-materialize';
 import axios from 'axios';
 import M from 'materialize-css';
 import moment from 'moment';
@@ -28,11 +28,21 @@ export default class TripDetails extends React.Component{
     render(){
         let {id, name, date, details, lat, lon} = this.props;
         const {photos} = this.state;
+        console.log(photos);
         const options = {onCloseStart : ()=>{this._saveChanges();}, onOpenEnd : ()=> {console.log(this.state.name, id)}};
         date = moment(date).format("MMM Do YYYY");
         const slides = photos.forEach(photo => {
             return(
-                <Slide image={<img src={`/photos/${photo.photo_url}`} key={photo.id} alt='' />}></Slide>
+                <Slide image={<img src={`photos/${photo.photo_url}`} key={photo.id} alt='' />}>
+                    <Caption>
+                        <h3>
+                        This is our big Tagline!
+                        </h3>
+                        <h5 className="light grey-text text-lighten-3">
+                        Here's our small slogan.
+                        </h5>
+                    </Caption>
+                </Slide>
             )
         })
         return (
@@ -55,9 +65,12 @@ export default class TripDetails extends React.Component{
                         <input id="tripPhotoInput" style={{visibility:"hidden"}} type="file" onChange={this._changeFileName} accept="image/png, image/jpeg, image/jpg, image/gif" />
                     </a>
                     :
+                    <>
                     <Slider>
                         {slides}
                     </Slider>
+                    <img src="photos/1_pillows_1558981007810.jpeg"></img>
+                    </>
                 }
                 <div className="btn" onClick={this._toggleDeleteTrip}>
                     {this.state.deleteThisTrip? `Undo`:`Delete Trip`}
@@ -72,7 +85,8 @@ export default class TripDetails extends React.Component{
             // we need to POST to db as well as alert the Dashboard 
             // component that it's time to freshly render with the latest from DB
             const {name, details, photos, lat, lon} = this.state
-            const date = document.getElementById(`editTripDate${this.props.id}`).value.toString()
+            let date = document.getElementById(`editTripDate${this.props.id}`).value.toString()
+            date = moment(date).format("YYYY-MM-DD")
             const body = {
                 trip_location : name,
                 trip_date : date,
@@ -142,4 +156,35 @@ export default class TripDetails extends React.Component{
     _choosePicture = () => {
         document.getElementById("tripPhotoInput").click()
     }
+    _changeFileName = (e) => {
+        console.log(" ******** ********** ********** _changeFileName firing");
+        // If we are to implement multiple files per upload, we will have to change the logic to a forEach or Map.
+        console.log(e.target.files[0]);
+        if(e.target.files[0]){
+          this.setState({
+            fileName:e.target.files[0]
+          },() => {this._uploadFile(this.state.fileName)})
+        }
+      }
+      _uploadFile = (file) => {
+        let formData = new FormData();
+        formData.append('file',file)
+        const photoFormData = formData
+        this.setState({
+            photoFormData
+        }, async () => {
+          console.log(photoFormData);
+          
+          photoFormData.append('tripId', this.props.id)
+          const {data} = await axios.post('/photos', photoFormData, {headers:{'content-type':'multipart/form-data'}})
+          const latestPhotoURL = data.photo_url
+          this.setState({photos:[...this.state.photos, latestPhotoURL]});
+
+        //   const {data} = await axios.post('/users/profilepic', this.state.photoFormData, {headers:{'content-type':'multipart/form-data'}} )
+        //   const latestPhotoURL = data.newPic[0].photo_url
+        //   this.setState({latestPhotoURL, tooltipShouldShow:true,})
+        })
+      }
 }
+
+
