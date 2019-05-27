@@ -40,14 +40,14 @@ class LandingPage extends React.Component{
         <Modal id="loading" open={this.state.modalShouldShow} actions='&nbsp;' options={{dismissible:false,}}>
           {/* <h4 className='loading'>Loading...</h4> */}
           {/* <div class="loader"></div> */}
-          <div class="preloader-wrapper big active center-align">
-            <div class="spinner-layer spinner-teal-only">
-              <div class="circle-clipper left">
-                <div class="circle"></div>
-              </div><div class="gap-patch">
-                <div class="circle"></div>
-              </div><div class="circle-clipper right">
-                <div class="circle"></div>
+          <div className="preloader-wrapper big active center-align">
+            <div className="spinner-layer spinner-teal-only">
+              <div className="circle-clipper left">
+                <div className="circle"></div>
+              </div><div className="gap-patch">
+                <div className="circle"></div>
+              </div><div className="circle-clipper right">
+                <div className="circle"></div>
               </div>
             </div>
           </div>
