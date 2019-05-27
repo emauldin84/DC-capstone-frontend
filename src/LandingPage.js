@@ -51,7 +51,7 @@ class LandingPage extends React.Component{
         }}>
           <SignIn signInUser={this._signIn} showModal={this._showModal} hideModal={this._hideModal}/>
         </div>
-        <Modal id="loading" open={this.state.modalShouldShow} actions='&nbsp;' showFooter='false' options={{dismissible:false,}}>
+        <Modal id="loading" open={this.state.modalShouldShow} actions='&nbsp;' options={{dismissible:false,}}>
           {/* <h4 className='loading'>Loading...</h4> */}
           {/* <div class="loader"></div> */}
           <div class="preloader-wrapper big active center-align">
