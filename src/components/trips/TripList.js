@@ -1,6 +1,7 @@
 import React from 'react';
 import TripDetails from './TripDetails';
 
+
 export default function TripList({selectedTrip, tripSelector, tripDeselector, updateAppDashboard, trips}){
     return(
         <div className='trip-list section'>
@@ -30,3 +31,4 @@ export default function TripList({selectedTrip, tripSelector, tripDeselector, up
         </div>
     )
 }
+

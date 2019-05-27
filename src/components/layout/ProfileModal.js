@@ -53,22 +53,24 @@ export default class ProfileModal extends React.Component{
                   <span id="phototip" onClick={this._undoPhoto} className={!this.state.tooltipShouldShow? "grey darken-3 tooltip-hidden" : "grey darken-3 tooltip profile-tool-tip" }>Undo?</span>
 
 
-                <h3>
+                <h3 className='user-name'>
                   <div id="firstName" onBlur={this._updateField} contentEditable={true} suppressContentEditableWarning={true}>{user.firstName}</div>
                   <div style={{opacity:"0"}}>_</div> {/*Flex was behaving "too well," so the most efficient way this programmer found was to add a "hidden" space between the two names. If you are reading this and would like to make a better suggestion, the programmer would welcome a Pull Request! */}
                   <div id="lastName" onBlur={this._updateField}  contentEditable={true} suppressContentEditableWarning={true}>{user.lastName}</div>
                 </h3>
+                
             </div>
             <div className="profile-second-row">
-                <button onClick={this._showPasswordCheck}>
-                    Change Password
+              <h5 id="email" onBlur={this._updateField}  contentEditable={true} suppressContentEditableWarning={true}>
+                      {user.email}
+              </h5>
+                <button className='btn change-password-button' onClick={this._showPasswordCheck}>
+                    ChangePassword
                 </button>
-                  <input id="oldpassword"  type="password" data-password className="old-password-input" onFocus={this._attachListener} onBlur={(e) => {this._detachListener(e); this._checkPassword();}}></input>
-                  <input id="newpassword1" type="password" data-password className="new-password-input" onFocus={this._attachListener} onBlur={(e) => {this._detachListener(e); this._showNewPassword2();}}></input>
-                  <input id="newpassword2" type="password" data-password className="new-password-input" onFocus={this._attachListener} onBlur={(e) => {this._detachListener(e); this._compareTwoPasswords();}}></input>
-                <h5 id="email" onBlur={this._updateField}  contentEditable={true} suppressContentEditableWarning={true}>
-                    {user.email}
-                </h5>
+                  <input id="oldpassword"  type="password" data-password className="old-password-input password-fields" placeholder='Enter Old Password' onFocus={this._attachListener} onBlur={(e) => {this._detachListener(e); this._checkPassword();}}></input>
+                  <input id="newpassword1" type="password" data-password className="new-password-input password-fields" placeholder='Enter New Password' onFocus={this._attachListener} onBlur={(e) => {this._detachListener(e); this._showNewPassword2();}}></input>
+                  <input id="newpassword2" type="password" data-password className="new-password-input password-fields" placeholder='Enter New Password Again' onFocus={this._attachListener} onBlur={(e) => {this._detachListener(e); this._compareTwoPasswords();}}></input>
+                
             </div>
         </div>
       </Modal>
