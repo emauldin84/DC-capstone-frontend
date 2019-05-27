@@ -25,7 +25,7 @@ export default class ProfileModal extends React.Component{
     return(
       <Modal id={"profile"}  options={options}>
         <div className="profile-modal">
-            <div className="profile-top-row">
+            <div className="profile-top-row row">
                 <div className="profile-picture-frame" onClick={this._choosePicture} onMouseEnter={this._showPhotoInput} onMouseLeave={this._hidePhotoInput} >
                       {photo?
                         <img src={`photos/${photo}`} ></img>
@@ -50,7 +50,7 @@ export default class ProfileModal extends React.Component{
                 </div>
                 
                   {/* <span id="phototip" onClick={this._undoPhoto} className={!this.state.latestPhotoURL > 0 ? "grey darken-3 tooltip-hidden" : "grey darken-3 tooltip" }>Undo?</span> */}
-                  <span id="phototip" onClick={this._undoPhoto} className={!this.state.tooltipShouldShow? "grey darken-3 tooltip-hidden" : "grey darken-3 tooltip profile-tool-tip" }>Undo?</span>
+                  <span id="phototip" onClick={this._undoPhoto} className={!this.state.tooltipShouldShow? "grey darken-3 tooltip-hidden" : "grey darken-3 profile-tool-tip" }>Undo?</span>
 
 
                 <h3 className='user-name'>

@@ -273,7 +273,7 @@ body {
 .profile-top-row{
     display: flex;
     /* flex-direction: column; */
-    /* justify-content: space-between; */
+    justify-content: space-between;
     align-items: center;
 
 }
@@ -386,7 +386,29 @@ body {
 .profile-tool-tip{
     left: 130px;
     width: 60px;
+    visibility: visible;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    /* Position the tooltip text - see examples below! */
+    position: relative;
+    z-index: 1;
+    top: 2px;
+    left: -40%;
 }
+
 .profile-tool-tip:hover{
-    left: 128px;
+    left: -39%;
+}
+
+.profile-tool-tip::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent transparent #424242 ;
 }
