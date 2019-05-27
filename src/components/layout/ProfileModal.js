@@ -14,7 +14,7 @@ export default class ProfileModal extends React.Component{
       newPassword : null,
       fileName : null,
       photoFormData : null,
-      latestPhotoURL : null,
+      latestPhotoURL : photoURL || null,
       tooltipShouldShow : false,
     };
   }
