@@ -169,7 +169,7 @@ export default class TripDetails extends React.Component{
             const propsDate = moment(this.props.date).format("YYYY-MM-DD")
 
             const body = {
-                trip_location : location,
+                trip_location : value,
                 trip_date : date,
                 lat,
                 lon,
@@ -177,12 +177,12 @@ export default class TripDetails extends React.Component{
             }
             if(this.state.deleteThisTrip){
                 axios.delete(`trips/delete/${this.props.id}`)
-                .then(this.props.updateApp)
+                .then(() => {console.log("firing updateAppDashboard!!");this.props.updateAppDashboard()})
             }
             if((value!==this.props.name)||(date!==propsDate)||(details!==this.props.details)){
                 console.log("prop id: ", this.props.id);
                 axios.post(`/trips/edit/${this.props.id}`, body)
-                .then(this.props.updateApp)
+                .then(() => {console.log("firing updateAppDashboard!!");this.props.updateAppDashboard()})
             }
 
             this.props.shutTheDoorBehindYou();

@@ -117,7 +117,7 @@ export default class Dashboard extends Component {
                 lat={clickedTrip.lat} 
                 lon={clickedTrip.lon} 
                 photos={photos} 
-                updateApp={this.props.updateAppDashboard} 
+                updateAppDashboard={this.props.updateApp} 
             /> 
             : 
             null;        
