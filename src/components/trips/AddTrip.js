@@ -3,6 +3,7 @@ import 'materialize-css/dist/css/materialize.min.css';
 import M, {options, elem,} from 'materialize-css';
 import axios from 'axios';
 import Autosuggest from 'react-autosuggest';
+import Dropzone, {useDropzone} from "react-dropzone";
 
 
 import { DatePicker, Button, Modal, }from 'react-materialize';
@@ -18,12 +19,13 @@ export default class AddTrip extends Component {
             lon:null,
             details: '',
             response: [],
-            fileName:null,
+            fileName: false,
             tripId:null,
             message:null,
             value: '',
             suggestions: [],
             photoFormData: [],
+            files: [],
         };
     }
 
@@ -32,6 +34,15 @@ export default class AddTrip extends Component {
     }
     
     render() {
+        const files = this.state.files.map(file => (
+            <li key={file.name}>
+                {file.name} - {file.size} bytes
+            </li>
+        ));
+
+
+
+
         const { value, suggestions } = this.state; // a little destructuring for conveinence 
         const inputProps = {
             placeholder: 'Choose a destination',
@@ -73,15 +84,52 @@ export default class AddTrip extends Component {
                         </div>
 
                         {/* file input */}
-                            <div className="file-field input-field">
-                                <div className="btn">
-                                    <span>File</span>
-                                    <input type="file" name="foo" onChange={this._changeFileName} accept="image/png, image/jpeg, image/jpg, image/gif" multiple/>
-                                </div>
-                                <div className="file-path-wrapper">
-                                    <input className="file-path validate" type="text" placeholder="Select multiple trip images for upload"/>
-                                </div>
-                            </div>
+                            {/* <div className="file-field input-field"> */}
+                                {/* <div className="btn"> */}
+                                    {/* <span>File</span> */}
+                                    {/* <input type="file" name="foo" onChange={this._changeFileName} accept="image/png, image/jpeg, image/jpg, image/gif" multiple/> */}
+                                    {/* <input type="file" name="foo" onChange={this._changeFileName} accept="image/png, image/jpeg, image/jpg, image/gif" multiple/> */}
+                                {/* </div> */}
+                                {/* <div className="file-path-wrapper"> */}
+                                    {/* <input className="file-path validate" type="text" placeholder="Select multiple trip images for upload"/> */}
+                                {/* </div> */}
+                            {/* </div> */}
+
+
+                            <Dropzone 
+                                onDrop={this._onDrop} 
+                                accept="image/*"   
+                                minSize={0} 
+                                maxSize={5242880} 
+                                multiple
+                            >
+                                {({
+                                getRootProps, 
+                                getInputProps, 
+                                isDragActive, 
+                                isDragReject, 
+                                isFileTooLarge,
+                                }) => (
+                                    <section className="container">
+                                        <div {...getRootProps()}>
+                                            <div className="btn">
+                                                <span>Images</span>
+                                            </div>
+                                            <input {...getInputProps()} />
+                                            {files.length > 0 ? <ul>{files.map(file=><li>{file.key}</li>)}</ul> : null}
+                                            {files.length === 0 && !isDragActive && `Upload photos for your trip!`}
+                                            {files.length === 0 && isDragActive && !isDragReject && "Drop it like it's hot!"}
+                                            {files.length === 0 && isDragReject && "File type not accepted, sorry!"}
+                                            {files.length === 0 && isFileTooLarge && (
+                                                <div className="text-danger mt-2">
+                                                    File is too large.
+                                                </div>
+                                            )}
+                                        </div>
+                                    </section>
+                                )}
+                            </Dropzone>
+
 
                         {/* submit button */}
                         <div className='input-field'>
@@ -99,8 +147,6 @@ export default class AddTrip extends Component {
     handleChange = (e) => {
         this.setState({
             [e.target.id]: e.target.value,
-        }, () => {
-            this.geocodeSearch();
         })
     }
 
@@ -130,22 +176,19 @@ export default class AddTrip extends Component {
             lon,
             details,
         }
-
         const {data} =  await axios.post('/trips/add', formData)
-
         // photo upload too
         // only send if there is a photo to upload
         if(this.state.fileName){
             photoFormData.append('tripId', data.tripID.id)
-            await axios.post('/photos', photoFormData, {headers:{'content-type':'multipart/form-data'}})
+            const response = await axios.post('/photos', photoFormData, {headers:{'content-type':'multipart/form-data'}})
         }        
         // shutdown the modal
+        // console.log("hushing AddTrip modal");
+        this.props.hushModal()
         
         // trigger a fresh get of trips from App component
-        console.log("about to update App.js");
-
-        const modal = document.getElementById("newtrip")
-        this.props.hushModal()
+        // console.log("about to update App.js from AddTrip");
         this.props.updateAppDashboard()
 
     }
@@ -155,12 +198,7 @@ export default class AddTrip extends Component {
         this.setState({
             response: data.data.features,
             suggestions : data.data.features,
-        }, () => {
-            this.state.response.forEach(res => {
-                // console.log('response state',res.place_name)
-            })
-        }
-        )
+        })
     }
 
     getSuggestionValue = ({place_name, center}) => {
@@ -214,19 +252,27 @@ export default class AddTrip extends Component {
         target.classList.remove("lighten-1");
         target.classList.add("lighten-2");
     }
-    _changeFileName = (e) => {
-        // If we are to implement multiple files per upload, we will have to change the logic to a forEach or Map.
-        console.log(e.target.files[0].name);
-        this.setState({
-            fileName:e.target.files[0]
-        },() => {this._uploadFile(this.state.fileName)})
-    }
-    _uploadFile = (file) => {
-        let formData = new FormData();
-        formData.append('file',file)
-        const photoFormData = formData
-        this.setState({
-            photoFormData
+    // _changeFileName = (e) => {
+    //     // If we are to implement multiple files per upload, we will have to change the logic to a forEach or Map.
+    //     console.log(e.target.files[0].name);
+    //     this.setState({
+    //         fileName:e.target.files[0]
+    //     },() => {this._uploadFile(this.state.fileName)})
+    // }
+    // _uploadFile = (file) => {
+    //     console.log(file);
+    //     let formData = new FormData();
+    //     formData.append('file',file)
+    //     const photoFormData = formData
+    //     this.setState({
+    //         photoFormData
+    //     }, ()=> console.log("Images in state."))
+    // }
+    _onDrop = async (files) => {
+        let photoFormData = new FormData();
+        files.forEach((file, i) => {
+            photoFormData.append(`file${i}`,file)
         })
+        this.setState({photoFormData, fileName:true, })
     }
 }

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import MapGL, { Marker } from 'react-map-gl';
 import TripDetails from '../trips/TripDetails';
 import moment from 'moment'
-const TOKEN = 'pk.eyJ1IjoiZW1hdWxkaW4iLCJhIjoiY2p2dmdhdjExMWMzMDQ5bDlwdzl0b2p1ZSJ9.HBj_nqaAQpYjoZx5vHOLOg';
+const TOKEN = 'pk.eyJ1Ijoiam9uYXRoYW5yYXkxNyIsImEiOiJjanZ3aHd1ZzM0Y3B5NDlxcjRsbnIzcTAxIn0.ygYs-iXNclW8pJeuknEvJA';
 
 export default class Map extends Component {
   constructor(props) {
@@ -29,7 +29,7 @@ export default class Map extends Component {
 
   render() {
       const {viewport} = this.state;
-      const { trips } = this.props
+      const { trips, selectedTrip, clickedTrip, } = this.props
       
       // translate today's date
       let today = moment(new Date()).format();
@@ -37,23 +37,12 @@ export default class Map extends Component {
       
       const arrayOfMarkers = trips && trips.map(({id, trip_location, trip_date, trip_details, lat, lon, photos}) => {
         let selected = '';
-        this.props.selectedTrip === id ? selected = 'fa-map-pin-hover' : selected = '';
+        selectedTrip === id ? selected = 'fa-map-pin-hover' : selected = '';
         // translate trip date
         let tripDate = moment(trip_date.split("T").shift()).format()
         // console.log('tripDate',tripDate)
         return(
-          <div key={id}>
-            <TripDetails
-            name={trip_location}
-            id={id}
-            details={trip_details}
-            date={trip_date}
-            lat={lat}
-            lon={lon}
-            photos={photos}
-            updateApp={this.props.updateAppDashboard}
-            />
-            <a href={`#${id}`} className="modal-trigger" style={{color:"black"}} onMouseEnter={()=>{this.props.tripSelector(id)}} onMouseLeave={this.props.tripDeselector}>
+          <div key={id} onClick={()=>clickedTrip(id)} onMouseEnter={()=>{this.props.tripSelector(id)}} onMouseLeave={this.props.tripDeselector}>
               <Marker
                 latitude={parseFloat(lat)}
                 longitude={parseFloat(lon)} 
@@ -62,7 +51,6 @@ export default class Map extends Component {
                 >
                 { tripDate > today ? <i style={{color:"blue"}} className={`fas fa-map-pin ${selected}`}></i> : <i style={{color:"red"}} className={`fas fa-map-pin ${selected}`}></i> }
               </Marker>
-            </a>
           </div>
         )});
     return (
