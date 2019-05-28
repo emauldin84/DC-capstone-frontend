@@ -484,3 +484,9 @@ body {
 .trip-title {
     margin-bottom: 0;
 }
+
+.helper-text {
+    margin-top: 25px;
+    z-index: 10;
+    cursor: pointer;
+}

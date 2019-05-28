@@ -38,6 +38,7 @@ export default class SignIn extends Component {
                 <div className='input-field'>
                     <label htmlFor='password'>Password</label>
                     <input type='password' id='password' onChange={this._handleSignInChange} />
+                    {this.state.showSignUp ? null :<span class="helper-text right" onClick={this._toggleMenu}>Don't have an account? Sign up here.</span>}
                 </div>
                 {this.state.showSignUp ? null :
                 <div className='input-field'>
@@ -53,6 +54,7 @@ export default class SignIn extends Component {
                     <div className='input-field'>
                         <label htmlFor='lastName'>Last Name</label>
                         <input type='text' id='lastName' onChange={this._handleSignUpChange} />
+                        {this.state.showSignUp ? <span class="helper-text right" onClick={this._toggleMenu}>Already have an account? Sign in here.</span> : null}
                     </div>
                     <div className='input-field'>
                         <button className='btn teal lighten-1 z-depth-0'>Sign Up</button>
@@ -143,5 +145,10 @@ export default class SignIn extends Component {
                 })
             }
         }
+    }
+    _toggleMenu = () => {
+        this.setState ({
+            showSignUp: !this.state.showSignUp
+        })
     }
 }
