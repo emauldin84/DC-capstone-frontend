@@ -447,13 +447,14 @@ body {
     border-color: transparent transparent transparent #424242 ;
 }
 
-#saving {
+#saving, #savingTrip {
     position: absolute;
     display: none;
     top: 5px;
     left: 15px;
     color: #616161;
 }
+
 
 #loading {
     background-color: rgba(255, 255, 255, 0);

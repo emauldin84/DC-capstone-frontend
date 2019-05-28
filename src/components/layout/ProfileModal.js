@@ -83,7 +83,7 @@ export default class ProfileModal extends React.Component{
     this.setState({
       [target.id] : target.textContent
     },
-    this._showSaving())
+    this._showSaving)
   }
   _saveChanges = async () => {
     // Remember to clear and hide all those password fields

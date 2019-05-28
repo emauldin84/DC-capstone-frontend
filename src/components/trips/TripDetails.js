@@ -4,6 +4,7 @@ import { Modal, Slider, Slide, Caption, } from 'react-materialize';
 import axios from 'axios';
 import M from 'materialize-css';
 import moment from 'moment';
+import Autosuggest from 'react-autosuggest';
 
 
 export default class TripDetails extends React.Component{
@@ -47,10 +48,11 @@ export default class TripDetails extends React.Component{
         })
         return (
             <Modal id={`${id}`} options={options}>
-                <div id='saving'>
-                    <p>Saving changes...</p>
-                    </div>
+                
                 <div className="modal-content">
+                <div id='savingTrip'>
+                    <p>Saving changes...</p>
+                </div>
                     <span className='card-title'>
                         <h2 className='trip-title' onBlur={(e)=>{this._updateName(e.target.textContent);}} contentEditable={true} suppressContentEditableWarning={true} >{name}</h2>
                     </span>
@@ -58,7 +60,7 @@ export default class TripDetails extends React.Component{
                         {/* <div onBlur={(e)=>{this._updateDate(e.target.textContent);}} contentEditable={true} suppressContentEditableWarning={true} >{date}</div> */}
                         <input type="text" id={`editTripDate${id}`} className="datepicker" defaultValue={date} ></input>
                     </div>
-                    <p onBlur={(e)=>{this._updateDetails(e.target.textContent)}} contentEditable={true} suppressContentEditableWarning={true} >{details}</p>
+                    <p onBlur={(e)=>{this._updateDetails(e.target.textContent);}} contentEditable={true} suppressContentEditableWarning={true} >{details}</p>
 
                 </div>
                 {this.state.photos.length === 0 ?
@@ -116,7 +118,7 @@ export default class TripDetails extends React.Component{
     }
     _updateName = (name) => {
         this.setState({name},
-            this._showSaving())
+            this._showSaving)
         // this will also have to update lat/lon in state too
     }
     _editName = (e) => {
@@ -127,6 +129,7 @@ export default class TripDetails extends React.Component{
     _updateDate = (d) => {
         const date = d.toString()
         document.getElementById(`editTripDate${this.props.id}`).value = date
+        this._showSaving()
     }
     _editDate = (e) => {
         this.setState({
@@ -134,7 +137,8 @@ export default class TripDetails extends React.Component{
         })
     }
     _updateDetails = (details) => {
-        this.setState({details})
+        this.setState({details},
+            this._showSaving)
     }
     _editDetails = (e) => {
         this.setState({
@@ -142,7 +146,8 @@ export default class TripDetails extends React.Component{
         })
     }
     _updatePhotos = (photos) => {
-        this.setState({photos})
+        this.setState({photos},
+            this._showSaving)
     }
     _editPhotos = (e) => {
         this.setState({
@@ -150,7 +155,8 @@ export default class TripDetails extends React.Component{
         })
     }
     _toggleDeleteTrip = () => {
-        this.setState({deleteThisTrip : !this.state.deleteThisTrip})
+        this.setState({deleteThisTrip : !this.state.deleteThisTrip},
+            this._showSaving)
     }
     _getPhotos = async () => {
         const {data} = await axios.get(`/trips/photos/${this.props.id}`);
@@ -199,12 +205,12 @@ export default class TripDetails extends React.Component{
         date = moment(date).format("YYYY-MM-DD")
     
         if((name!==this.props.name) || (date!==this.props.date) || (details!==this.props.details) || (photos!==this.props.photos)){
-            {document.getElementById('saving').style.display='inline'
-            setTimeout(function () {document.getElementById('saving').style.display='none'}, 2000)}
+            document.getElementById('savingTrip').style.display='inline'
+            setTimeout(function () {document.getElementById('savingTrip').style.display='none'}, 2000)
         }
-        console.log('state.name:', name)
-        console.log('props.name:', this.props.name)
     }
 }
+
+
 
 
