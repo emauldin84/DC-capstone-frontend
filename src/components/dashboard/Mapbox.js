@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import MapGL, { Marker } from 'react-map-gl';
 import TripDetails from '../trips/TripDetails';
 import moment from 'moment'
-const TOKEN = 'pk.eyJ1IjoiZW1hdWxkaW4iLCJhIjoiY2p2dmdhdjExMWMzMDQ5bDlwdzl0b2p1ZSJ9.HBj_nqaAQpYjoZx5vHOLOg';
+const TOKEN = 'pk.eyJ1Ijoiam9uYXRoYW5yYXkxNyIsImEiOiJjanZ3aHd1ZzM0Y3B5NDlxcjRsbnIzcTAxIn0.ygYs-iXNclW8pJeuknEvJA';
 
 export default class Map extends Component {
   constructor(props) {

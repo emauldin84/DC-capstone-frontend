@@ -96,7 +96,31 @@ export default class Dashboard extends Component {
         // console.log(this.props.trips[0] ? this.props.trips[0].trip_date : null)
         const { updateApp, trips } = this.props;
         const { viewableTrips, clickedTrip, } = this.state;
-        const tripDetails = clickedTrip ? <TripDetails name={clickedTrip.trip_location} id={clickedTrip.id} shutTheDoorBehindYou={this._clearClickedTrip} details={clickedTrip.trip_details} date={clickedTrip.trip_date} lat={clickedTrip.lat} lon={clickedTrip.lon} photos={clickedTrip.trip_photos} updateApp={this.props.updateAppDashboard} /> : null;        
+        let photos = null;
+        if(clickedTrip){
+            if(clickedTrip.trip_photos){
+            photos = clickedTrip.trip_photos.map(photo => {
+                // console.log(photo)
+                // photo = JSON.parse(photo)
+                // return photo.photo_url
+                return photo;
+            });
+        }}
+        console.log("Dashboard is sending the following photos as props: ",photos);
+        const tripDetails = clickedTrip ? 
+            <TripDetails 
+                name={clickedTrip.trip_location} 
+                id={clickedTrip.id} 
+                shutTheDoorBehindYou={this._clearClickedTrip} 
+                details={clickedTrip.trip_details} 
+                date={clickedTrip.trip_date} 
+                lat={clickedTrip.lat} 
+                lon={clickedTrip.lon} 
+                photos={photos} 
+                updateApp={this.props.updateAppDashboard} 
+            /> 
+            : 
+            null;        
         return (
             <div className='dashboard section'>
                 <div className='row'>
@@ -156,6 +180,7 @@ export default class Dashboard extends Component {
     }
     _goAwayModal = () => {
         this.setState({showModal:false})
+        console.log("Set showModal to false, DASHBOARD");
     }
     _comeBackModal = () => {
         this.setState({showModal:true})
@@ -238,6 +263,7 @@ export default class Dashboard extends Component {
     _clickedOnTrip = async(clickedTripId) => {
         const {data} = await axios.get(`/trips/${clickedTripId}`)
         const {clickedTrip} = data
+        console.log(clickedTrip);
         this.setState({clickedTrip})
     }
     _clearClickedTrip = () => {
