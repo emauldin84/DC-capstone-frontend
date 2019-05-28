@@ -52,6 +52,7 @@ export default class TripDetails extends React.Component{
             </div>
             )
         }
+        let photosArray;
         if(photos){
             if(photos.length > 0){
             photosArray = photos.map(photo => (photo));
@@ -82,7 +83,7 @@ export default class TripDetails extends React.Component{
                 </div>
                     <span className='card-title'>
                         <h2 className='trip-title' onBlur={(e)=>{this._updateName(e.target.textContent);}} contentEditable={true} suppressContentEditableWarning={true} >{name}</h2>
-                    <Autosuggest 
+                    {/* <Autosuggest 
                             suggestions={suggestions} // this.state.suggestions to select from
                             onSuggestionsFetchRequested={this.onSuggestionsFetchRequested} // where Axios and the filtering happens
                             onSuggestionsClearRequested={this.onSuggestionsClearRequested} // onBlur(-ish), clears the rendered suggestions
@@ -94,7 +95,7 @@ export default class TripDetails extends React.Component{
                             className='trip-title' 
                             onBlur={()=>{this._updateName();}} contentEditable={true} 
                             suppressContentEditableWarning={true}
-                        />
+                        /> */}
                     </span>
                     <div className='card-action grey-text'>
                         {/* <div onBlur={(e)=>{this._updateDate(e.target.textContent);}} contentEditable={true} suppressContentEditableWarning={true} >{date}</div> */}
@@ -187,8 +188,8 @@ export default class TripDetails extends React.Component{
         
     }
     _updateName = () => {
-        this.setState({name: this.state.location},
-            this._showSaving)
+        // this.setState({name: this.state.location},
+        //     this._showSaving)
         // this will also have to update lat/lon in state too
     }
     _editName = (e) => {
@@ -330,7 +331,7 @@ export default class TripDetails extends React.Component{
         });
     };
 
-}
+
 
 
 
