@@ -20,6 +20,9 @@ export default class TripDetails extends React.Component{
             lat : this.props.lat,
             lon : this.props.lon,
             deleteThisTrip : false,
+            value: this.props.name,
+            suggestions: [],
+            response: [],
             files: [],
         };
         this._updateDate.bind(this);
@@ -35,15 +38,29 @@ export default class TripDetails extends React.Component{
         // instance.destroy();
     }
     render(){
-        const { files, photos, } = this.state;
-        let {id, name, date, details, lat, lon, } = this.props;
-        let photosArray = null;
+        console.log('this.state.location',this.state.location)
+        const { value, suggestions, files, photos,  } = this.state; // a little destructuring for conveinence 
+        const inputProps = {
+            placeholder: 'Choose a destination',
+            value, // this.state.value aka what's in the input box right now
+            onChange: this.updateAutosuggestField
+        };
+        const renderSuggestion = (suggestion, { query, isHighlighted }) => {
+            return(
+            <div>
+                {suggestion.place_name}
+            </div>
+            )
+        }
         if(photos){
             if(photos.length > 0){
             photosArray = photos.map(photo => (photo));
             }
         }
-        console.log(photos)
+        let {id, name, date, details, lat, lon} = this.props;
+
+        // console.log(photos);
+
         const options = {onCloseStart : ()=>{this._saveChanges();}, onOpenEnd : ()=> {console.log(this.state.name, id)}};
         date = moment(date).format("MMM Do YYYY");
         let slides = null;
@@ -65,6 +82,19 @@ export default class TripDetails extends React.Component{
                 </div>
                     <span className='card-title'>
                         <h2 className='trip-title' onBlur={(e)=>{this._updateName(e.target.textContent);}} contentEditable={true} suppressContentEditableWarning={true} >{name}</h2>
+                    <Autosuggest 
+                            suggestions={suggestions} // this.state.suggestions to select from
+                            onSuggestionsFetchRequested={this.onSuggestionsFetchRequested} // where Axios and the filtering happens
+                            onSuggestionsClearRequested={this.onSuggestionsClearRequested} // onBlur(-ish), clears the rendered suggestions
+                            getSuggestionValue={this.getSuggestionValue} // selector for suggestion, drops into state of final value
+                            renderSuggestion={renderSuggestion} // the div of suggestion below input field
+                            inputProps={inputProps} // placeholder, final value, and the onChange function
+                            highlightFirstSuggestion={true} // cues the user that they need to select one of these options
+                            focusInputOnSuggestionClick={false} // when you take a suggestion, the input blurs
+                            className='trip-title' 
+                            onBlur={()=>{this._updateName();}} contentEditable={true} 
+                            suppressContentEditableWarning={true}
+                        />
                     </span>
                     <div className='card-action grey-text'>
                         {/* <div onBlur={(e)=>{this._updateDate(e.target.textContent);}} contentEditable={true} suppressContentEditableWarning={true} >{date}</div> */}
@@ -129,12 +159,14 @@ export default class TripDetails extends React.Component{
         }, () => {
             // we need to POST to db as well as alert the Dashboard 
             // component that it's time to freshly render with the latest from DB
-            const {name, details, lat, lon} = this.state
+
+            const {name, location, details, lat, lon} = this.state
             let date1 = document.getElementById(`editTripDate${this.props.id}`).value.toString() 
             const date = moment(date1, 'MMM Do YYYY').format("YYYY-MM-DD")
             const propsDate = moment(this.props.date).format("YYYY-MM-DD")
+
             const body = {
-                trip_location : name,
+                trip_location : location,
                 trip_date : date,
                 lat,
                 lon,
@@ -154,8 +186,8 @@ export default class TripDetails extends React.Component{
         })
         
     }
-    _updateName = (name) => {
-        this.setState({name},
+    _updateName = () => {
+        this.setState({name: this.state.location},
             this._showSaving)
         // this will also have to update lat/lon in state too
     }
@@ -241,6 +273,65 @@ export default class TripDetails extends React.Component{
             setTimeout(function () {document.getElementById('savingTrip').style.display='none'}, 2000)
         }
     }
+
+
+    geocodeSearch = async () => {
+        let {data} = await axios.post(`/cors`, {location: this.state.location})
+        this.setState({
+            response: data.data.features,
+            suggestions : data.data.features,
+        }, () => {
+            this.state.response.forEach(res => {
+                // console.log('response state',res.place_name)
+            })
+        }
+        )
+    }
+
+    getSuggestionValue = ({place_name, center}) => {
+        const lat = center[1]
+        const lon = center[0]
+        this.setState({
+            lat,
+            lon,
+        })
+        return (place_name)
+    };
+
+    // This will allows the component to be a controlled component
+    updateAutosuggestField = (event, { newValue }) => {
+        this.setState({
+            value: newValue,
+            location: newValue,
+        }, ()=>{this.geocodeSearch()});
+        
+    };
+    
+    // Autosuggest will call these function every time you need to update suggestions.
+        getSuggestions = (value) => {
+            const inputValue = value.trim().toLowerCase();
+            const inputLength = inputValue.length;
+            const suggestionArryOfObjects =  inputLength === 0 ? [] : (this.state.response.length > 0 ? (this.state.response.filter(lang =>{
+                return lang.place_name.toLowerCase().slice(0, inputLength) === inputValue
+            })) : []);
+            return suggestionArryOfObjects.map(suggestion => suggestion.place_name)
+        };
+        // You already implemented this logic above, so just use it.
+        onSuggestionsFetchRequested = ({ value }) => {
+            this.setState({
+                suggestions: this.getSuggestions(value)
+            });
+        };
+    
+    // Autosuggest will call this function every time you need to clear suggestions.
+    onSuggestionsClearRequested = () => {
+        this.setState({
+            suggestions: []
+        });
+    };
+
+}
+
 
 
     //     //   const {data} = await axios.post('/users/profilepic', this.state.photoFormData, {headers:{'content-type':'multipart/form-data'}} )
