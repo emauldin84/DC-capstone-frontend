@@ -4,6 +4,7 @@ import { Modal, Slider, Slide, Caption, } from 'react-materialize';
 import axios from 'axios';
 import M from 'materialize-css';
 import moment from 'moment';
+import Autosuggest from 'react-autosuggest';
 
 
 export default class TripDetails extends React.Component{
@@ -51,10 +52,15 @@ export default class TripDetails extends React.Component{
             )
         })
         return (
+
             <Modal id={`${id}`} open={true} options={options}>
+
                 <div className="modal-content">
+                <div id='savingTrip'>
+                    <p>Saving changes...</p>
+                </div>
                     <span className='card-title'>
-                        <h2 onBlur={(e)=>{this._updateName(e.target.textContent);}} contentEditable={true} suppressContentEditableWarning={true} >{name}</h2>
+                        <h2 className='trip-title' onBlur={(e)=>{this._updateName(e.target.textContent);}} contentEditable={true} suppressContentEditableWarning={true} >{name}</h2>
                     </span>
                     <div className='card-action grey-text'>
                         {/* <div onBlur={(e)=>{this._updateDate(e.target.textContent);}} contentEditable={true} suppressContentEditableWarning={true} >{date}</div> */}
@@ -77,9 +83,12 @@ export default class TripDetails extends React.Component{
                     <img src="photos/1_pillows_1558981007810.jpeg"></img>
                     </>
                 }
-                <div className="btn" onClick={this._toggleDeleteTrip}>
-                    {this.state.deleteThisTrip? `Undo`:`Delete Trip`}
-                </div>
+                {/* <div className="btn" onClick={this._toggleDeleteTrip}>
+                    {this.state.deleteThisTrip ? `Undo`:`Delete Trip`}
+                </div> */}
+
+                <a className="btn-floating right" title={this.state.deleteThisTrip ? 'undo': 'delete'} onClick={this._toggleDeleteTrip}><i className="material-icons">{this.state.deleteThisTrip ? 'undo':'delete'}</i></a>
+                <span className={this.state.deleteThisTrip ? "grey darken-3 undodelete-tooltip" : "grey darken-3 tooltip-hidden" }>Undo Delete</span>
             </Modal>
         )
     }
@@ -116,7 +125,8 @@ export default class TripDetails extends React.Component{
         
     }
     _updateName = (name) => {
-        this.setState({name})
+        this.setState({name},
+            this._showSaving)
         // this will also have to update lat/lon in state too
     }
     _editName = (e) => {
@@ -127,6 +137,7 @@ export default class TripDetails extends React.Component{
     _updateDate = (d) => {
         const date = d.toString()
         document.getElementById(`editTripDate${this.props.id}`).value = date
+        this._showSaving()
     }
     _editDate = (e) => {
         this.setState({
@@ -134,7 +145,8 @@ export default class TripDetails extends React.Component{
         })
     }
     _updateDetails = (details) => {
-        this.setState({details})
+        this.setState({details},
+            this._showSaving)
     }
     _editDetails = (e) => {
         this.setState({
@@ -142,7 +154,8 @@ export default class TripDetails extends React.Component{
         })
     }
     _updatePhotos = (photos) => {
-        this.setState({photos})
+        this.setState({photos},
+            this._showSaving)
     }
     _editPhotos = (e) => {
         this.setState({
@@ -150,7 +163,8 @@ export default class TripDetails extends React.Component{
         })
     }
     _toggleDeleteTrip = () => {
-        this.setState({deleteThisTrip : !this.state.deleteThisTrip})
+        this.setState({deleteThisTrip : !this.state.deleteThisTrip},
+            this._showSaving)
     }
     _getPhotos = async () => {
         const {data} = await axios.get(`/trips/photos/${this.props.id}`);
@@ -192,6 +206,19 @@ export default class TripDetails extends React.Component{
         //   this.setState({latestPhotoURL, tooltipShouldShow:true,})
         })
       }
+
+    _showSaving = () => {
+        const {name, details, photos, lat, lon} = this.state
+        let date = document.getElementById(`editTripDate${this.props.id}`).value.toString()
+        date = moment(date).format("YYYY-MM-DD")
+    
+        if((name!==this.props.name) || (date!==this.props.date) || (details!==this.props.details) || (photos!==this.props.photos)){
+            document.getElementById('savingTrip').style.display='inline'
+            setTimeout(function () {document.getElementById('savingTrip').style.display='none'}, 2000)
+        }
+    }
 }
+
+
 
 
