@@ -47,6 +47,9 @@ export default class TripDetails extends React.Component{
         })
         return (
             <Modal id={`${id}`} options={options}>
+                <div id='saving'>
+                    <p>Saving changes...</p>
+                    </div>
                 <div className="modal-content">
                     <span className='card-title'>
                         <h2 className='trip-title' onBlur={(e)=>{this._updateName(e.target.textContent);}} contentEditable={true} suppressContentEditableWarning={true} >{name}</h2>
@@ -188,6 +191,17 @@ export default class TripDetails extends React.Component{
         //   this.setState({latestPhotoURL, tooltipShouldShow:true,})
         })
       }
+
+    _showSaving = () => {
+        const {name, details, photos, lat, lon} = this.state
+        let date = document.getElementById(`editTripDate${this.props.id}`).value.toString()
+        date = moment(date).format("YYYY-MM-DD")
+    
+        if((name!==this.props.name) || (date!==this.props.date) || (details!==this.props.details) || (photos!==this.props.photos)){
+            {document.getElementById('saving').style.display='inline'
+            setTimeout(function () {document.getElementById('saving').style.display='none'}, 2000)} 
+        }
+    }
 }
 
 
