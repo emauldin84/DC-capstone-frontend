@@ -58,7 +58,7 @@ export default class TripDetails extends React.Component{
                         {/* <div onBlur={(e)=>{this._updateDate(e.target.textContent);}} contentEditable={true} suppressContentEditableWarning={true} >{date}</div> */}
                         <input type="text" id={`editTripDate${id}`} className="datepicker" defaultValue={date} ></input>
                     </div>
-                    <p onBlur={(e)=>{this._updateDetails(e.target.textContent);}} contentEditable={true} suppressContentEditableWarning={true} >{details}</p>
+                    <p onBlur={(e)=>{this._updateDetails(e.target.textContent)}} contentEditable={true} suppressContentEditableWarning={true} >{details}</p>
 
                 </div>
                 {this.state.photos.length === 0 ?
@@ -115,7 +115,8 @@ export default class TripDetails extends React.Component{
         
     }
     _updateName = (name) => {
-        this.setState({name})
+        this.setState({name},
+            this._showSaving())
         // this will also have to update lat/lon in state too
     }
     _editName = (e) => {
@@ -199,8 +200,10 @@ export default class TripDetails extends React.Component{
     
         if((name!==this.props.name) || (date!==this.props.date) || (details!==this.props.details) || (photos!==this.props.photos)){
             {document.getElementById('saving').style.display='inline'
-            setTimeout(function () {document.getElementById('saving').style.display='none'}, 2000)} 
+            setTimeout(function () {document.getElementById('saving').style.display='none'}, 2000)}
         }
+        console.log('state.name:', name)
+        console.log('props.name:', this.props.name)
     }
 }
 

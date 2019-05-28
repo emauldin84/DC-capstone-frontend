@@ -38,7 +38,7 @@ export default class SignIn extends Component {
                 <div className='input-field'>
                     <label htmlFor='password'>Password</label>
                     <input type='password' id='password' onChange={this._handleSignInChange} />
-                    {this.state.showSignUp ? null :<span class="helper-text right" onClick={this._toggleMenu}>Don't have an account? Sign up here.</span>}
+                    {this.state.showSignUp ? null :<span className="helper-text right" onClick={this._toggleMenu}>Don't have an account? Sign up here.</span>}
                 </div>
                 {this.state.showSignUp ? null :
                 <div className='input-field'>
