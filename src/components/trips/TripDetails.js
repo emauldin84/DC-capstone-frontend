@@ -132,12 +132,13 @@ export default class TripDetails extends React.Component{
                                 isDragReject, 
                                 isFileTooLarge,
                                 }) => (
-                                    <section className="container">
+                                    <section className="container dragdrop center">
                                         <div {...getRootProps()}>
-                                            <div className="btn">
-                                                <span>+ Images</span>
+                                            <div className="btn-floating addtripphotobtn">
+                                                <i className="material-icons ">add</i>
                                             </div>
-                                            <input {...getInputProps()} className='dragdrop'/>
+                                            <input {...getInputProps()} />
+                                            <p style={{height: '145px'}}>
                                             {files.length > 0 ? <ul>{files.map(file=><li>{file.key}</li>)}</ul> : null}
                                             {files.length === 0 && !isDragActive && `Drag & Drop image files here to upload photos of your trip!`}
                                             {files.length === 0 && isDragActive && !isDragReject && "Drop it like it's hot!"}
@@ -147,6 +148,7 @@ export default class TripDetails extends React.Component{
                                                     File is too large.
                                                 </div>
                                             )}
+                                            </p>
                                         </div>
                                     </section>
                                 )}

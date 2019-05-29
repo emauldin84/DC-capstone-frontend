@@ -486,7 +486,8 @@ body {
     margin-bottom: 0;
 }
 .dragdrop {
-    margin: 10px;
+height: 150px;
+border: 1px solid teal !important;
 }
 
 .helper-text {
@@ -497,4 +498,8 @@ body {
 
 .helper-text:hover {
     color:#26a69a !important;
+}
+
+.addtripphotobtn {
+    margin: 10px;
 }
