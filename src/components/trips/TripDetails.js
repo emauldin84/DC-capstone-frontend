@@ -61,10 +61,7 @@ export default class TripDetails extends React.Component{
         // this._getPhotos();
     }
     componentWillUnmount(){
-        // console.log("TripDetails, signing off...")
-        // const elem = document.getElementById(`editTripDate${this.props.id}`);
-        // const instance = M.Datepicker.getInstance(elem);
-        // instance.destroy();
+        clearTimeout(this.saving)
     }
     render(){
 
@@ -129,7 +126,7 @@ export default class TripDetails extends React.Component{
                 </div>
                 <a className="btn-floating right delete-trip-btn" title={this.state.deleteThisTrip ? 'undo': 'delete trip'} onClick={this._toggleDeleteTrip}><i className="material-icons">{this.state.deleteThisTrip ? 'undo':'delete'}</i></a>
                 <span className={this.state.deleteThisTrip ? "grey darken-3 undodelete-tooltip" : "grey darken-3 tooltip-hidden" }>Undo Delete</span>
-                
+
                     <span className='card-title'>
                         {/* <h2 className='trip-title' onBlur={(e)=>{this._updateName(e.target.textContent);}} contentEditable={true} suppressContentEditableWarning={true} >{name}</h2> */}
                     <StyledWrapper>
@@ -151,7 +148,7 @@ export default class TripDetails extends React.Component{
                         {/* <div onBlur={(e)=>{this._updateDate(e.target.textContent);}} contentEditable={true} suppressContentEditableWarning={true} >{date}</div> */}
                         <input type="text" id={`editTripDate${id}`} className="datepicker" defaultValue={date} ></input>
                     </div>
-                    <p onBlur={(e)=>{this._updateDetails(e.target.textContent);}} contentEditable={true} suppressContentEditableWarning={true} >{details}</p>
+                    <p onBlur={(e)=>{this._updateDetails(e.target.textContent);}} contentEditable={true} suppressContentEditableWarning={true} >{details || "Click here to enter Trip Details"}</p>
                 </div>
 
                     {/* <a title='Upload your trip photos!' id="addTripPhotos" className="pulse btn-floating waves-effect waves-light" onClick={this._choosePicture} onMouseOver={this._removePulse} >
@@ -334,7 +331,7 @@ export default class TripDetails extends React.Component{
     
         if((name!==this.props.name) || (date!==this.props.date) || (details!==this.props.details) || (photos!==this.props.photos)){
             document.getElementById('savingTrip').style.display='inline'
-            setTimeout(function () {document.getElementById('savingTrip').style.display='none'}, 2000)
+            this.saving = setTimeout(function () {document.getElementById('savingTrip').style.display='none'}, 1000)
         }
     }
 

@@ -110,21 +110,23 @@ export default class AddTrip extends Component {
                                 isDragReject, 
                                 isFileTooLarge,
                                 }) => (
-                                    <section className="container">
-                                        <div {...getRootProps()}>
-                                            <div className="btn">
-                                                <span>Images</span>
+                                    <section className="container dragdrop center">
+                                        <div className='dragdrop-div'{...getRootProps()}>
+                                            <div className="btn-floating addtripphotobtn">
+                                                <i className="material-icons ">add</i>
                                             </div>
                                             <input {...getInputProps()} />
-                                            {files.length > 0 ? <ul>{files.map(file=><li>{file.key}</li>)}</ul> : null}
-                                            {files.length === 0 && !isDragActive && `Upload photos for your trip!`}
-                                            {files.length === 0 && isDragActive && !isDragReject && "Drop it like it's hot!"}
-                                            {files.length === 0 && isDragReject && "File type not accepted, sorry!"}
-                                            {files.length === 0 && isFileTooLarge && (
-                                                <div className="text-danger mt-2">
-                                                    File is too large.
-                                                </div>
-                                            )}
+                                                <p className='dragDrop-p'>
+                                                {files.length > 0 ? <ul>{files.map(file=><li>{file.key}</li>)}</ul> : null}
+                                                {files.length === 0 && !isDragActive && `Upload photos for your trip!` }
+                                                {files.length === 0 && isDragActive && !isDragReject && "Drop it like it's hot!"}
+                                                {files.length === 0 && isDragReject && "File type not accepted, sorry!"}
+                                                {files.length === 0 && isFileTooLarge && (
+                                                    <div className="text-danger mt-2">
+                                                        File is too large.
+                                                    </div>
+                                                )}
+                                                </p>
                                         </div>
                                     </section>
                                 )}
@@ -273,6 +275,6 @@ export default class AddTrip extends Component {
         files.forEach((file, i) => {
             photoFormData.append(`file${i}`,file)
         })
-        this.setState({photoFormData, fileName:true, })
+        this.setState({photoFormData, fileName:true, files, })
     }
 }
