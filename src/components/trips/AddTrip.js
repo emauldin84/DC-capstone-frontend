@@ -118,7 +118,7 @@ export default class AddTrip extends Component {
                                             <input {...getInputProps()} />
                                                 <p className='dragDrop-p'>
                                                 {files.length > 0 ? <ul>{files.map(file=><li>{file.key}</li>)}</ul> : null}
-                                                {files.length === 0 && !isDragActive && `Upload photos for your trip!`}
+                                                {files.length === 0 && !isDragActive && `Upload photos for your trip!` }
                                                 {files.length === 0 && isDragActive && !isDragReject && "Drop it like it's hot!"}
                                                 {files.length === 0 && isDragReject && "File type not accepted, sorry!"}
                                                 {files.length === 0 && isFileTooLarge && (
@@ -275,6 +275,6 @@ export default class AddTrip extends Component {
         files.forEach((file, i) => {
             photoFormData.append(`file${i}`,file)
         })
-        this.setState({photoFormData, fileName:true, })
+        this.setState({photoFormData, fileName:true, files, })
     }
 }
