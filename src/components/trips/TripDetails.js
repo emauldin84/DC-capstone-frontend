@@ -135,11 +135,11 @@ export default class TripDetails extends React.Component{
                                     <section className="container">
                                         <div {...getRootProps()}>
                                             <div className="btn">
-                                                <span>Images</span>
+                                                <span>+ Images</span>
                                             </div>
-                                            <input {...getInputProps()} />
+                                            <input {...getInputProps()} className='dragdrop'/>
                                             {files.length > 0 ? <ul>{files.map(file=><li>{file.key}</li>)}</ul> : null}
-                                            {files.length === 0 && !isDragActive && `Upload photos for your trip!`}
+                                            {files.length === 0 && !isDragActive && `Drag & Drop image files here to upload photos of your trip!`}
                                             {files.length === 0 && isDragActive && !isDragReject && "Drop it like it's hot!"}
                                             {files.length === 0 && isDragReject && "File type not accepted, sorry!"}
                                             {files.length === 0 && isFileTooLarge && (
@@ -304,7 +304,7 @@ export default class TripDetails extends React.Component{
         this.setState({
             lat,
             lon,
-        })
+        }, this._showSaving())
         return (place_name)
     };
 
@@ -324,6 +324,7 @@ export default class TripDetails extends React.Component{
             const suggestionArryOfObjects =  inputLength === 0 ? [] : (this.state.response.length > 0 ? (this.state.response.filter(lang =>{
                 return lang.place_name.toLowerCase().slice(0, inputLength) === inputValue
             })) : []);
+            
             return suggestionArryOfObjects.map(suggestion => suggestion.place_name)
         };
         // You already implemented this logic above, so just use it.

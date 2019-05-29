@@ -485,8 +485,8 @@ body {
 .trip-title {
     margin-bottom: 0;
 }
-.autosuggest-wrapper {
-    font-size: 38px !important;
+.dragdrop {
+    margin: 10px;
 }
 
 .helper-text {
