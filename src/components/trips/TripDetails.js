@@ -41,8 +41,11 @@ export default class TripDetails extends React.Component{
     componentDidMount(){
         M.Datepicker.init(document.getElementById(`editTripDate${this.props.id}`), {autoClose:true, onSelect:this._updateDate});
         // M.Materialbox.init(document.getElementById(`editTripDate${this.props.id}`), {autoClose:true, onSelect:this._updateDate});
-        const carouselInstance = M.Carousel.init(document.querySelectorAll('.carousel')[0],{fullWidth: true, indicators: true});
-        this.setState({carouselInstance})
+        if(this.state.photos && this.state.photos.length > 0) {
+            const carouselInstance = M.Carousel.init(document.querySelectorAll('.carousel')[0],{fullWidth: true, indicators: true});
+            this.setState({carouselInstance})
+
+        }
         // this._getPhotos();
     }
     componentWillUnmount(){
@@ -53,7 +56,7 @@ export default class TripDetails extends React.Component{
     }
     render(){
         const { value, suggestions, files, photos, deleteAPhoto, } = this.state; // a little destructuring for conveinence 
-        console.log("photos: ", photos)
+        console.log("photos: ", typeof photos)
         const inputProps = {
             placeholder: 'Choose a destination',
             value: this.state.value, // this.state.value aka what's in the input box right now
@@ -162,7 +165,9 @@ export default class TripDetails extends React.Component{
                         <br />
                         <br />
                     {/* {photosArray ? <Slider onClick={()=> console.log(`you clicked on slider`)} >{slides}</Slider> : null} */}
-                    {photos ?    
+                    
+                    
+                    { photos && photos.length > 0 ?    
                         <>
                             {tooltipDecision}
                             <div className="carousel-wrapper">                            
