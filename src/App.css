@@ -495,3 +495,38 @@ body {
 .helper-text:hover {
     color:#26a69a !important;
 }
+
+.carousel-wrapper{
+    position: relative;
+}
+
+.carousel-close{
+    color: rgba(255, 255, 255, 0.4);
+    position: absolute;
+    top:0;
+    right: 0;
+    transform: scale(1.2)
+}
+.carousel-close:hover{
+    color: rgba(255, 255, 255, 0.8);
+    text-shadow: rgba(0, 0, 0, 0.4) 1px 1px;
+    transform: scale(1.4);
+}
+.tripphoto-tool-tip{
+    /* left: 130px; */
+    width: 100px;
+    color: #fff;
+    text-align: center;
+    padding: 5px 5px;
+    border-radius: 6px;
+    /* Position the tooltip text - see examples below! */
+    position: relative;
+    z-index: 1;
+    /* right: -100%; */
+    /* right: -20px; */
+    /* left: -20px; */
+    /* right: 20px; */
+    left: 80%;
+    /* top: 2px; */
+    /* left: 70; */
+}
