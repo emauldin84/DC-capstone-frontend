@@ -510,31 +510,34 @@ border: 1px solid teal !important;
     position: absolute;
     top:0;
     right: 0;
-    transform: scale(1.2)
+    transform: scale(1);
+
 }
 .carousel-close:hover{
-    color: rgba(255, 255, 255, 0.8);
+    /* color: rgba(255, 255, 255, 0.8);
     text-shadow: rgba(0, 0, 0, 0.4) 1px 1px;
-    transform: scale(1.4);
+    transform: scale(1.2); */
+    /* z-index: 9999999; */
+    cursor: pointer;
 }
-.tripphoto-tool-tip{
+/* .tripphoto-tool-tip{ */
     /* left: 130px; */
-    width: 100px;
+    /* width: 100px;
     color: #fff;
     text-align: center;
     padding: 5px 5px;
-    border-radius: 6px;
+    border-radius: 6px; */
     /* Position the tooltip text - see examples below! */
-    position: relative;
-    z-index: 1;
+    /* position: relative;
+    z-index: 1; */
     /* right: -100%; */
     /* right: -20px; */
     /* left: -20px; */
     /* right: 20px; */
-    left: 80%;
+    /* left: 80%; */
     /* top: 2px; */
     /* left: 70; */
-}
+/* } */
 
 .addtripphotobtn {
     margin: 10px;
