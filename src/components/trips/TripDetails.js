@@ -13,6 +13,7 @@ export default class TripDetails extends React.Component{
         super(props);
         this.state = {
             name : this.props.name,
+            value : this.props.name,
             date : this.props.date,
             details : this.props.details,
             editPhotos : false, // changing the photos?
@@ -42,7 +43,7 @@ export default class TripDetails extends React.Component{
         const { value, suggestions, files, photos,  } = this.state; // a little destructuring for conveinence 
         const inputProps = {
             placeholder: 'Choose a destination',
-            value, // this.state.value aka what's in the input box right now
+            value: this.state.value, // this.state.value aka what's in the input box right now
             onChange: this.updateAutosuggestField
         };
         const renderSuggestion = (suggestion, { query, isHighlighted }) => {
@@ -83,7 +84,7 @@ export default class TripDetails extends React.Component{
                 </div>
                     <span className='card-title'>
                         <h2 className='trip-title' onBlur={(e)=>{this._updateName(e.target.textContent);}} contentEditable={true} suppressContentEditableWarning={true} >{name}</h2>
-                    {/* <Autosuggest 
+                    <Autosuggest 
                             suggestions={suggestions} // this.state.suggestions to select from
                             onSuggestionsFetchRequested={this.onSuggestionsFetchRequested} // where Axios and the filtering happens
                             onSuggestionsClearRequested={this.onSuggestionsClearRequested} // onBlur(-ish), clears the rendered suggestions
@@ -93,9 +94,10 @@ export default class TripDetails extends React.Component{
                             highlightFirstSuggestion={true} // cues the user that they need to select one of these options
                             focusInputOnSuggestionClick={false} // when you take a suggestion, the input blurs
                             className='trip-title' 
-                            onBlur={()=>{this._updateName();}} contentEditable={true} 
-                            suppressContentEditableWarning={true}
-                        /> */}
+                            // onBlur={()=>{this._updateName();}} 
+                            // contentEditable={true} 
+                            // suppressContentEditableWarning={true}
+                        />
                     </span>
                     <div className='card-action grey-text'>
                         {/* <div onBlur={(e)=>{this._updateDate(e.target.textContent);}} contentEditable={true} suppressContentEditableWarning={true} >{date}</div> */}
@@ -161,13 +163,13 @@ export default class TripDetails extends React.Component{
             // we need to POST to db as well as alert the Dashboard 
             // component that it's time to freshly render with the latest from DB
 
-            const {name, location, details, lat, lon} = this.state
+            const {value, location, details, lat, lon} = this.state
             let date1 = document.getElementById(`editTripDate${this.props.id}`).value.toString() 
             const date = moment(date1, 'MMM Do YYYY').format("YYYY-MM-DD")
             const propsDate = moment(this.props.date).format("YYYY-MM-DD")
 
             const body = {
-                trip_location : location,
+                trip_location : value,
                 trip_date : date,
                 lat,
                 lon,
@@ -175,12 +177,12 @@ export default class TripDetails extends React.Component{
             }
             if(this.state.deleteThisTrip){
                 axios.delete(`trips/delete/${this.props.id}`)
-                .then(this.props.updateApp)
+                .then(() => {console.log("firing updateAppDashboard!!");this.props.updateAppDashboard()})
             }
-            if((name!==this.props.name)||(date!==propsDate)||(details!==this.props.details)){
+            if((value!==this.props.name)||(date!==propsDate)||(details!==this.props.details)){
                 console.log("prop id: ", this.props.id);
                 axios.post(`/trips/edit/${this.props.id}`, body)
-                .then(this.props.updateApp)
+                .then(() => {console.log("firing updateAppDashboard!!");this.props.updateAppDashboard()})
             }
 
             this.props.shutTheDoorBehindYou();

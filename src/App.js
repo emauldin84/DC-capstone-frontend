@@ -40,6 +40,9 @@ export default class App extends Component {
 
   getTripsByUserId = async () => {
     const response = await axios.get('/trips', {withCredentials: true})
+    console.log(" ");
+    console.log("Here's what App knows about:");
+    console.log(response);
     this.setState({
       trips: response.data
     })
