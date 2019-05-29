@@ -6,6 +6,13 @@ import M from 'materialize-css';
 import moment from 'moment';
 import Dropzone, {useDropzone} from "react-dropzone";
 import Autosuggest from 'react-autosuggest';
+import styled from 'styled-components'
+
+const StyledWrapper = styled.div`
+    & .react-autosuggest__input{
+        font-size: 38px !important;
+    }
+    `
 
 
 export default class TripDetails extends React.Component{
@@ -83,21 +90,21 @@ export default class TripDetails extends React.Component{
                     <p>Saving changes...</p>
                 </div>
                     <span className='card-title'>
-                        <h2 className='trip-title' onBlur={(e)=>{this._updateName(e.target.textContent);}} contentEditable={true} suppressContentEditableWarning={true} >{name}</h2>
-                    <Autosuggest 
-                            suggestions={suggestions} // this.state.suggestions to select from
-                            onSuggestionsFetchRequested={this.onSuggestionsFetchRequested} // where Axios and the filtering happens
-                            onSuggestionsClearRequested={this.onSuggestionsClearRequested} // onBlur(-ish), clears the rendered suggestions
-                            getSuggestionValue={this.getSuggestionValue} // selector for suggestion, drops into state of final value
-                            renderSuggestion={renderSuggestion} // the div of suggestion below input field
-                            inputProps={inputProps} // placeholder, final value, and the onChange function
-                            highlightFirstSuggestion={true} // cues the user that they need to select one of these options
-                            focusInputOnSuggestionClick={false} // when you take a suggestion, the input blurs
-                            className='trip-title' 
-                            // onBlur={()=>{this._updateName();}} 
-                            // contentEditable={true} 
-                            // suppressContentEditableWarning={true}
-                        />
+                        {/* <h2 className='trip-title' onBlur={(e)=>{this._updateName(e.target.textContent);}} contentEditable={true} suppressContentEditableWarning={true} >{name}</h2> */}
+                    <StyledWrapper>
+                        <Autosuggest
+                                
+                                suggestions={suggestions} // this.state.suggestions to select from
+                                onSuggestionsFetchRequested={this.onSuggestionsFetchRequested} // where Axios and the filtering happens
+                                onSuggestionsClearRequested={this.onSuggestionsClearRequested} // onBlur(-ish), clears the rendered suggestions
+                                getSuggestionValue={this.getSuggestionValue} // selector for suggestion, drops into state of final value
+                                renderSuggestion={renderSuggestion} // the div of suggestion below input field
+                                inputProps={inputProps} // placeholder, final value, and the onChange function
+                                highlightFirstSuggestion={true} // cues the user that they need to select one of these options
+                                focusInputOnSuggestionClick={false} // when you take a suggestion, the input blurs
+                                
+                            />
+                    </StyledWrapper>
                     </span>
                     <div className='card-action grey-text'>
                         {/* <div onBlur={(e)=>{this._updateDate(e.target.textContent);}} contentEditable={true} suppressContentEditableWarning={true} >{date}</div> */}
