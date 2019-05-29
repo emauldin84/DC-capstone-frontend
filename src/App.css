@@ -48,6 +48,13 @@ body {
     left: 55px;
     
 }
+
+.site-logo {
+    position: absolute;
+    left: 1%;
+    top: 1%;
+    vertical-align: middle;
+}
 .tooltip-hidden {
     display: none;
 }

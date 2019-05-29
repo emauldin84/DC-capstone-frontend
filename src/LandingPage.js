@@ -32,9 +32,9 @@ class LandingPage extends React.Component{
       <div className='container right column'>
         <div className='landing-page-div'>
           <div className='container section'>
-            <h2 className='landingtitle'>Map Travel App</h2>
-
+            {/* <h2 className='landingtitle'>Map Travel App</h2> */}
           </div>
+
           <SignIn signInUser={this._signIn} showModal={this._showModal} hideModal={this._hideModal}/>
         </div>
         <Modal id="loading" open={this.state.modalShouldShow} actions='&nbsp;' options={{dismissible:false,}}>
