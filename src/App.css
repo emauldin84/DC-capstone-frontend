@@ -427,7 +427,7 @@ body {
 
 .undodelete-tooltip {
     float: right;
-    left: -8px;
+    left: 25px;
     width: 100px !important;
     visibility: visible;
     color: #fff;
@@ -437,11 +437,11 @@ body {
     /* Position the tooltip text - see examples below! */
     position: relative;
     z-index: 1;
-    top: 4px;
+    top: -40px;
     /* left: -40%; */
 }
 .undodelete-tooltip:hover{
-    left: -5px;
+    left: 28px;
 }
 .undodelete-tooltip::after {
     content: "";
