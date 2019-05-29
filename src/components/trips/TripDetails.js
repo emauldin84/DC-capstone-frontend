@@ -6,6 +6,13 @@ import M from 'materialize-css';
 import moment from 'moment';
 import Dropzone, {useDropzone} from "react-dropzone";
 import Autosuggest from 'react-autosuggest';
+import styled from 'styled-components'
+
+const StyledWrapper = styled.div`
+    & .react-autosuggest__input{
+        font-size: 38px !important;
+    }
+    `
 
 
 export default class TripDetails extends React.Component{
@@ -83,21 +90,21 @@ export default class TripDetails extends React.Component{
                     <p>Saving changes...</p>
                 </div>
                     <span className='card-title'>
-                        <h2 className='trip-title' onBlur={(e)=>{this._updateName(e.target.textContent);}} contentEditable={true} suppressContentEditableWarning={true} >{name}</h2>
-                    <Autosuggest 
-                            suggestions={suggestions} // this.state.suggestions to select from
-                            onSuggestionsFetchRequested={this.onSuggestionsFetchRequested} // where Axios and the filtering happens
-                            onSuggestionsClearRequested={this.onSuggestionsClearRequested} // onBlur(-ish), clears the rendered suggestions
-                            getSuggestionValue={this.getSuggestionValue} // selector for suggestion, drops into state of final value
-                            renderSuggestion={renderSuggestion} // the div of suggestion below input field
-                            inputProps={inputProps} // placeholder, final value, and the onChange function
-                            highlightFirstSuggestion={true} // cues the user that they need to select one of these options
-                            focusInputOnSuggestionClick={false} // when you take a suggestion, the input blurs
-                            className='trip-title' 
-                            // onBlur={()=>{this._updateName();}} 
-                            // contentEditable={true} 
-                            // suppressContentEditableWarning={true}
-                        />
+                        {/* <h2 className='trip-title' onBlur={(e)=>{this._updateName(e.target.textContent);}} contentEditable={true} suppressContentEditableWarning={true} >{name}</h2> */}
+                    <StyledWrapper>
+                        <Autosuggest
+                                
+                                suggestions={suggestions} // this.state.suggestions to select from
+                                onSuggestionsFetchRequested={this.onSuggestionsFetchRequested} // where Axios and the filtering happens
+                                onSuggestionsClearRequested={this.onSuggestionsClearRequested} // onBlur(-ish), clears the rendered suggestions
+                                getSuggestionValue={this.getSuggestionValue} // selector for suggestion, drops into state of final value
+                                renderSuggestion={renderSuggestion} // the div of suggestion below input field
+                                inputProps={inputProps} // placeholder, final value, and the onChange function
+                                highlightFirstSuggestion={true} // cues the user that they need to select one of these options
+                                focusInputOnSuggestionClick={false} // when you take a suggestion, the input blurs
+                                
+                            />
+                    </StyledWrapper>
                     </span>
                     <div className='card-action grey-text'>
                         {/* <div onBlur={(e)=>{this._updateDate(e.target.textContent);}} contentEditable={true} suppressContentEditableWarning={true} >{date}</div> */}
@@ -125,14 +132,15 @@ export default class TripDetails extends React.Component{
                                 isDragReject, 
                                 isFileTooLarge,
                                 }) => (
-                                    <section className="container">
+                                    <section className="container dragdrop center">
                                         <div {...getRootProps()}>
-                                            <div className="btn">
-                                                <span>Images</span>
+                                            <div className="btn-floating addtripphotobtn">
+                                                <i className="material-icons ">add</i>
                                             </div>
                                             <input {...getInputProps()} />
+                                            <p style={{height: '145px'}}>
                                             {files.length > 0 ? <ul>{files.map(file=><li>{file.key}</li>)}</ul> : null}
-                                            {files.length === 0 && !isDragActive && `Upload photos for your trip!`}
+                                            {files.length === 0 && !isDragActive && `Drag & Drop image files here to upload photos of your trip!`}
                                             {files.length === 0 && isDragActive && !isDragReject && "Drop it like it's hot!"}
                                             {files.length === 0 && isDragReject && "File type not accepted, sorry!"}
                                             {files.length === 0 && isFileTooLarge && (
@@ -140,6 +148,7 @@ export default class TripDetails extends React.Component{
                                                     File is too large.
                                                 </div>
                                             )}
+                                            </p>
                                         </div>
                                     </section>
                                 )}
@@ -297,7 +306,7 @@ export default class TripDetails extends React.Component{
         this.setState({
             lat,
             lon,
-        })
+        }, this._showSaving())
         return (place_name)
     };
 
@@ -317,6 +326,7 @@ export default class TripDetails extends React.Component{
             const suggestionArryOfObjects =  inputLength === 0 ? [] : (this.state.response.length > 0 ? (this.state.response.filter(lang =>{
                 return lang.place_name.toLowerCase().slice(0, inputLength) === inputValue
             })) : []);
+            
             return suggestionArryOfObjects.map(suggestion => suggestion.place_name)
         };
         // You already implemented this logic above, so just use it.
