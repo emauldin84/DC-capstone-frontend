@@ -29,7 +29,9 @@ export default class SignIn extends Component {
     render() {
         return (
         <div className='container section'>
+            
             <form onSubmit={this.state.showSignUp ? this._handleSignUp : this._handleSignIn} className='white signin-signup'>
+            <img src='./assets/flaminGO_logo.png' width='100%' className='site-logo-landing center' alt='' title='Flamingo Logo'/>
                 <h5 className='grey-text text-darken-3 section'>{this.state.showSignUp ? 'Sign Up' : 'Sign In' }</h5>
                 <div className='input-field'>
                     <label htmlFor='email'>Email</label>

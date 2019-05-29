@@ -13,6 +13,13 @@ const StyledWrapper = styled.div`
         font-size: 38px !important;
     }
     `
+// const DeleteWrapper = styled.div`
+// & .carousel-close:hover{
+//     color: rgba(255, 255, 255, 0.8);
+//     text-shadow: rgba(0, 0, 0, 0.4) 1px 1px;
+//     transform: scale(1.2);
+// }
+// `
 
 
 
@@ -35,14 +42,22 @@ export default class TripDetails extends React.Component{
             files: [],
             deleteAPhoto: false,
             deleteMe: null,
+            carouselShouldSpin: true,
         };
         this._updateDate.bind(this);
+        this.carouselInstance = React.createRef()
     }
     componentDidMount(){
         M.Datepicker.init(document.getElementById(`editTripDate${this.props.id}`), {autoClose:true, onSelect:this._updateDate});
+
         // M.Materialbox.init(document.getElementById(`editTripDate${this.props.id}`), {autoClose:true, onSelect:this._updateDate});
-        const carouselInstance = M.Carousel.init(document.querySelectorAll('.carousel')[0],{fullWidth: true, indicators: true});
-        this.setState({carouselInstance})
+
+        if(this.state.photos && this.state.photos.length > 0) {
+            console.log('carouselShouldSping nested IF')
+            
+            this.setState({carouselShouldSpin: false,})
+        }
+        
         // this._getPhotos();
     }
     componentWillUnmount(){
@@ -52,7 +67,15 @@ export default class TripDetails extends React.Component{
         // instance.destroy();
     }
     render(){
-        const { value, suggestions, files, photos, deleteAPhoto, } = this.state; // a little destructuring for conveinence 
+
+        setTimeout(() => {
+            if(this.state.photos && this.state.photos.length > 0) {
+            this.materializeCarouselInstance = M.Carousel.init(this.carouselInstance.current,{fullWidth: true, indicators: false});
+        }}, 500
+    
+    )
+
+        const { value, suggestions, files, photos, deleteAPhoto, carouselShouldSpin } = this.state; // a little destructuring for conveinence 
         console.log("photos: ", photos)
         const inputProps = {
             placeholder: 'Choose a destination',
@@ -66,6 +89,7 @@ export default class TripDetails extends React.Component{
             </div>
             )
         }
+
         // let photosArray;
         // if(photos){
         //     if(photos.length > 0){
@@ -75,17 +99,25 @@ export default class TripDetails extends React.Component{
         let {id, name, date, details, lat, lon} = this.props;
 
         // console.log(photos);
-        const tooltipDecision = deleteAPhoto?  <span id="tripphototip" onClick={this._deleteMe} className="grey darken-3 tripphoto-tool-tip">Delete this photo?</span> : null ;
         const options = {onCloseStart : ()=>{this._saveChanges();}, onOpenEnd : ()=> {console.log(this.state.name, id)}};
         date = moment(date).format("MMM Do YYYY");
         let slides = null;
-        if(photos){
+        if(photos && photos.length > 0){
+            console.log(photos)
             slides = photos.map((photo, i) => {
                 return(
                     <a key={i} className="carousel-item" ><img src={`photos/${photo}`} alt='' /></a>
                     // <Slide  key={i} image={<img data-photo src={`photos/${photo}`}  alt='' />} />
                 )
-            })
+            }) 
+            // debugger;
+        }
+        if (carouselShouldSpin) {
+            // if(this.state.photos && this.state.photos.length > 0) {
+            //     console.log('carouselShouldSping nested IF')
+            //     const carouselInstance = M.Carousel.init(document.querySelectorAll('.carousel')[0],{fullWidth: true, indicators: true});
+            //     this.setState({carouselInstance, carouselShouldSpin: false,})
+            // }
         }
         return (
 
@@ -95,6 +127,9 @@ export default class TripDetails extends React.Component{
                 <div id='savingTrip'>
                     <p>Saving changes...</p>
                 </div>
+                <a className="btn-floating right delete-trip-btn" title={this.state.deleteThisTrip ? 'undo': 'delete trip'} onClick={this._toggleDeleteTrip}><i className="material-icons">{this.state.deleteThisTrip ? 'undo':'delete'}</i></a>
+                <span className={this.state.deleteThisTrip ? "grey darken-3 undodelete-tooltip" : "grey darken-3 tooltip-hidden" }>Undo Delete</span>
+                
                     <span className='card-title'>
                         {/* <h2 className='trip-title' onBlur={(e)=>{this._updateName(e.target.textContent);}} contentEditable={true} suppressContentEditableWarning={true} >{name}</h2> */}
                     <StyledWrapper>
@@ -139,12 +174,12 @@ export default class TripDetails extends React.Component{
                                 isFileTooLarge,
                                 }) => (
                                     <section className="container dragdrop center">
-                                        <div {...getRootProps()}>
+                                        <div className='dragdrop-div'{...getRootProps()}>
                                             <div className="btn-floating addtripphotobtn">
                                                 <i className="material-icons ">add</i>
                                             </div>
                                             <input {...getInputProps()} />
-                                            <p style={{height: '145px'}}>
+                                            <p className='dragDrop-p'>
                                             {files.length > 0 ? <ul>{files.map(file=><li>{file.key}</li>)}</ul> : null}
                                             {files.length === 0 && !isDragActive && `Drag & Drop image files here to upload photos of your trip!`}
                                             {files.length === 0 && isDragActive && !isDragReject && "Drop it like it's hot!"}
@@ -162,28 +197,22 @@ export default class TripDetails extends React.Component{
                         <br />
                         <br />
                     {/* {photosArray ? <Slider onClick={()=> console.log(`you clicked on slider`)} >{slides}</Slider> : null} */}
-                    {photos ?    
+                    
+                    
+                    { slides ?    
                         <>
-                            {tooltipDecision}
                             <div className="carousel-wrapper">                            
-                                <div id="carousel" className="carousel carousel-slider">
+                                <div ref={this.carouselInstance} id="carousel" className="carousel carousel-slider">
                                     {slides}
-                                </div>  
-                                <div className="carousel-close" onClick={this._deleteAPhoto} >
-                                    <i className="material-icons">close</i>
+                                </div> 
+                                <div className="carousel-close" title="delete photo" onClick={this._deleteMe} >
+                                    <i className="material-icons">delete</i>
                                 </div>
                             </div>
                         </>
                     : 
                         null
                     }
-
-
-
-
-
-                <a className="btn-floating right" title={this.state.deleteThisTrip ? 'undo': 'delete'} onClick={this._toggleDeleteTrip}><i className="material-icons">{this.state.deleteThisTrip ? 'undo':'delete'}</i></a>
-                <span className={this.state.deleteThisTrip ? "grey darken-3 undodelete-tooltip" : "grey darken-3 tooltip-hidden" }>Undo Delete</span>
 
             </Modal>
         )
@@ -395,22 +424,30 @@ export default class TripDetails extends React.Component{
     }
 
 
-    _deleteAPhoto = () => {
-        const {photos, carouselInstance,} = this.state
-        this.setState({deleteAPhoto : true})
-        this.setState({deleteMe: photos[carouselInstance.center] })
-    }
+    // _deleteAPhoto = () => {
+    //     const {photos,} = this.state
+    //     console.log(photos[this.materializeCarouselInstance.center])
+    //     this.setState({deleteAPhoto : true, deleteMe: photos[this.materializeCarouselInstance.center] })
+    // }
     _deleteMe = async() => {
-        const {deleteMe} = this.state;
+        const {photos,} = this.state
+        // console.log(photos[this.materializeCarouselInstance.center])
+        // this.setState({deleteAPhoto : true, deleteMe: photos[this.materializeCarouselInstance.center] })
+        // const {deleteMe,} = this.state;
+        const deleteMe = photos[this.materializeCarouselInstance.center]
+        console.log('deleteMe', deleteMe)
         const {data} = await axios.delete(`/photos/${this.props.id}/${deleteMe}`,)
-        const {photos} = data;
+        const newPhotos = data.photos;
         console.log("data: ", data);
+        this.materializeCarouselInstance.destroy()
         this.setState({
             deleteAPhoto : false,
             deleteMe : null,
-        })
-
-        this.setState({photos})
+            photos: newPhotos,
+            carouselShouldSpin: true,
+        }, 
+        // () => carouselInstance.destroy()
+        )
 
         // update trip
     }
