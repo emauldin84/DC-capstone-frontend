@@ -487,7 +487,26 @@ body {
 }
 .dragdrop {
 height: 150px;
-border: 1px solid teal !important;
+/* border: 1px solid teal !important; */
+}
+
+
+.dragdrop-div {
+    border: 1px dashed teal !important;
+    height: 100%;
+    box-shadow: -1px 9px 18px 0px rgba(0,0,0,0.75);
+
+    
+}
+
+.dragdrop-div:hover {
+    box-shadow: -1px 9px 18px 0px rgba(0,0,0,0.5);
+    transform: scale(1.01);
+}
+
+.delete-trip-btn {
+    top: -45px;
+    left: 30px;
 }
 
 .helper-text {

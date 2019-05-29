@@ -69,9 +69,11 @@ export default class TripDetails extends React.Component{
     render(){
 
         setTimeout(() => {
+            if(this.state.photos && this.state.photos.length > 0) {
             this.materializeCarouselInstance = M.Carousel.init(this.carouselInstance.current,{fullWidth: true, indicators: false});
-        }, 500
-        )
+        }}, 500
+    
+    )
 
         const { value, suggestions, files, photos, deleteAPhoto, carouselShouldSpin } = this.state; // a little destructuring for conveinence 
         console.log("photos: ", photos)
@@ -100,7 +102,8 @@ export default class TripDetails extends React.Component{
         const options = {onCloseStart : ()=>{this._saveChanges();}, onOpenEnd : ()=> {console.log(this.state.name, id)}};
         date = moment(date).format("MMM Do YYYY");
         let slides = null;
-        if(photos){
+        if(photos && photos.length > 0){
+            console.log(photos)
             slides = photos.map((photo, i) => {
                 return(
                     <a key={i} className="carousel-item" ><img src={`photos/${photo}`} alt='' /></a>
@@ -124,6 +127,9 @@ export default class TripDetails extends React.Component{
                 <div id='savingTrip'>
                     <p>Saving changes...</p>
                 </div>
+                <a className="btn-floating right delete-trip-btn" title={this.state.deleteThisTrip ? 'undo': 'delete trip'} onClick={this._toggleDeleteTrip}><i className="material-icons">{this.state.deleteThisTrip ? 'undo':'delete'}</i></a>
+                <span className={this.state.deleteThisTrip ? "grey darken-3 undodelete-tooltip" : "grey darken-3 tooltip-hidden" }>Undo Delete</span>
+                
                     <span className='card-title'>
                         {/* <h2 className='trip-title' onBlur={(e)=>{this._updateName(e.target.textContent);}} contentEditable={true} suppressContentEditableWarning={true} >{name}</h2> */}
                     <StyledWrapper>
@@ -168,12 +174,12 @@ export default class TripDetails extends React.Component{
                                 isFileTooLarge,
                                 }) => (
                                     <section className="container dragdrop center">
-                                        <div {...getRootProps()}>
+                                        <div className='dragdrop-div'{...getRootProps()}>
                                             <div className="btn-floating addtripphotobtn">
                                                 <i className="material-icons ">add</i>
                                             </div>
                                             <input {...getInputProps()} />
-                                            <p style={{height: '145px'}}>
+                                            <p className='dragDrop-p'>
                                             {files.length > 0 ? <ul>{files.map(file=><li>{file.key}</li>)}</ul> : null}
                                             {files.length === 0 && !isDragActive && `Drag & Drop image files here to upload photos of your trip!`}
                                             {files.length === 0 && isDragActive && !isDragReject && "Drop it like it's hot!"}
@@ -207,13 +213,6 @@ export default class TripDetails extends React.Component{
                     : 
                         null
                     }
-
-
-
-
-
-                <a className="btn-floating right" title={this.state.deleteThisTrip ? 'undo': 'delete'} onClick={this._toggleDeleteTrip}><i className="material-icons">{this.state.deleteThisTrip ? 'undo':'delete'}</i></a>
-                <span className={this.state.deleteThisTrip ? "grey darken-3 undodelete-tooltip" : "grey darken-3 tooltip-hidden" }>Undo Delete</span>
 
             </Modal>
         )
