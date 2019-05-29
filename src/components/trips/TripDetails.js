@@ -15,6 +15,7 @@ const StyledWrapper = styled.div`
     `
 
 
+
 export default class TripDetails extends React.Component{
     constructor(props){
         super(props);
@@ -32,11 +33,16 @@ export default class TripDetails extends React.Component{
             suggestions: [],
             response: [],
             files: [],
+            deleteAPhoto: false,
+            deleteMe: null,
         };
         this._updateDate.bind(this);
     }
     componentDidMount(){
         M.Datepicker.init(document.getElementById(`editTripDate${this.props.id}`), {autoClose:true, onSelect:this._updateDate});
+        // M.Materialbox.init(document.getElementById(`editTripDate${this.props.id}`), {autoClose:true, onSelect:this._updateDate});
+        const carouselInstance = M.Carousel.init(document.querySelectorAll('.carousel')[0],{fullWidth: true, indicators: true});
+        this.setState({carouselInstance})
         // this._getPhotos();
     }
     componentWillUnmount(){
@@ -46,8 +52,8 @@ export default class TripDetails extends React.Component{
         // instance.destroy();
     }
     render(){
-        console.log('this.state.location',this.state.location)
-        const { value, suggestions, files, photos,  } = this.state; // a little destructuring for conveinence 
+        const { value, suggestions, files, photos, deleteAPhoto, } = this.state; // a little destructuring for conveinence 
+        console.log("photos: ", photos)
         const inputProps = {
             placeholder: 'Choose a destination',
             value: this.state.value, // this.state.value aka what's in the input box right now
@@ -60,24 +66,24 @@ export default class TripDetails extends React.Component{
             </div>
             )
         }
-        let photosArray;
-        if(photos){
-            if(photos.length > 0){
-            photosArray = photos.map(photo => (photo));
-            }
-        }
+        // let photosArray;
+        // if(photos){
+        //     if(photos.length > 0){
+        //     photosArray = photos.map(photo => (photo));
+        //     }
+        // }
         let {id, name, date, details, lat, lon} = this.props;
 
         // console.log(photos);
-
+        const tooltipDecision = deleteAPhoto?  <span id="tripphototip" onClick={this._deleteMe} className="grey darken-3 tripphoto-tool-tip">Delete this photo?</span> : null ;
         const options = {onCloseStart : ()=>{this._saveChanges();}, onOpenEnd : ()=> {console.log(this.state.name, id)}};
         date = moment(date).format("MMM Do YYYY");
         let slides = null;
-        if(photosArray){
-            slides = photosArray.map((photo, i) => {
+        if(photos){
+            slides = photos.map((photo, i) => {
                 return(
-                    <Slide key={i} image={<img src={`photos/${photo}`}  alt='' />}>
-                    </Slide>
+                    <a key={i} className="carousel-item" ><img src={`photos/${photo}`} alt='' /></a>
+                    // <Slide  key={i} image={<img data-photo src={`photos/${photo}`}  alt='' />} />
                 )
             })
         }
@@ -155,7 +161,24 @@ export default class TripDetails extends React.Component{
                             </Dropzone>
                         <br />
                         <br />
-                    {photosArray ? <Slider>{slides}</Slider> : null}
+                    {/* {photosArray ? <Slider onClick={()=> console.log(`you clicked on slider`)} >{slides}</Slider> : null} */}
+                    {photos ?    
+                        <>
+                            {tooltipDecision}
+                            <div className="carousel-wrapper">                            
+                                <div id="carousel" className="carousel carousel-slider">
+                                    {slides}
+                                </div>  
+                                <div className="carousel-close" onClick={this._deleteAPhoto} >
+                                    <i className="material-icons">close</i>
+                                </div>
+                            </div>
+                        </>
+                    : 
+                        null
+                    }
+
+
 
 
 
@@ -367,11 +390,31 @@ export default class TripDetails extends React.Component{
         const {data} = await axios.post('/photos', photoFormData, {headers:{'content-type':'multipart/form-data'}});
         const photos = data.trip_photos;
         // const photos = photosStringObject.map(photo => JSON.parse(photo))
-        console.log("LOOK HERE");
-        console.log(photos);
-        console.log("*********************************************");
         this.setState({photos})
         // probably have to get a fresh trip object to get the latest photo references...
     }
+
+
+    _deleteAPhoto = () => {
+        const {photos, carouselInstance,} = this.state
+        this.setState({deleteAPhoto : true})
+        this.setState({deleteMe: photos[carouselInstance.center] })
+    }
+    _deleteMe = async() => {
+        const {deleteMe} = this.state;
+        const {data} = await axios.delete(`/photos/${this.props.id}/${deleteMe}`,)
+        const {photos} = data;
+        console.log("data: ", data);
+        this.setState({
+            deleteAPhoto : false,
+            deleteMe : null,
+        })
+
+        this.setState({photos})
+
+        // update trip
+    }
+
+
 }
 
