@@ -35,34 +35,22 @@ export default class ProfileModal extends React.Component{
             <div className="profile-top-row">
                 <div className="profile-picture-frame" onClick={this._choosePicture} onMouseEnter={this._showPhotoInput} onMouseLeave={this._hidePhotoInput} >
                       {photo?
-                        <img src={`photos/${photo}`} ></img>
+                        <img alt="" src={`photos/${photo}`} ></img>
                       :
                         <p>{`${this.state.firstName[0]}${this.state.lastName[0]}`}</p>
                       }
-
-                {/* <div className="file-field input-field"> */}
-                  {/* <div className="btn"> */}
-                      {/* <span>File</span> */}
                       <div className="fileupload-wrapper">
                         <input type="file" id="pictureinput" onChange={this._changeFileName} accept="image/png, image/jpeg, image/jpg, image/gif" />
                       </div>
                       <div className="fileupload-icon">
                         <i className="material-icons">add</i>
                       </div>
-                  {/* </div> */}
-                  {/* <div className="file-path-wrapper"> */}
-                      {/* <input className="file-path validate" type="text" placeholder="Select multiple trip images for upload"/> */}
-                  {/* </div> */}
-                {/* </div> */}
                 </div>
                 
-                  {/* <span id="phototip" onClick={this._undoPhoto} className={!this.state.latestPhotoURL > 0 ? "grey darken-3 tooltip-hidden" : "grey darken-3 tooltip" }>Undo?</span> */}
                   <span id="phototip" onClick={this._undoPhoto} className={!this.state.tooltipShouldShow? "grey darken-3 tooltip-hidden" : "grey darken-3 profile-tool-tip" }>Undo?</span>
-
-
                 <h3 className='user-name'>
                   <div id="firstName" onBlur={this._updateField} contentEditable={true} suppressContentEditableWarning={true}>{user.firstName}</div>
-                  <div>&nbsp;</div> {/*Flex was behaving "too well," so the most efficient way this programmer found was to add a "hidden" space between the two names. If you are reading this and would like to make a better suggestion, the programmer would welcome a Pull Request! */}
+                  <div>&nbsp;</div>
                   <div id="lastName" onBlur={this._updateField}  contentEditable={true} suppressContentEditableWarning={true}>{user.lastName}</div>
                 </h3>
                 
@@ -90,15 +78,12 @@ export default class ProfileModal extends React.Component{
     this._showSaving)
   }
   _saveChanges = async () => {
-    // Remember to clear and hide all those password fields
     const passwords =  document.querySelectorAll("[data-password]")
     passwords.forEach(password => {
       password.style="visibility: hidden;"
       password.value=""
     })
-    // Clear the tool tip for next time
     this.setState({tooltipShouldShow : false})
-    // we need to POST to db as well as alert the Landing Page 
     const { firstName, lastName, email, photoURL, newPassword, latestPhotoURL, } = this.state
     const body = { 
       firstName, 
@@ -119,7 +104,7 @@ export default class ProfileModal extends React.Component{
     const oldPassword = document.getElementById("oldpassword");
     oldPassword.style="visibility: visible;"
     oldPassword.addEventListener('keypress', this._listenForEnter);
-    oldPassword.focus() // put cursor in the input field
+    oldPassword.focus() 
   }
   _checkPassword = async () => {
     const password = document.getElementById("oldpassword").value
@@ -129,7 +114,6 @@ export default class ProfileModal extends React.Component{
       this._showNewPassword1()
     }
     else if(data.status === 401){
-      // Wrong password! We can alert the user to that here.
       document.getElementById("profile").classList.add("shake")
       this.setTimeout = setTimeout(()=>{document.getElementById("profile").classList.remove("shake")}, 830)
     }
@@ -150,7 +134,6 @@ export default class ProfileModal extends React.Component{
         )
     }
     else{
-      console.log("Passwords don't match!");
       document.getElementById("profile").classList.add("shake")
       setTimeout(()=>{document.getElementById("profile").classList.remove("shake")}, 830)
     }
@@ -180,7 +163,7 @@ export default class ProfileModal extends React.Component{
     (e.target).removeEventListener('keypress', this._listenForEnter)
   }
 
-  _listenForEnter = (e) => { // allows users to either press "Enter" or click outside of the password field to submit their request
+  _listenForEnter = (e) => { 
     if (e.keyCode === 13){
       console.log(e.srcElement.id);
       if(e.srcElement.id === "oldpassword"){
@@ -195,9 +178,6 @@ export default class ProfileModal extends React.Component{
     }
   }
   _changeFileName = (e) => {
-    console.log(" ******** ********** ********** _changeFileName firing");
-    // If we are to implement multiple files per upload, we will have to change the logic to a forEach or Map.
-    console.log(e.target.files[0]);
     if(e.target.files[0]){
       this.setState({
         fileName:e.target.files[0]
@@ -211,7 +191,6 @@ export default class ProfileModal extends React.Component{
     this.setState({
         photoFormData
     }, async () => {
-      console.log(photoFormData);
       const {data} = await axios.post('/users/profilepic', this.state.photoFormData, {headers:{'content-type':'multipart/form-data'}} )
       const latestPhotoURL = data.newPic[0].photo_url
       this.setState({latestPhotoURL, tooltipShouldShow:true,})
@@ -233,7 +212,6 @@ export default class ProfileModal extends React.Component{
     const {data} = await axios.post('/users/profilepic/undo', {url: this.state.photoURL})
     const latestPhotoURL = data.newPic[0].photo_url
     this.setState({latestPhotoURL}, () => {
-      // turn off tool tip
       this.setState({tooltipShouldShow:false, fileName:null})
       let input = document.getElementById("pictureinput")
       input.value = null
@@ -242,12 +220,11 @@ export default class ProfileModal extends React.Component{
   }
 
   _showSaving = () => {
-    const { firstName, lastName, email, photoURL, newPassword, latestPhotoURL, } = this.state
+    const { firstName, lastName, email, photoURL, newPassword, } = this.state
 
     if((newPassword || firstName!==this.props.firstName) || (lastName!==this.props.lastName) || (email!==this.props.email) || (photoURL!==this.props.photoURL) || (newPassword!==null)){
-      {document.getElementById('saving').style.display='inline'
-      this.autoSave = setTimeout(function () {document.getElementById('saving').style.display='none'}, 1000)
-    } 
+      document.getElementById('saving').style.display='inline';
+      this.autoSave = setTimeout(function () {document.getElementById('saving').style.display='none'}, 1000);
     }
   }
 

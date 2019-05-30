@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import MapGL, { Marker } from 'react-map-gl';
-import TripDetails from '../trips/TripDetails';
-import moment from 'moment'
+import moment from 'moment';
 const TOKEN = 'pk.eyJ1Ijoiam9uYXRoYW5yYXkxNyIsImEiOiJjanZ3aHd1ZzM0Y3B5NDlxcjRsbnIzcTAxIn0.ygYs-iXNclW8pJeuknEvJA';
 
 export default class Map extends Component {
@@ -26,21 +25,14 @@ export default class Map extends Component {
   componentWillUnmount(){
     window.removeEventListener('resize', this._assignMapDimensions);
   }
-
   render() {
       const {viewport} = this.state;
-      const { trips, selectedTrip, clickedTrip, } = this.props
-      
-      // translate today's date
+      const { trips, selectedTrip, clickedTrip, } = this.props;
       let today = moment(new Date()).format();
-      // console.log('moment:', today)
-      
       const arrayOfMarkers = trips && trips.map(({id, trip_location, trip_date, trip_details, lat, lon, photos}) => {
         let selected = '';
         selectedTrip === id ? selected = 'fa-map-pin-hover' : selected = '';
-        // translate trip date
         let tripDate = moment(trip_date.split("T").shift()).format()
-        // console.log('tripDate',tripDate)
         return(
           <div key={id} onClick={()=>clickedTrip(id)} onMouseEnter={()=>{this.props.tripSelector(id)}} onMouseLeave={this.props.tripDeselector}>
               <Marker
