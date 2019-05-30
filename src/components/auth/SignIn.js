@@ -135,8 +135,8 @@ export default class SignIn extends Component {
     }
     _handleSignUp = async (e) => {
         e.preventDefault();
-        const {email} = this.state.signUp
-        if (email.includes("@") && email.includes(".")){            
+        const {email, password, } = this.state.signUp
+        if (email.includes("@") && email.includes(".") && password.length > 1){            
             const signInCheck = await axios.post('/signin', this.state.signUp)
             const {data} = signInCheck;
             console.log("Sign up says ",data);
