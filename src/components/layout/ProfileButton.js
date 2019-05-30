@@ -22,18 +22,16 @@ export default function ProfileButton({user, clearState}){
     await axios.get('/signout');
     clearState();
 }
-  const photo = user.photoURL
+  const photo = user.photoURL;
   return(
     <div className="museum" onMouseLeave={hoverOff} >
       <div className="gallery-wall" onMouseEnter={hoverOn} onClick={hoverOn}>
         <div className="picture-frame">
           {photo? 
-            <img src={`photos/${photo}`} ></img>
+            <img alt="" src={`photos/${photo}`} ></img>
           :
             <p>{`${user.firstName[0]}${user.lastName[0]}`}</p>
           }
-          {/* <img src="https://cdn.pixabay.com/photo/2016/08/31/11/54/user-1633249_1280.png"></img> */}
-          {/* <p>{`${user.firstName[0]}${user.lastName[0]}`}</p> */}
         </div>
       </div>
       <div id="fab" className="foward-action-removed"  >
@@ -43,10 +41,7 @@ export default function ProfileButton({user, clearState}){
               <i className="fas fa-user-cog"></i>
             </li>
           </a>
-          <a> {/* Reduntant/Useless `<a></a>` tag because they impart their own padding/margin. 
-                Rather than unstyle the tag above to match the button below, the lazy programmer
-                behind this choice decided to apply the styles here instead, cheaply, with a useless
-                anchor tag. */}
+          <a>
             <li title="Sign Out" onClick={(e)=> logOut(e) } className="btn btn-floating fab-buttons">
               <i className="fas fa-door-open"></i>
             </li>
@@ -56,9 +51,3 @@ export default function ProfileButton({user, clearState}){
     </div>
     )
 }
-
-// .liquorcabinet 
-// .picture-frame
-// .picture-frame img 
-
-

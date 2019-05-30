@@ -684,6 +684,9 @@ height: 150px;
     height: 95vw;
 }
 
+.mapbox-gl {
+    border-radius: 2px;
+}
 
 /* > iPhone 6 */
 @media only screen and (min-width: 360px){
@@ -745,6 +748,75 @@ height: 150px;
         flex-direction: row;
         justify-content: space-evenly;
     }
+
+
+
+
+    #tripdetails{
+        width: 70%;
+        -webkit-overflow-scrolling: touch;
+    }
+    .delete-trip-btn{
+        float: right;
+        margin-right: 22px;
+        top: 0px;
+    }
+    .modal-content{
+        padding: 0 !important;
+        margin: 10px !important;
+    }
+    .map-detail-wrapper{
+        display: flex;
+        flex-direction: row;
+        margin-left: 10px !important;
+        margin-right: 10px !important;
+        justify-content: space-around;
+    }
+    
+    .map-detail-wrapper p{
+        margin: 10px;
+        min-width: 420px;
+        max-width: 420px;
+        max-height: 240px;
+        overflow-y: auto;
+    }
+    .mini-map{
+        min-width: 250px;
+        min-height: 250px;
+        max-width: 330px;
+        max-height: 330px;
+    }
+    .mini-map img{
+        width: 100%;
+        height: 100%;
+    }
+    
+
+
+
+
+    .profile-tool-tip{
+        width: 60px;
+        visibility: visible;
+        color: #fff;
+        text-align: center;
+        padding: 5px 0;
+        border-radius: 6px;
+        /* Position the tooltip text - see examples below! */
+        position: relative;
+        z-index: 1;
+        top: 0px;
+        left: -220px;
+    }
+    
+    .profile-tool-tip:hover{
+        left: -217px;
+    }
+    
+
+
+
+
 }
 /* > iPad */
 @media only screen and (min-width: 760px){
