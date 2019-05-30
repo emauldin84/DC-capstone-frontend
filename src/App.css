@@ -136,6 +136,7 @@ body {
 
 .mapbox-gl {
     height: 100%;
+    border-radius: 2px;
 }
 
 #myform.white {
@@ -481,9 +482,12 @@ body {
     /* margin-top: 20px; */
 }
 
-.signin-signup {
+.white.signin-signup {
     margin-top: 0;
+    background-color: rgba(255, 255, 255, .85) !important;
+    border-radius: 2px;
 }
+
 
 .landing-page-div {
     margin-top: 20px;
