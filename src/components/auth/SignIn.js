@@ -28,7 +28,7 @@ export default class SignIn extends Component {
     }
     render() {
         return (
-        <div className='container section'>
+        <div id="signin" className='container section'>
             
             <form onSubmit={this.state.showSignUp ? this._handleSignUp : this._handleSignIn} className='white signin-signup'>
             <img src='./assets/flaminGO_logo.png' width='100%' className='site-logo-landing center' alt='' title='Flamingo Logo'/>
@@ -123,6 +123,10 @@ export default class SignIn extends Component {
                 this.props.signInUser(data)
             }
             else{
+                // Wrong password. Let's show them the signup process.
+                // Shake
+                document.getElementById("signin").classList.add("shake")
+                setTimeout(()=>{document.getElementById("signin").classList.remove("shake")}, 830)          
                 this.setState({
                     showSignUp : true
                 })
