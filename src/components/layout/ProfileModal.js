@@ -18,6 +18,9 @@ export default class ProfileModal extends React.Component{
       tooltipShouldShow : false,
     };
   }
+  componentWillUnmount(){
+    clearTimeout(this.setTimeout);
+  }
   render(){
     const {user} = this.props;
     const photo = this.state.latestPhotoURL? this.state.latestPhotoURL : this.state.photoURL;
@@ -127,7 +130,7 @@ export default class ProfileModal extends React.Component{
     else if(data.status === 401){
       // Wrong password! We can alert the user to that here.
       document.getElementById("profile").classList.add("shake")
-      setTimeout(()=>{document.getElementById("profile").classList.remove("shake")}, 830)
+      this.setTimeout = setTimeout(()=>{document.getElementById("profile").classList.remove("shake")}, 830)
     }
   }
   _compareTwoPasswords = () => {
