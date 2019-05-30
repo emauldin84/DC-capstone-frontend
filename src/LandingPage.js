@@ -55,10 +55,7 @@ class LandingPage extends React.Component{
       </div>
     )
   }
-  _getRandomBackground = async () => {
-    const randomNumber = Math.floor(Math.random() * Math.floor(3)) // gets random number, 0 - 3
-    document.body.style.backgroundImage = `url("./assets/desktop_${randomNumber}.png")`;
-  }
+  
   _signIn = (user) => {
     this.setState({user})
   }

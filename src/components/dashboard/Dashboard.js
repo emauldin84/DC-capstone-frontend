@@ -124,7 +124,7 @@ export default class Dashboard extends Component {
         return (
             <div className='dashboard section'>
                 <div className='row'>
-                    <div className='col s3 m2'>
+                    <div className='col s3 m2 dashboard-tools'>
                         {/* <NavLink  className='addTrip btn-floating waves-effect waves-light' to='/addtrip' title='add trip'></NavLink> */}
                         
                             {this.state.showModal?

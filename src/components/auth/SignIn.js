@@ -88,9 +88,10 @@ export default class SignIn extends Component {
         )
     }
     _getRandomBackground = async () => {
-        const randomNumber = Math.floor(Math.random() * Math.floor(3)) // gets random number, 0 - 3
-        document.body.style.backgroundImage = `url("./assets/desktop_${randomNumber}.png")`;
-    }
+        const randomNumber = Math.floor(Math.random() * (19 - 3)) + 3 // gets random number, 3 - 19
+        document.body.style.backgroundImage = `url("./assets/desktop_${randomNumber}.jpg")`;
+      }
+    
     _handleSignInChange = (e) => {
         this.setState({
             signIn : {

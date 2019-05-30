@@ -51,7 +51,7 @@ body {
 
 .site-logo {
     position: absolute;
-    left: 1%;
+    left: 3%;
     top: 1%;
     vertical-align: middle;
 }
@@ -136,6 +136,7 @@ body {
 
 .mapbox-gl {
     height: 100%;
+    border-radius: 2px;
 }
 
 #myform.white {
@@ -481,9 +482,12 @@ body {
     /* margin-top: 20px; */
 }
 
-.signin-signup {
+.white.signin-signup {
     margin-top: 0;
+    background-color: rgba(255, 255, 255, .85) !important;
+    border-radius: 2px;
 }
+
 
 .landing-page-div {
     margin-top: 20px;
@@ -573,6 +577,20 @@ height: 150px;
 
 }
 
+
+@media only screen and (max-width: 1062px) {
+  .dashboard {
+      flex-direction: column !important;
+
+  }
+  .dashboard-tools {
+      flex-direction: row !important;
+  }
+  .mapbox-gl {
+      height: 80%;
+  }
+}
+
 .mini-map{
     width: 20vw;
     height: 20vw;
@@ -586,4 +604,5 @@ height: 150px;
 }
 .map-detail-wrapper{
     display: block;
+
 }
