@@ -135,21 +135,31 @@ export default class SignIn extends Component {
     }
     _handleSignUp = async (e) => {
         e.preventDefault();
-        // const 
-        const signInCheck = await axios.post('/signin', this.state.signUp)
-        const {data} = signInCheck;
-        if (signInCheck.status !== 200){
-            console.log("Something is wrong with the backend");
-        }
-        else{
-            if(data.id){
-                this.props.signInUser(data)
+        const {email} = this.state.signUp
+        if (email.includes("@") && email.includes(".")){            
+            const signInCheck = await axios.post('/signin', this.state.signUp)
+            const {data} = signInCheck;
+            console.log("Sign up says ",data);
+            if (signInCheck.status !== 200){
+                console.log("Something is wrong with the backend");
             }
             else{
-                this.setState({
-                    showSignUp : true
-                })
+                if(data.id){
+                    this.props.signInUser(data)
+                }
+                else{
+                    document.getElementById("signin").classList.add("shake")
+                    setTimeout(()=>{document.getElementById("signin").classList.remove("shake")}, 830)              
+                    this.setState({
+                        showSignUp : true
+                    })
+                }
             }
+        }
+        else{
+            // no email provided.
+            document.getElementById("signin").classList.add("shake")
+            setTimeout(()=>{document.getElementById("signin").classList.remove("shake")}, 830)          
         }
     }
     _toggleMenu = () => {
