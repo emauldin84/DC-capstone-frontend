@@ -577,16 +577,32 @@ height: 150px;
 
 }
 
-@media only screen and (max-width: 1062px) {
-.dashboard {
-    flex-direction: column !important;
 
+@media only screen and (max-width: 1062px) {
+  .dashboard {
+      flex-direction: column !important;
+
+  }
+  .dashboard-tools {
+      flex-direction: row !important;
+  }
+  .mapbox-gl {
+      height: 80%;
+  }
 }
-.dashboard-tools {
-    flex-direction: row !important;
+
+.mini-map{
+    width: 20vw;
+    height: 20vw;
+    float: left;
+    padding-bottom: 10px;
+    padding-right: 10px;
 }
-.mapbox-gl {
-    height: 80%;
+.mini-map img{
+    width: 100%;
+    height: 100%;
 }
+.map-detail-wrapper{
+    display: block;
 
 }
