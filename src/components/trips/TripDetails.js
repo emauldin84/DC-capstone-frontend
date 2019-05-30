@@ -7,6 +7,7 @@ import moment from 'moment';
 import Dropzone, {useDropzone} from "react-dropzone";
 import Autosuggest from 'react-autosuggest';
 import styled from 'styled-components'
+import { async } from 'q';
 
 const StyledWrapper = styled.div`
     & .react-autosuggest__input{
@@ -43,6 +44,7 @@ export default class TripDetails extends React.Component{
             deleteAPhoto: false,
             deleteMe: null,
             carouselShouldSpin: true,
+            staticMap: null,
         };
         this._updateDate.bind(this);
         this.carouselInstance = React.createRef()
@@ -148,7 +150,10 @@ export default class TripDetails extends React.Component{
                         {/* <div onBlur={(e)=>{this._updateDate(e.target.textContent);}} contentEditable={true} suppressContentEditableWarning={true} >{date}</div> */}
                         <input type="text" id={`editTripDate${id}`} className="datepicker" defaultValue={date} ></input>
                     </div>
-                    <p onBlur={(e)=>{this._updateDetails(e.target.textContent);}} contentEditable={true} suppressContentEditableWarning={true} >{details || "Click here to enter Trip Details"}</p>
+                    <div><div className="mini-map">
+                        <img alt="map" src={`https://www.mapquestapi.com/staticmap/v5/map?key=Rum6uC90qtUc0AkV3bXdLYhrlxdqGi3K&center=${lat},${lon}&size=@2x`}></img>
+                    </div>
+                    <p onBlur={(e)=>{this._updateDetails(e.target.textContent);}} contentEditable={true} suppressContentEditableWarning={true} >{details || "Click here to enter Trip Details"}</p></div>
                 </div>
 
                     {/* <a title='Upload your trip photos!' id="addTripPhotos" className="pulse btn-floating waves-effect waves-light" onClick={this._choosePicture} onMouseOver={this._removePulse} >
