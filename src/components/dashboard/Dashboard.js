@@ -122,9 +122,9 @@ export default class Dashboard extends Component {
             : 
             null;        
         return (
-            <div className='dashboard section'>
-                <div className='row'>
-                    <div className='col s3 m2 dashboard-tools'>
+            <div className='dashboard'>
+                <div className='dashboard-map-n-tools'>
+                    <div className='dashboard-tools'>
                         {/* <NavLink  className='addTrip btn-floating waves-effect waves-light' to='/addtrip' title='add trip'></NavLink> */}
                         
                             {this.state.showModal?
@@ -132,7 +132,7 @@ export default class Dashboard extends Component {
                             :
                             null
                             }
-                        <div className='row addtrip-searchtrip'>
+                        <div className='addtrip-searchtrip'>
                             <a href={`#newtrip`} title='add new trip' className={trips.length <= 0 ? "pulse modal-trigger addTrip btn-floating waves-effect waves-light" : `modal-trigger addTrip btn-floating waves-effect waves-light`}>
                                 <i className="pulse material-icons addtrip" >add</i>
                             </a>
@@ -145,26 +145,28 @@ export default class Dashboard extends Component {
 
                         </div>
                         {tripDetails}
-                        {trips.length <= 0 ? null :
-                        <TripToggle 
-                            past={this.state.pastTrips} 
-                            future={this.state.futureTrips} 
-                            changePast={this._onPastChange}
-                            changeFuture={this._onFutureChange}
-                            />}
-                        
-                        {trips.length <= 0 ? null :
-                        <TripList 
-                            trips={viewableTrips.filter(searchingFor(this.state.searchWord)).map(trip => trip)}
-                            tripDeselector={this._deSelectTrip} 
-                            tripSelector={this._selectTripId} 
-                            selectedTrip={this.state.selectedTripId}
-                            updateAppDashboard={updateApp}
-                            clickedTrip={this._clickedOnTrip}
+                        <div className="dashboard-toggle-list">
+                            {trips.length <= 0 ? null :
+                            <TripToggle 
+                                past={this.state.pastTrips} 
+                                future={this.state.futureTrips} 
+                                changePast={this._onPastChange}
+                                changeFuture={this._onFutureChange}
+                                />}
                             
-                        />}
+                            {trips.length <= 0 ? null :
+                            <TripList 
+                                trips={viewableTrips.filter(searchingFor(this.state.searchWord)).map(trip => trip)}
+                                tripDeselector={this._deSelectTrip} 
+                                tripSelector={this._selectTripId} 
+                                selectedTrip={this.state.selectedTripId}
+                                updateAppDashboard={updateApp}
+                                clickedTrip={this._clickedOnTrip}
+                                
+                            />}
+                        </div>
                     </div>
-                    <div id="mapbox" className='col s9 m10'>
+                    <div id="mapbox" className=''>
                         <Mapbox 
                             trips={viewableTrips.filter(searchingFor(this.state.searchWord)).map(trip => trip)} 
                             tripDeselector={this._deSelectTrip} 

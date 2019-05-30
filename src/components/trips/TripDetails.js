@@ -10,7 +10,7 @@ import styled from 'styled-components'
 
 const StyledWrapper = styled.div`
     & .react-autosuggest__input{
-        font-size: 38px !important;
+        font-size: 18px !important;
     }
     `
 // const DeleteWrapper = styled.div`
@@ -118,13 +118,13 @@ export default class TripDetails extends React.Component{
         }
         return (
 
-            <Modal id={`${id}`} open={true} options={options}>
+            <Modal id="tripdetails" open={true} options={options}>
 
                 <div className="modal-content">
                 <div id='savingTrip'>
                     <p>Saving changes...</p>
                 </div>
-                <a className="btn-floating right delete-trip-btn" title={this.state.deleteThisTrip ? 'undo': 'delete trip'} onClick={this._toggleDeleteTrip}><i className="material-icons">{this.state.deleteThisTrip ? 'undo':'delete'}</i></a>
+                <a className="btn-floating delete-trip-btn" title={this.state.deleteThisTrip ? 'undo': 'delete trip'} onClick={this._toggleDeleteTrip}><i className="material-icons">{this.state.deleteThisTrip ? 'undo':'delete'}</i></a>
                 <span className={this.state.deleteThisTrip ? "grey darken-3 undodelete-tooltip" : "grey darken-3 tooltip-hidden" }>Undo Delete</span>
 
                     <span className='card-title'>

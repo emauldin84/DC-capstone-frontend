@@ -4,7 +4,7 @@ import TripDetails from './TripDetails';
 
 export default function TripList({selectedTrip, tripSelector, tripDeselector, updateAppDashboard, trips, clickedTrip}){
     return(
-        <div className='trip-list section'>
+        <div className='trip-list'>
             <ul className='trip-unordered-list'>
                     {trips && trips.map(({id, trip_location, trip_date, trip_details, lat, lon, photos}) => {
                         let selected = '';

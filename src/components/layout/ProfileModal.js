@@ -20,6 +20,7 @@ export default class ProfileModal extends React.Component{
   }
   componentWillUnmount(){
     clearTimeout(this.setTimeout);
+    clearTimeout(this.autoSave);
   }
   render(){
     const {user} = this.props;
@@ -31,7 +32,7 @@ export default class ProfileModal extends React.Component{
           <div id='saving'>
             <p>Saving changes...</p>
           </div>
-            <div className="profile-top-row row">
+            <div className="profile-top-row">
                 <div className="profile-picture-frame" onClick={this._choosePicture} onMouseEnter={this._showPhotoInput} onMouseLeave={this._hidePhotoInput} >
                       {photo?
                         <img src={`photos/${photo}`} ></img>
@@ -245,7 +246,7 @@ export default class ProfileModal extends React.Component{
 
     if((newPassword || firstName!==this.props.firstName) || (lastName!==this.props.lastName) || (email!==this.props.email) || (photoURL!==this.props.photoURL) || (newPassword!==null)){
       {document.getElementById('saving').style.display='inline'
-      setTimeout(function () {document.getElementById('saving').style.display='none'}, 2000)
+      this.autoSave = setTimeout(function () {document.getElementById('saving').style.display='none'}, 1000)
     } 
     }
   }

@@ -25,7 +25,7 @@ export default function ProfileButton({user, clearState}){
   const photo = user.photoURL
   return(
     <div className="museum" onMouseLeave={hoverOff} >
-      <div className="gallery-wall" onMouseEnter={hoverOn} >
+      <div className="gallery-wall" onMouseEnter={hoverOn} onClick={hoverOn}>
         <div className="picture-frame">
           {photo? 
             <img src={`photos/${photo}`} ></img>

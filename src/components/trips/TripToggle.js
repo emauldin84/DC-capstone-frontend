@@ -14,31 +14,34 @@ export default class tripToggle extends Component {
         const {past, future, changePast, changeFuture} = this.props
         return (
             <div className='triptoggle'>
-                  {/* Past Trips Switch */}
-                <label>Past Trips</label>
-                <div className="switch">
-                    <label>
-                    hide
-                    <input type="checkbox" defaultChecked onChange={changePast}/>
-                    <span className="lever"></span>
-                    show
-                    </label>
+                <div className="past">
+                    {/* Past Trips Switch */}
+                    <label>Past Trips</label>
+                    <div className="switch">
+                        <label>
+                        hide
+                        <input type="checkbox" defaultChecked onChange={changePast}/>
+                        <span className="lever"></span>
+                        show
+                        </label>
+                    </div>
                 </div>
                 <p>
 
 
                 </p>
-                {/* Future Trips Switch */}
-                <label>Future Trips</label>
-                <div className="switch">
-                    <label>
-                    hide
-                    <input type="checkbox" defaultChecked onChange={changeFuture}/>
-                    <span className="lever"></span>
-                    show
-                    </label>
+                <div className="future">
+                    {/* Future Trips Switch */}
+                    <label>Future Trips</label>
+                    <div className="switch">
+                        <label>
+                        hide
+                        <input type="checkbox" defaultChecked onChange={changeFuture}/>
+                        <span className="lever"></span>
+                        show
+                        </label>
+                    </div>
                 </div>
-
 
                 
             </div>

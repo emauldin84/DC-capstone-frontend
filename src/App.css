@@ -30,8 +30,9 @@ body {
 
 /* new trip modal resize issue fix */
 #newtrip {
-    width: 80%;
-    max-height: 80%;
+    width: 90%;
+    max-height: 90%;
+    -webkit-overflow-scrolling: touch;
 }
 
 .tooltip {
@@ -271,10 +272,38 @@ body {
     border-radius: 50px;
 }
 
-.profile-modal {
+#profile{
+    width: 90%;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    -webkit-overflow-scrolling: touch;
+}
+.profile-top-row{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+.fileupload-wrapper{
+    /* padding-top: 50px !important; */
+    width: 100px !important;
+    /* display: none; */
+}
+.profile-modal{
+    margin-top: 20px;
+}
+#firstName, #lastName{
+    font-size: 2rem;
+    padding-top: 20px;
+}
+#email{
+    margin-top:0;
+}
+#phototip{
+
+}
+.password-fields{
+    min-width: 70%;
     /* align-content: space-between; */
 }
 
@@ -295,7 +324,6 @@ body {
 }
 
 .profile-second-row{
-    padding-top: 1vh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -407,12 +435,12 @@ body {
     /* Position the tooltip text - see examples below! */
     position: relative;
     z-index: 1;
-    top: 2px;
-    left: -40%;
+    top: -65px;
+    left: -90px;
 }
 
 .profile-tool-tip:hover{
-    left: -39%;
+    left: -87px;
 }
 
 .profile-tool-tip::after {
@@ -577,7 +605,7 @@ height: 150px;
 
 }
 
-
+/* 
 @media only screen and (max-width: 1062px) {
   .dashboard {
       flex-direction: column !important;
@@ -589,20 +617,224 @@ height: 150px;
   .mapbox-gl {
       height: 80%;
   }
+} */
+#tripdetails{
+    width: 90%;
+    -webkit-overflow-scrolling: touch;
+}
+.delete-trip-btn{
+    float: right;
+    margin-right: 22px;
+    top: 0px;
+}
+.modal-content{
+    padding: 0 !important;
+    margin: 10px !important;
+}
+.map-detail-wrapper{
+    display: flex;
+    flex-direction: column;
 }
 
+.map-detail-wrapper p{
+    max-width: 100%;
+    max-height: 210px;
+    overflow-y: auto;
+}
 .mini-map{
-    width: 20vw;
-    height: 20vw;
-    float: left;
-    padding-bottom: 10px;
-    padding-right: 10px;
+    min-width: 250px;
+    min-height: 250px;
 }
 .mini-map img{
     width: 100%;
     height: 100%;
 }
-.map-detail-wrapper{
-    display: block;
 
+
+
+.dashboard{
+    display: flex;
+    flex-direction: row;
+    padding: 0;
+    margin: 8px;
+}
+
+.dashboard-tools{
+    display: block;
+}
+.addtrip-searchtrip{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+.triptoggle{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.trip-list{
+    max-height: 15vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 5px;
+}
+
+#mapbox{
+    width: 95vw;
+    height: 95vw;
+}
+
+
+/* > iPhone 6 */
+@media only screen and (min-width: 360px){
+    .dashboard{
+        margin: 10px;
+    }
+}
+/* > iPhone X */
+@media only screen and (min-height: 800px){
+    .dashboard{
+        margin-top: 30px;
+        display: flex;
+        flex-direction: column;
+    }
+    .addtrip-searchtrip{
+        margin-top: 0;
+        padding: 0;
+    }
+    .triptoggle{
+        margin-top: 10px;
+    }
+    .trip-list{
+        max-height: 200px;
+        margin-top: 10px;
+    }
+    #mapbox{
+        margin-top: 25px;
+    }
+
+}
+/* > iPhone Landscape */
+@media only screen and (min-width: 660px){
+    .addtrip-searchtrip{
+        justify-content: flex-start;
+    }
+    .dashboard-toggle-list{
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: flex-end;
+    }
+    .triptoggle{
+        margin-top: -10px;
+        margin-left: 130px;
+        flex-direction: column;
+    }
+    .trip-list{
+        max-height: 33vh;
+        margin-bottom: 10px;
+        margin-left: 40px;
+        flex-direction: column;
+    }
+    #mapbox{
+        height: 365px;
+    }
+    #profile{
+        width: 70%;
+    }
+    .profile-top-row{
+        flex-direction: row;
+        justify-content: space-evenly;
+    }
+}
+/* > iPad */
+@media only screen and (min-width: 760px){
+    .dashboard{
+        margin-left: 20px;
+    }
+    .addtrip-searchtrip{
+        justify-content: flex-start;
+    }
+    .dashboard-toggle-list{
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: flex-end;
+    }
+    .triptoggle{
+        margin-left: 165px;
+        flex-direction: column;
+    }
+    .trip-list{
+        max-height: 15vh;
+        margin-bottom: 10px;
+        flex-direction: column;
+        max-width: 350px;
+    }
+    #mapbox{
+        height: 660px;
+    }
+}
+
+/* > iPad Landscape */
+@media only screen and (min-width: 1020px){
+    .dashboard{
+        margin-left: 25px;
+    }
+    .dashboard-tools{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-right: 60px;
+        margin-left: 60px;
+        align-items: center;
+    }
+    .triptoggle{
+        margin-left: 0;
+    }
+    .trip-list{
+        margin-left: 00px;
+        margin-right: 0px;
+        max-height: 130px;
+        max-width: 440px;
+    }
+    #mapbox{
+        height: 550px;
+    }
+    #profile{
+        width: 550px;
+    }
+}
+
+/* Desktop */
+@media only screen and (min-width: 1030px){
+    .dashboard{
+        display: flex;
+        flex-direction: row;
+        padding: 0;
+        margin-left: 10px;
+    }
+    .dashboard-tools{
+        flex-direction: column;
+        max-width: 20vw;
+        padding: 0;
+        margin: 0;
+        margin-right: 10px;
+        justify-content: flex-start;
+        max-height: 100vh;
+    }
+    .trip-list{
+        max-height: 65vh;
+    }
+    .dashboard-toggle-list{
+        flex-direction: column;
+    }
+    .dashboard-map-n-tools{
+        display: flex;
+    }
+
+    #mapbox{
+        width: 79vw;
+        max-width: 79vw;
+        height: 89vh;
+        max-height: 89vh;
+    }
 }
