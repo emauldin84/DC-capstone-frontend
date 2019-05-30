@@ -7,7 +7,6 @@ import moment from 'moment';
 import Dropzone, {useDropzone} from "react-dropzone";
 import Autosuggest from 'react-autosuggest';
 import styled from 'styled-components'
-import { async } from 'q';
 
 const StyledWrapper = styled.div`
     & .react-autosuggest__input{
@@ -44,7 +43,6 @@ export default class TripDetails extends React.Component{
             deleteAPhoto: false,
             deleteMe: null,
             carouselShouldSpin: true,
-            staticMap: null,
         };
         this._updateDate.bind(this);
         this.carouselInstance = React.createRef()
