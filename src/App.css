@@ -576,3 +576,17 @@ height: 150px;
     margin: 10px;
 
 }
+
+@media only screen and (max-width: 1062px) {
+.dashboard {
+    flex-direction: column !important;
+
+}
+.dashboard-tools {
+    flex-direction: row !important;
+}
+.mapbox-gl {
+    height: 80%;
+}
+
+}
