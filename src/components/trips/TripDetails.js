@@ -27,7 +27,6 @@ export default class TripDetails extends React.Component{
             value : this.props.name,
             date : this.props.date,
             details : this.props.details,
-            editPhotos : false, 
             photos : this.props.photos,
             lat : this.props.lat,
             lon : this.props.lon,
@@ -219,11 +218,6 @@ export default class TripDetails extends React.Component{
     _updatePhotos = (photos) => {
         this.setState({photos},
             this._showSaving)
-    }
-    _editPhotos = (e) => {
-        this.setState({
-            editPhotos : true
-        })
     }
     _toggleDeleteTrip = () => {
         this.setState({deleteThisTrip : !this.state.deleteThisTrip},
