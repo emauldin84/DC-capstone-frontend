@@ -7,8 +7,8 @@ export default class SignIn extends Component {
         super(props);
         this.state = {
             signIn : {
-                email: 'eric@test.com',
-                password: 'test',
+                email: '',
+                password: '',
             },
             signUp : {
                 email: '',
@@ -29,7 +29,10 @@ export default class SignIn extends Component {
         <div id="signin" className='container section'>
             
             <form onSubmit={this.state.showSignUp ? this._handleSignUp : this._handleSignIn} className='white signin-signup'>
-            <img src='./assets/flaminGO_logo.png' width='100%' className='site-logo-landing center' alt='' title='Flamingo Logo'/>
+                <div className="logo-tagline">
+                    <img src='./assets/flaminGO_logo.png' width='100%' className='site-logo-landing center' alt='' title='Flamingo Logo'/>
+                    <p className="tagline">Your leg up on trip management</p>
+                </div>
                 <h5 className='grey-text text-darken-3 section'>{this.state.showSignUp ? 'Sign Up' : 'Sign In' }</h5>
                 <div className='input-field'>
                     <label htmlFor='email'>Email</label>
