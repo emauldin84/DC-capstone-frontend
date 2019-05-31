@@ -292,7 +292,7 @@ body {
 .profile-modal{
     margin-top: 20px;
 }
-#firstName, #lastName{
+.profile-modal #firstName,.profile-modal  #lastName{
     font-size: 2rem;
     padding-top: 20px;
 }
@@ -456,7 +456,7 @@ body {
 
 .undodelete-tooltip {
     float: right;
-    left: 25px;
+    left: 22px;
     width: 100px !important;
     visibility: visible;
     color: #fff;
@@ -466,11 +466,11 @@ body {
     /* Position the tooltip text - see examples below! */
     position: relative;
     z-index: 1;
-    top: -40px;
+    top: 5px;
     /* left: -40%; */
 }
 .undodelete-tooltip:hover{
-    left: 28px;
+    left: 25px;
 }
 .undodelete-tooltip::after {
     content: "";
@@ -515,7 +515,9 @@ body {
     background-color: rgba(255, 255, 255, .85) !important;
     border-radius: 2px;
 }
-
+.signin-signup{
+    font-size: 1rem;
+}
 
 .landing-page-div {
     margin-top: 20px;
