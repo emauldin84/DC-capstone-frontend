@@ -110,7 +110,7 @@ export default class TripDetails extends React.Component{
                     </div>
                     <div className="map-detail-wrapper">
                         <div className="mini-map">
-                            <img alt="map" src={`https://www.mapquestapi.com/staticmap/v5/map?key=Rum6uC90qtUc0AkV3bXdLYhrlxdqGi3K&center=${lat},${lon}&size=@2x`}></img>
+                            <img alt="map" src={`https://www.mapquestapi.com/staticmap/v5/map?key=Rum6uC90qtUc0AkV3bXdLYhrlxdqGi3K&center=${this.state.lat||lat},${this.state.lon||lon}&size=@2x`}></img>
                         </div>
                         <p onBlur={(e)=>{this._updateDetails(e.target.textContent);}} contentEditable={true} suppressContentEditableWarning={true} >{details || "Click here to enter Trip Details"}</p>
                     </div>
@@ -168,30 +168,26 @@ export default class TripDetails extends React.Component{
         )
     }
     _saveChanges = () => {
-        this.setState({
-            editPhotos : false,
-        }, () => {
-            const {value, details, lat, lon} = this.state
-            let date1 = document.getElementById(`editTripDate${this.props.id}`).value.toString() 
-            const date = moment(date1, 'MMM Do YYYY').format("YYYY-MM-DD")
-            const propsDate = moment(this.props.date).format("YYYY-MM-DD")
-            const body = {
-                trip_location : value,
-                trip_date : date,
-                lat,
-                lon,
-                trip_details : details,
-            }
-            if(this.state.deleteThisTrip){
-                axios.delete(`trips/delete/${this.props.id}`)
-                .then(() => this.props.updateAppDashboard())
-            }
-            if((value!==this.props.name)||(date!==propsDate)||(details!==this.props.details)){
-                axios.post(`/trips/edit/${this.props.id}`, body)
-                .then(() => this.props.updateAppDashboard())
-            }
-            this.props.shutTheDoorBehindYou();
-        })
+        const {value, details, lat, lon} = this.state
+        let date1 = document.getElementById(`editTripDate${this.props.id}`).value.toString() 
+        const date = moment(date1, 'MMM Do YYYY').format("YYYY-MM-DD")
+        const propsDate = moment(this.props.date).format("YYYY-MM-DD")
+        const body = {
+            trip_location : value,
+            trip_date : date,
+            lat,
+            lon,
+            trip_details : details,
+        }
+        if(this.state.deleteThisTrip){
+            axios.delete(`trips/delete/${this.props.id}`)
+            .then(() => this.props.updateAppDashboard())
+        }
+        if((value!==this.props.name)||(date!==propsDate)||(details!==this.props.details)){
+            axios.post(`/trips/edit/${this.props.id}`, body)
+            .then(() => this.props.updateAppDashboard())
+        }
+        this.props.shutTheDoorBehindYou();
     }
     _updateName = () => {
 
