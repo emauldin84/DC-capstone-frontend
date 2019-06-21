@@ -4,8 +4,28 @@ import axios from 'axios';
 import Autosuggest from 'react-autosuggest';
 import Dropzone from "react-dropzone";
 import { DatePicker, Button, Modal, }from 'react-materialize';
+import { gql } from 'apollo-boost'
+import { compose, graphql } from 'react-apollo'
 
-export default class AddTrip extends Component {
+const addTripQuery = gql`
+mutation {
+    addTrip(
+    trip_location: "Atlanta",
+    trip_date: "1/1/1",
+    lat: "89.11",
+    lon: "-11.11",
+    trip_details: "details and details",
+    trip_photos: [
+        "8_DSCF0578_1560969954035.jpg"
+        ]
+    ){
+        trip_details
+        trip_photos
+    }
+}
+`
+
+class AddTrip extends Component {
     constructor(props){
         super(props);
         this.state = {
@@ -212,3 +232,5 @@ export default class AddTrip extends Component {
         this.setState({photoFormData, fileName:true, files, })
     }
 }
+
+export default graphql(addTripQuery)(AddTrip)
