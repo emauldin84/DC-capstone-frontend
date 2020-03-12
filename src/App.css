@@ -672,7 +672,7 @@ height: 150px;
 .triptoggle{
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: center;
 }
 .trip-list{
     max-height: 15vh;
@@ -680,7 +680,7 @@ height: 150px;
     -webkit-overflow-scrolling: touch;
     margin-bottom: 5px;
     background-color: #c0eae6;
-
+    border-radius: 2px;
 }
 
 #mapbox{
@@ -854,7 +854,8 @@ height: 150px;
         justify-content: flex-end;
     }
     .triptoggle{
-        margin-left: 165px;
+        margin-left: auto;
+        margin-right: 40px;
         flex-direction: column;
     }
     .trip-list{
@@ -882,7 +883,7 @@ height: 150px;
         align-items: center;
     }
     .triptoggle{
-        margin-left: 0;
+        margin-left: 20px;
     }
     .trip-list{
         margin-left: 00px;
@@ -961,7 +962,7 @@ height: 150px;
   height: 10em;
 }
 .loader {
-  margin: 60px auto;
+  margin: 30% auto;
   font-size: 10px;
   position: relative;
   text-indent: -9999em;
