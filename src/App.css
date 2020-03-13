@@ -77,7 +77,7 @@ body {
 .addtrip-searchtrip {
     display: flex;
     margin-left: 0 !important;
-    margin-bottom: 0 !important;
+    margin-bottom: 5px !important;
 
 }
 
@@ -274,7 +274,7 @@ body {
 
 #profile{
     width: 90%;
-    display: flex;
+    /* display: flex; */
     flex-direction: column;
     justify-content: center;
     -webkit-overflow-scrolling: touch;
