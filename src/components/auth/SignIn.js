@@ -36,11 +36,11 @@ export default class SignIn extends Component {
                 <h5 className='grey-text text-darken-3 section'>{this.state.showSignUp ? 'Sign Up' : 'Sign In' }</h5>
                 <div className='input-field'>
                     <label htmlFor='email'>Email</label>
-                    <input type='email' id='email' onChange={this._handleSignInChange} />
+                    <input type='email' id='email' required onChange={this._handleSignInChange} />
                 </div>
                 <div className='input-field'>
                     <label htmlFor='password'>Password</label>
-                    <input type='password' id='password' onChange={this._handleSignInChange} />
+                    <input type='password' id='password' required onChange={this._handleSignInChange} />
                     {this.state.showSignUp ? null :<span className="helper-text right" onClick={this._toggleMenu}>Don't have an account? Sign up here.</span>}
                 </div>
                 {this.state.showSignUp ? null :
@@ -52,11 +52,11 @@ export default class SignIn extends Component {
                 <div>
                     <div className='input-field'>
                         <label htmlFor='firstName'>First Name</label>
-                        <input type='text' id='firstName' onChange={this._handleSignUpChange} />
+                        <input type='text' id='firstName' required onChange={this._handleSignUpChange} />
                     </div>
                     <div className='input-field'>
                         <label htmlFor='lastName'>Last Name</label>
-                        <input type='text' id='lastName' onChange={this._handleSignUpChange} />
+                        <input type='text' id='lastName' required onChange={this._handleSignUpChange} />
                         {this.state.showSignUp ? <span className="helper-text right" onClick={this._toggleMenu}>Already have an account? Sign in here.</span> : null}
                     </div>
                     <div className='input-field'>
