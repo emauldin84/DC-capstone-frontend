@@ -114,32 +114,34 @@ export default class Dashboard extends Component {
                             <a href={`#newtrip`} title='add new trip' className={trips.length <= 0 ? "pulse modal-trigger addTrip btn-floating waves-effect waves-light" : `modal-trigger addTrip btn-floating waves-effect waves-light`}>
                                 <i className="pulse material-icons addtrip" >add</i>
                             </a>
-                                <span className={trips.length <= 0 ? "grey darken-3 tooltip" : "grey darken-3 tooltip-hidden" }>Click me to add your first trip!</span>
                                 {trips.length <= 0 ? null : 
                                 <SearchBar 
                                 search={this._searchHandler}
                                 />}
                         </div>
                         {tripDetails}
-                        <div className="dashboard-toggle-list">
-                            {trips.length <= 0 ? null :
-                            <TripToggle 
-                                past={this.state.pastTrips} 
-                                future={this.state.futureTrips} 
-                                changePast={this._onPastChange}
-                                changeFuture={this._onFutureChange}
-                                />}
-                            
-                            {trips.length <= 0 ? null :
-                            <TripList 
-                                trips={viewableTrips.filter(searchingFor(this.state.searchWord)).map(trip => trip)}
-                                tripDeselector={this._deSelectTrip} 
-                                tripSelector={this._selectTripId} 
-                                selectedTrip={this.state.selectedTripId}
-                                updateAppDashboard={updateApp}
-                                clickedTrip={this._clickedOnTrip}
+                        <div className='dashboard-toggle-list'>
+                            <div className="">
+                                {trips.length <= 0 ? null :
+                                <TripToggle 
+                                    past={this.state.pastTrips} 
+                                    future={this.state.futureTrips} 
+                                    changePast={this._onPastChange}
+                                    changeFuture={this._onFutureChange}
+                                    />}
                                 
-                            />}
+                            </div>
+                                {trips.length <= 0 ? <div className="get-started-text">Add your first trip by clicking the flashing button above!</div> :
+                                <TripList 
+                                    trips={viewableTrips.filter(searchingFor(this.state.searchWord)).map(trip => trip)}
+                                    tripDeselector={this._deSelectTrip} 
+                                    tripSelector={this._selectTripId} 
+                                    selectedTrip={this.state.selectedTripId}
+                                    updateAppDashboard={updateApp}
+                                    clickedTrip={this._clickedOnTrip}
+                                    
+                                />}
+
                         </div>
                     </div>
                     <div id="mapbox" className=''>

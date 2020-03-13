@@ -27,6 +27,12 @@ body {
     min-width: 40px !important;
     
 }
+.get-started-text{
+    margin: auto 5px;
+    color: #424242;
+    font-size: calc(15px + 1vmin);
+    text-align: center;
+}
 
 /* new trip modal resize issue fix */
 #newtrip {
@@ -685,7 +691,7 @@ height: 150px;
 
 #mapbox{
     width: 95vw;
-    height: 95vw;
+    height: 67vmin;
 }
 
 .mapbox-gl {
@@ -767,9 +773,6 @@ height: 150px;
         flex-direction: row;
         justify-content: space-evenly;
     }
-
-
-
 
     #tripdetails{
         width: 70%;
@@ -854,7 +857,7 @@ height: 150px;
         justify-content: flex-end;
     }
     .triptoggle{
-        margin-left: auto;
+        margin-left: calc(200px + 2vmax);
         margin-right: 40px;
         flex-direction: column;
     }
@@ -865,25 +868,33 @@ height: 150px;
         max-width: 350px;
     }
     #mapbox{
-        height: 660px;
+        height: 62vmin;
     }
 }
 
 /* > iPad Landscape */
 @media only screen and (min-width: 1020px){
     .dashboard{
+        display: flex;
+        flex-direction: row;
         margin-left: 25px;
     }
     .dashboard-tools{
         display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        margin-right: 60px;
-        margin-left: 60px;
+        flex-direction: column;
+        /* justify-content: space-between; */
+        margin-right: 10px;
+        margin-left: 10px;
         align-items: center;
+    }
+    .dashboard-map-n-tools{
+        display: flex;
     }
     .triptoggle{
         margin-left: 20px;
+    }
+    .dashboard-toggle-list{
+        flex-direction: column;
     }
     .trip-list{
         margin-left: 00px;
@@ -892,7 +903,10 @@ height: 150px;
         max-width: 440px;
     }
     #mapbox{
-        height: 550px;
+        width: 79vw;
+        max-width: 79vw;
+        height: 89vh;
+        max-height: 89vh;
     }
     #profile{
         width: 550px;
@@ -931,8 +945,8 @@ height: 150px;
     }
 
     #mapbox{
-        width: 79vw;
-        max-width: 79vw;
+        width: 78vw;
+        max-width: 78vw;
         height: 89vh;
         max-height: 89vh;
     }
