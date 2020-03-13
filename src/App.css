@@ -240,7 +240,7 @@ body {
 }
 
 .fab-buttons{
-    margin-top: 4vh;
+    margin-top: 1vh;
 }
 .fab-buttons :hover{
     background-color:  #4db6ac;
@@ -288,7 +288,9 @@ body {
 .profile-top-row{
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    /* justify-content: flex-end; */
+    justify-content: space-between;
+    align-items: center;
 }
 .fileupload-wrapper{
     /* padding-top: 50px !important; */
@@ -317,13 +319,13 @@ body {
     padding-bottom: none !important;
 }
 
-.profile-top-row{
+/* .profile-top-row{
     display: flex;
-    /* flex-direction: column; */
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
 
-}
+} */
 
 .profile-top-row h3{
     display: flex;
@@ -441,8 +443,8 @@ body {
     /* Position the tooltip text - see examples below! */
     position: relative;
     z-index: 1;
-    top: -65px;
-    left: -90px;
+    top: -66px;
+    left: -88px;
 }
 
 .profile-tool-tip:hover{
@@ -669,6 +671,7 @@ height: 150px;
 
 .dashboard-tools{
     display: block;
+    max-width: 95vw;
 }
 .addtrip-searchtrip{
     display: flex;
@@ -739,8 +742,8 @@ height: 150px;
     #mapbox{
         margin-top: 25px;
     }
-
 }
+
 /* > iPhone Landscape */
 @media only screen and (min-width: 660px){
     .addtrip-searchtrip{
@@ -753,15 +756,16 @@ height: 150px;
     }
     .triptoggle{
         margin-top: -10px;
-        margin-left: 130px;
+        margin-left: 100px;
         flex-direction: column;
         align-self: right;
     }
     .trip-list{
-        max-height: 33vh;
+        max-height: 15vh;
         margin-bottom: 10px;
         margin-left: 40px;
         flex-direction: column;
+        width: 350px;
     }
     #mapbox{
         height: 365px;
@@ -770,7 +774,7 @@ height: 150px;
         width: 70%;
     }
     .profile-top-row{
-        flex-direction: row;
+        /* flex-direction: row; */
         justify-content: space-evenly;
     }
 
@@ -794,7 +798,6 @@ height: 150px;
         margin-right: 10px !important;
         justify-content: space-around;
     }
-    
     .map-detail-wrapper p{
         margin: 10px;
         min-width: 420px;
@@ -812,11 +815,6 @@ height: 150px;
         width: 100%;
         height: 100%;
     }
-    
-
-
-
-
     .profile-tool-tip{
         width: 60px;
         visibility: visible;
@@ -827,21 +825,15 @@ height: 150px;
         /* Position the tooltip text - see examples below! */
         position: relative;
         z-index: 1;
-        top: 0px;
-        left: -220px;
+        top: -66px;
+        left: -88px;
     }
-    
     .profile-tool-tip:hover{
-        left: -217px;
+        left: -95;
     }
-    
-
     .tagline{
         font-size: 1em;
     }
-    
-
-
 }
 /* > iPad */
 @media only screen and (min-width: 760px){
@@ -857,7 +849,6 @@ height: 150px;
         justify-content: flex-end;
     }
     .triptoggle{
-        margin-left: calc(200px + 2vmax);
         margin-right: 40px;
         flex-direction: column;
     }
@@ -877,14 +868,15 @@ height: 150px;
     .dashboard{
         display: flex;
         flex-direction: row;
-        margin-left: 25px;
+        margin-left: 10px;
     }
     .dashboard-tools{
         display: flex;
         flex-direction: column;
-        /* justify-content: space-between; */
         margin-right: 10px;
-        margin-left: 10px;
+        /* justify-content: space-between; */
+        max-width: 20vw;
+        min-width: 20vw;
         align-items: center;
     }
     .dashboard-map-n-tools{
@@ -899,12 +891,12 @@ height: 150px;
     .trip-list{
         margin-left: 00px;
         margin-right: 0px;
-        max-height: 130px;
-        max-width: 440px;
+        max-height: 61vh;
+        max-width: 215px;
     }
     #mapbox{
-        width: 79vw;
-        max-width: 79vw;
+        width: 77vw;
+        max-width: 77vw;
         height: 89vh;
         max-height: 89vh;
     }
@@ -932,7 +924,8 @@ height: 150px;
         max-height: 100vh;
     }
     .trip-list{
-        max-height: 65vh;
+        max-height: 61vh;
+        max-width: 225px;
     }
     .dashboard-toggle-list{
         flex-direction: column;
@@ -945,8 +938,8 @@ height: 150px;
     }
 
     #mapbox{
-        width: 78vw;
-        max-width: 78vw;
+        width: 77vw;
+        max-width: 77vw;
         height: 89vh;
         max-height: 89vh;
     }
