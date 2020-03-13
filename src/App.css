@@ -615,19 +615,6 @@ height: 150px;
 
 }
 
-/* 
-@media only screen and (max-width: 1062px) {
-  .dashboard {
-      flex-direction: column !important;
-
-  }
-  .dashboard-tools {
-      flex-direction: row !important;
-  }
-  .mapbox-gl {
-      height: 80%;
-  }
-} */
 #tripdetails{
     width: 90%;
     -webkit-overflow-scrolling: touch;
@@ -774,7 +761,6 @@ height: 150px;
         width: 70%;
     }
     .profile-top-row{
-        /* flex-direction: row; */
         justify-content: space-evenly;
     }
 
@@ -874,7 +860,6 @@ height: 150px;
         display: flex;
         flex-direction: column;
         margin-right: 10px;
-        /* justify-content: space-between; */
         max-width: 20vw;
         min-width: 20vw;
         align-items: center;
@@ -944,7 +929,6 @@ height: 150px;
         max-height: 89vh;
     }
     .tooltip {
-        /* visibility: visible; */
         width: 120px;
         color: #fff;
         text-align: center;
